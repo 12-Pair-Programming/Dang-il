@@ -9,33 +9,26 @@ html {
   --Purple-80: #6e0ad1;
   --Purple-90: #5603a7;
 
---Red-10: #FFEBE7
---Red-20: #FFAF9B
---Red-30: #FF8D72
---Red-40: #FF4040
+  --Red-10: #FFEBE7
+  --Red-20: #FFAF9B
+  --Red-30: #FF8D72
+  --Red-40: #FF4040
 
-  --Blue-10: #e2f5ff;
-  --Blue-20: #b1e4ff;
-  --Blue-30: #7cd2ff;
-  --Blue-40: #34b9ff;
-  --Blue-50: #00a2fe;
+  --Blue-10: #cce6ff;
+  --Blue-20: #0080ff;
 
-  --Green-10: #e4fbdc;
-  --Green-20: #d0f5c3;
-  --Green-30: #9be282;
-  --Green-40: #60cf37;햣 
-  --Green-50: #2ba600;
+  --Green-10: #d4f7d4;
+  --Green-20: #20a81e;
 
-  --Gray-10: #f6f6f6;
-  --Gray-20: #eeeeee;
-  --Gray-30: #cccccc;
-  --Gray-40: #999999;
-  --Gray-50: #555555;
-  --Gray-60: #4a4a4a;
-  --Gray-70: #3a3a3a;
-  --Gray-80: #2b2b2b;
-  --Gray-90: #181818;
+  --Gray-05: #fafafa
+  --Gray-10: #f2f2f3;
+  --Gray-20: #e5e4e7;
+  --Gray-30: #cbc9cf;
+  --Gray-40: #a4a1aa;
+  --Gray-50: #7d7986;
 
-  --Error: #dc3a3a;
-  --Surface: #f6f8ff;
+
+  --White: #ffffff;
+  --Black: #111322;
+
 }
