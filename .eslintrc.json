@@ -1,0 +1,25 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "airbnb",
+    "airbnb-typescript",
+    "prettier"
+  ],
+
+  "rules": {
+    "react/prop-types": 0,
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0,
+    "consistent-return": 0,
+    "react/no-unknown-property": 0,
+    "no-unused-vars": "off",
+    "prettier/prettier": ["error", { "endOfLine": "auto", "useTabs": false }],
+    "arrow-body-style": "off",
+    "import/no-unresolved": "off",
+    "import/order": "off",
+    "no-unsafe-optional-chaining": "off",
+    "no-shadow": "off",
+    "dot-notation": "off",
+    "object-shorthand": "off"
+  }
+}
