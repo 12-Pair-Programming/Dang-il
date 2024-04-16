@@ -1,10 +1,10 @@
 import React from 'react';
-import Pagenation from './Pagenation';
+import Pagination from './Pagination';
 
 const AnnouncementList = () => {
   return (
     <>
-      <Pagenation />
+      <Pagination />
     </>
   );
 };

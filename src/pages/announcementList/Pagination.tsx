@@ -1,9 +1,8 @@
 import React from 'react';
 
-const Pagenation = () => {
+const Pagination = () => {
   return (
     <div>
-      <span className="text-Red-20">color test</span>
       <button>1</button>
       <button>2</button>
       <button>3</button>
@@ -15,4 +14,4 @@ const Pagenation = () => {
   );
 };
 
-export default Pagenation;
+export default Pagination;
