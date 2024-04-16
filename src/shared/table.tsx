@@ -1,17 +1,35 @@
+import { useEffect } from "react";
 import React from 'react';
 
-interface TableRow {
-  store: string;
-  date: string;
-  hourlyPay: number;
-  status: string;
-}
 
-const Table: React.FC<{ data: TableRow[] }> = ({ data }) => {
+
+const Table: React.FC<{
+  id: number,
+  name: string,
+  date: number,
+  hour: number,
+  hourlypay: number,
+  status: string,
+  }> = ({ id,
+    name,
+    date,
+    hourlypay,
+    status
+  }) => {
+
+  // useEffect(() => {
+  //   const handleTableLoad = async () => {
+  //     try {
+  //       const response = await getShopTable();
+  //       const result = response.
+  //     }
+  //   }
+  // })
+
   return (
     <>
       <table className="inline-flex flex-col items-start rounded-2xl border-gray-20 border border-solid">
-        <thead>
+        <thead className="flex w-full items-start bg-red-10">
           <tr>
             <th>가게</th>
             <th>일자</th>
@@ -19,13 +37,16 @@ const Table: React.FC<{ data: TableRow[] }> = ({ data }) => {
             <th>상태</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>이주형</td>
-            <td>11월 19일</td>
-            <td>41,600원</td>
-            <th>모집중</th>
-          </tr>
+        <tbody className="flex w-full h-full items-start bg-white">
+          for(let i=0; i<id.length; i++){
+            <tr>
+              <td>{name}</td>
+              <td>{date}, ({hour}시간)</td>
+              <td>{hourlypay}</td>
+              <th>{status}</th>
+            </tr>
+          }
+
         </tbody>
         {/* <tbody>
           {data.map((row, index) => (
