@@ -1,20 +1,22 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import React from 'react';
 
 
 
 const Table: React.FC<{
-  id: number,
+  id: any,
   name: string,
   date: number,
   hour: number,
   hourlypay: number,
-  status: string,
-  }> = ({ id,
+  statuses: string,
+  }> = ({ 
+    id,
     name,
     date,
+    hour,
     hourlypay,
-    status
+    statuses
   }) => {
 
   // useEffect(() => {
@@ -25,27 +27,73 @@ const Table: React.FC<{
   //     }
   //   }
   // })
+  const [buttonVisible, setButtonVisible] = useState(true);
+  const [status, setStatus] = useState('');
+
+  interface ButtonComponentProps {
+    handleClick: (buttons: string) => void;
+  }
+  
+  const ButtonComponent: React.FC<ButtonComponentProps> = ({ handleClick }) => {
+    return (
+      <>
+        {buttonVisible && (
+          <>
+            <button className="border-purple-60 flex py-2 px-3 content-center items-center rounded-md border border-solid " onClick={() => handleClick('reject')}>
+              <p className="text-purple-60 font-bold text-sm">거절하기</p>
+            </button>  
+            <button className="border-blue-20 flex py-2 px-3 content-center items-center rounded-md border border-solid" onClick={() => handleClick('approve')}>
+              <p className="text-blue-20 font-bold text-sm">승인하기</p>
+            </button>  
+          </>
+        )}
+        {status && <p className={`p-4 ${status === '거절' ? 'bg-purple-20 text-purple-50' : 'bg-blue-10 text-blue-20'} flex py-1 px-2 content-center items-center rounded-2xl font-bold text-sm`}>{status}</p>}
+      </>
+    );
+  };
+  
+
+  const handleChangingStatus = (buttons : string) => {
+    if(buttons === 'approve'){
+      setStatus('승인 완료');
+    } else if (buttons === 'reject'){
+      setStatus('거절');
+    }
+    setButtonVisible(false);
+  }
+
+  useEffect(() => {
+    console.log(status);
+  }, [status]);
+
+
 
   return (
     <>
-      <table className="inline-flex flex-col items-start rounded-2xl border-gray-20 border border-solid">
-        <thead className="flex w-full items-start bg-red-10">
-          <tr>
-            <th>가게</th>
-            <th>일자</th>
-            <th>시급</th>
-            <th>상태</th>
+      <table className="inline-flex flex-col items-start rounded-2xl border-gray-20 border border-solid w-full">
+        <thead className="flex w-full items-start bg-red-10 justify-between">
+          <tr className="flex w-full">
+            <th className="w-[228px] text-left py-3 px-3 gap-3 items-center flex-shrink-0">가게</th>
+            <th className="w-1/4 text-left py-3 px-3 gap-3 items-center flex-shrink-1">일자</th>
+            <th className="w-1/4 text-left py-3 px-3 gap-3 items-center flex-shrink-1">시급</th>
+            <th className="w-1/4 text-left py-3 px-3 gap-3 items-center flex-shrink-0">상태</th>
           </tr>
         </thead>
         <tbody className="flex w-full h-full items-start bg-white">
-          for(let i=0; i<id.length; i++){
-            <tr>
-              <td>{name}</td>
-              <td>{date}, ({hour}시간)</td>
-              <td>{hourlypay}</td>
-              <th>{status}</th>
-            </tr>
-          }
+          <tr className="flex w-full">
+            <td className="flex w-[228px] py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 ">
+              {name}
+            </td>
+            <td className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 ">{date}, ({hour}시간)</td>
+            <td className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 ">{hourlypay}</td>
+            <td className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 ">
+              {id === 'a' ? (
+                {statuses}
+              ) : id === 'b' ? (
+                <ButtonComponent handleClick={handleChangingStatus} />
+              ) : null}
+            </td>
+          </tr>
 
         </tbody>
         {/* <tbody>
