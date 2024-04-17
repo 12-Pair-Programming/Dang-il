@@ -1,6 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-jp.css);
+
+@layer base {
+  html {
+    font-family: 'Spoqa Han Sans Neo';
+    font-size: 16px;
+    font-weight: 400;
+  }
+}
 
 :root {
   --foreground-rgb: 0, 0, 0;
