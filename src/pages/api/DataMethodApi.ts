@@ -7,6 +7,6 @@ export async function fetchDatas(endpoint: string | number) {
     const response = await axios.get(`${BASE_URL}${endpoint}`);
     return response.data;
   } catch (error) {
-    throw new Error('HTTP error! status: ${error.response.status');
+    throw new Error('HTTP error! status: ${error.response.status}');
   }
 }

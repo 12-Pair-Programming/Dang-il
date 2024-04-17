@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-import React from 'react';
-
+import React, { useEffect, useState } from "react";
 
 
 const Table: React.FC<{
@@ -81,7 +79,7 @@ const Table: React.FC<{
         </thead>
         <tbody className="flex w-full h-full items-start bg-white">
           <tr className="flex w-full">
-            <td className="flex w-[228px] py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 ">
+            <td className="flex w-[14rem] py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 ">
               {name}
             </td>
             <td className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 ">{date}, ({hour}시간)</td>
