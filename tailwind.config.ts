@@ -13,14 +13,9 @@ const config: Config = {
         primary: '#9935ff',
 
         'purple-10': '#f8f0ff',
-        'purple-20': '#ecd9ff',
-        'purple-30': '#dcb9ff',
-        'purple-40': '#c894fd',
-        'purple-50': '#ab57ff',
-        'purple-60': '#9935ff',
-        'purple-70': '#861dee',
-        'purple-80': '#6e0ad1',
-        'purple-90': '#5603a7',
+        'purple-20': '#dcb9ff',
+        'purple-30': '#9935ff',
+        'purple-40': '#6e0ad1',
 
         'red-10': '#FFEBE7',
         'red-20': '#FFAF9B',

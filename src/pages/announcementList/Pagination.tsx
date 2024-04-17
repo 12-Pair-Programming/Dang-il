@@ -1,17 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Pagination = () => {
-  return (
-    <div>
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
-      <button>7</button>
-    </div>
-  );
+const Pagination = ({ totalPage, limit, page, setPage }) => {
+  const [currentPageArray, setCurrentPageArray] = useState([]);
+  const [totalPageArray, setTotalPageArray] = useState([]);
+  const sliceArrayByLimit = (totalPageArray, limit) => {
+    totalPageArray.slice(0, limit);
+  };
+
+  useEffect(() => {
+    if (page % limit === 1) {
+      return setCurrentPageArray(totalPageArray[Math.floor(page / limit)]);
+    }
+    if (page % limit === 0) {
+      return setCurrentPageArray(totalPageArray[Math.floor(page / limit) - 1]);
+    }
+  }, [page]);
+
+  useEffect(() => {
+    const slicedPageArray = sliceArrayByLimit(totalPageArray, limit);
+    setTotalPageArray(slicedPageArray);
+    setCurrentPageArray(slicedPageArray[0]);
+  }, [totalPage]);
+
+  return ();
 };
 
 export default Pagination;
