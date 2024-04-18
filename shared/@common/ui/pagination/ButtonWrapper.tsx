@@ -2,9 +2,7 @@ import { ReactNode } from 'react';
 
 const ButtonWrapper = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="flex justify-between align-center w-[372px] h-[40px]">
-      {children}
-    </div>
+    <div className="flex justify-between align-center h-[40px]">{children}</div>
   );
 };
 
