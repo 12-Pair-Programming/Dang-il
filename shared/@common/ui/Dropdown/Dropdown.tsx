@@ -9,19 +9,19 @@ interface Option {
 interface DropdownProps {
   options: Option[];
   onSelect: (value: string) => void;
-  defult?: string;
+  defaultValue?: string;
   title: string;
 }
 
 export const Dropdown: React.FC<DropdownProps> = ({
   options,
   onSelect,
-  defult,
+  defaultValue,
   title,
 }) => {
   const dropDownClickRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const defaultOption = options.find((option) => option.value === defult);
+  const defaultOption = options.find((option) => option.value === defaultValue);
   const [selectedOption, setSelectedOption] = useState(
     defaultOption || options[0],
   );
@@ -70,7 +70,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
         />
         <button
           style={{ width: '100%' }}
-          className={`flex px-5 py-4 items-center gap-189 border bg-white border-gray-30 rounded-md text-base font-normal leading-26px tracking-wide`}
+          className={`flex px-5 py-4 items-center border bg-white border-gray-30 rounded-md text-base font-normal leading-26px tracking-wide`}
         >
           {selectedOption.label}
         </button>
