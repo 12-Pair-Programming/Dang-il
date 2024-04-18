@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export const Footer = () => {
   return (
@@ -14,30 +15,30 @@ export const Footer = () => {
             <p className=" text-gray-50">FAQ</p>
           </div>
           <div className="flex flex-row items-start gap-[10px]">
-            <a href="">
+            <Link href={'https://www.facebook.com/?locale=ko_KR"'}>
               <Image
                 width={25}
                 height={25}
                 src={'/images/envelopeIcon.png'}
                 alt="인벨로프"
               />
-            </a>
-            <a href="https://www.facebook.com/?locale=ko_KR">
+            </Link>
+            <Link href={'https://www.facebook.com/?locale=ko_KR"'}>
               <Image
                 width={25}
                 height={25}
                 src={'/images/facebookIcon.png'}
                 alt="페이스북"
               />
-            </a>
-            <a href="https://www.instagram.com/">
+            </Link>
+            <Link href={'https://www.facebook.com/?locale=ko_KR"'}>
               <Image
                 width={25}
                 height={25}
                 src={'/images/instagramIcon.png'}
                 alt="인스타그램"
               />
-            </a>
+            </Link>
           </div>
         </div>
       </div>
