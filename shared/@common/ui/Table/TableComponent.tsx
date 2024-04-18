@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Table from '@/shared/@common/ui/Table/table';
+import Table from '@/shared/@common/ui/Table/Table';
 
 const TableComponent = () => {
   const []
