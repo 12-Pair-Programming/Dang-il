@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Image from 'next/image'
 
 interface InputProps {
   text?: string;
@@ -20,10 +21,10 @@ export const Input = ({
   countText,
 }: InputProps) => {
   const firstType = type;
-  const [inputType, setInpuType] = useState(type);
+  const [inputType, setInputType] = useState(type);
 
   const handleEye = () => {
-    setInpuType((prevType) => (prevType === 'password' ? 'text' : 'password'));
+    setInputType((prevType) => (prevType === 'password' ? 'text' : 'password'));
   };
 
   return (
@@ -41,17 +42,18 @@ export const Input = ({
             placeholder={placeholder}
           />
           {firstType === 'password' && (
-            <img
+            <Image
               className={`absolute top-1/2 right-4 transform -translate-y-1/2 w-4 h-4 flex-shrink-0`}
               src={
                 inputType === 'password'
                   ? 'Images/eye-off.svg'
                   : 'Images/eye-on.svg'
               }
+              alt={"눈 표시"}
               onClick={handleEye}
             />
           )}
-          {countText && (``
+          {countText && (
             <p className="h-[24px] absolute top-1/2 right-4 transform -translate-y-1/2 w-4  flex-shrink-0">
               {countText}
             </p>
@@ -62,4 +64,3 @@ export const Input = ({
     </>
   );
 };
-`
