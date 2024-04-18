@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Image from 'next/image'
+import Image from 'next/image';
 
 interface InputProps {
   text?: string;
@@ -9,6 +9,7 @@ interface InputProps {
   isError?: boolean;
   errorText?: string;
   countText?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Input = ({
@@ -19,6 +20,7 @@ export const Input = ({
   isError = false,
   errorText,
   countText,
+  onChange,
 }: InputProps) => {
   const firstType = type;
   const [inputType, setInputType] = useState(type);
@@ -40,6 +42,7 @@ export const Input = ({
             } bg-white items-start gap-2 self-stretch`}
             type={inputType}
             placeholder={placeholder}
+            onChange={onChange}
           />
           {firstType === 'password' && (
             <Image
@@ -51,7 +54,7 @@ export const Input = ({
                   ? 'images/eye-off.svg'
                   : 'images/eye-on.svg'
               }
-              alt={"눈 표시"}
+              alt={'눈 표시'}
               onClick={handleEye}
             />
           )}
