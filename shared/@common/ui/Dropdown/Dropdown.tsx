@@ -65,7 +65,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
           className={`absolute top-1/2 right-4 transform -translate-y-1/2 w-4 h-4 flex-shrink-0`}
           width={16}
           height={16}
-          src={!isOpen ? '/Images/dropdownDown.png' : '/Images/dropdownUp.png'}
+          src={!isOpen ? '/images/dropdownDown.png' : '/images/dropdownUp.png'}
           alt="드롭다운"
         />
         <button
