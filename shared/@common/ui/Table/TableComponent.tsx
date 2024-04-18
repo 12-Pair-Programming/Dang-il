@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import Table from '@/shared/Table/table';
+import Table from '@/shared/@common/ui/Table/table';
 
 const TableComponent = () => {
+  const []
+
 
   return (
     <>
-      <Table />
+      <Table id={id} userName={userName} date={date} hour={hour} hourlypay={hourlypay} statuses={statuses} />
     </>
   );
 };

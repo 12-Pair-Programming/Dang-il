@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Table from '@/shared/Table/table';
-import Button from '@/shared/Button/Button';
+import Table from '@/shared/@common/ui/Table/table';
+import Button from '@/shared/@common/ui/Button/Button';
 
 const TableComponent = () => {
 
