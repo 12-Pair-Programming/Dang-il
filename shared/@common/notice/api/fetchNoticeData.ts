@@ -1,4 +1,4 @@
-import API from '../utils/axiosInstance';
+import API from '@/shared/utils/axiosInstance';
 import { AxiosRequestConfig } from 'axios';
 
 export interface NoticeData extends AxiosRequestConfig {
