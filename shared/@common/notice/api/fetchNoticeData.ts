@@ -14,6 +14,7 @@ const fetchNoticeData = async () => {
   try {
     const responseData = await API.get('/notices');
     console.log(responseData);
+    return responseData;
   } catch (error) {
     console.error('Error fetching data:', error);
   }

@@ -40,14 +40,16 @@ const Pagination = ({
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   if (page % limit === 1) {
-  //     return setCurrentPageArray(totalPageArray[Math.floor(page / limit)]);
-  //   }
-  //   if (page % limit === 0) {
-  //     return setCurrentPageArray(totalPageArray[Math.floor(page / limit) - 1]);
-  //   }
-  // }, [page]);
+  useEffect(() => {
+    if (page % limit === 1) {
+      return setCurrentPageArray([totalPageArray[Math.floor(page / limit)]]);
+    }
+    if (page % limit === 0) {
+      return setCurrentPageArray([
+        totalPageArray[Math.floor(page / limit) - 1],
+      ]);
+    }
+  }, [page]);
 
   console.log(totalPageArray);
   console.log(currentPageArray);

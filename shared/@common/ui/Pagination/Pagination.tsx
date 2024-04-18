@@ -4,52 +4,54 @@ import FaAngleLeft from './FaAngleLeft';
 import FaAngleRight from './FaAngleRight';
 import ButtonWrapper from './ButtonWrapper';
 import PageButton from './PageButton';
-import fetchNoticeData from '../../notice/api/fetchNoticeData';
-import { NoticeData } from '../../notice/api/fetchNoticeData';
 
 interface PaginationProps {
   totalPage: number;
   limit: number;
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
-  data?: NoticeData[];
 }
 
-const Pagination = ({
-  totalPage,
-  limit,
-  page,
-  setPage,
-  data,
-}: PaginationProps) => {
+const Pagination = ({ totalPage, limit, page, setPage }: PaginationProps) => {
   const [currentPageArray, setCurrentPageArray] = useState<number[]>([]);
   const [totalPageArray, setTotalPageArray] = useState<number[]>([]);
-  const sliceArrayByLimit = (totalPageArray: number[], limit: number) => {
-    totalPageArray.slice(0, limit);
+
+  const sliceArrayByLimit = (totalPage: number, limit: number) => {
+    const totalPageArray = Array(totalPage)
+      .fill(0)
+      .map((_, i) => i);
+    return totalPageArray.slice(0, limit);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchNoticeData();
-        setPage(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
-  }, []);
+  console.log(sliceArrayByLimit(20, 7));
+
+  const getPageItems = (pageIndex: number, totalPage: number): number[] => {
+    const startNumber = pageIndex <= 1 ? pageIndex : (pageIndex - 1) * limit;
+    const lastNumber =
+      startNumber + (limit - 1) > totalPage
+        ? totalPage
+        : startNumber + limit - 1;
+    if (totalPage <= limit)
+      return Array.from({ length: totalPage }, (_, i) => i + 1);
+    return Array.from({ length: limit }, (_, i) => lastNumber - i).reverse();
+  };
 
   // useEffect(() => {
   //   if (page % limit === 1) {
-  //     return setCurrentPageArray(totalPageArray[Math.floor(page / limit)]);
-  //   }
-  //   if (page % limit === 0) {
-  //     return setCurrentPageArray(totalPageArray[Math.floor(page / limit) - 1]);
+  //     setCurrentPageArray([totalPageArray[Math.floor(page / limit)]]);
+  //   } else if (page % limit === 0) {
+  //     return setCurrentPageArray([
+  //       totalPageArray[Math.floor(page / limit) - 1],
+  //     ]);
   //   }
   // }, [page]);
 
-  console.log(totalPageArray);
+  // useEffect(() => {
+  //   const slicedPageArray = sliceArrayByLimit(totalPage, limit);
+  //   setTotalPageArray(slicedPageArray);
+  //   setCurrentPageArray(slicedPageArray[0]);
+  // }, [totalPage]);
+
   console.log(currentPageArray);
 
   return (
