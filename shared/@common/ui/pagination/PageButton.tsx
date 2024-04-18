@@ -4,8 +4,8 @@ const PageButton = ({
   children,
   onClick,
 }: {
-  children?: ReactNode;
-  onClick?: () => void;
+  children: ReactNode;
+  onClick: () => void;
 }) => {
   return (
     <button

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import API from '../utils/axiosInstance';
 import { AxiosRequestConfig } from 'axios';
 
