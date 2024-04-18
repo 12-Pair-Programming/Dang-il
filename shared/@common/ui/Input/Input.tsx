@@ -44,10 +44,12 @@ export const Input = ({
           {firstType === 'password' && (
             <Image
               className={`absolute top-1/2 right-4 transform -translate-y-1/2 w-4 h-4 flex-shrink-0`}
+              width={16}
+              height={16}
               src={
                 inputType === 'password'
-                  ? 'Images/eye-off.svg'
-                  : 'Images/eye-on.svg'
+                  ? 'images/eye-off.svg'
+                  : 'images/eye-on.svg'
               }
               alt={"눈 표시"}
               onClick={handleEye}
