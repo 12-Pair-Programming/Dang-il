@@ -16,41 +16,31 @@ const Pagination = ({ totalPage, limit, page, setPage }: PaginationProps) => {
   const [currentPageArray, setCurrentPageArray] = useState<number[]>([]);
   const [totalPageArray, setTotalPageArray] = useState<number[]>([]);
 
-  const sliceArrayByLimit = (totalPage: number, limit: number) => {
-    const totalPageArray = Array(totalPage)
-      .fill(0)
-      .map((_, i) => i);
-    return totalPageArray.slice(0, limit);
+  // const sliceArrayByLimit = (totalPage: number, limit: number) => {
+  //   const totalPageArray = Array(totalPage)
+  //     .fill(0)
+  //     .map((_, i) => i + 1);
+  //   return totalPageArray.slice(0, limit);
+  // };
+
+  const sliceArrayByLimit = (
+    totalPage: number,
+    limit: number,
+    currentPage: number,
+  ) => {
+    const start = Math.max(1, currentPage - Math.floor(limit / 2));
+    const end = Math.min(totalPage, start + limit - 1);
+    const slicedArray = Array.from(
+      { length: end - start + 1 },
+      (_, index) => start + index,
+    );
+    return slicedArray;
   };
 
-  console.log(sliceArrayByLimit(20, 7));
-
-  const getPageItems = (pageIndex: number, totalPage: number): number[] => {
-    const startNumber = pageIndex <= 1 ? pageIndex : (pageIndex - 1) * limit;
-    const lastNumber =
-      startNumber + (limit - 1) > totalPage
-        ? totalPage
-        : startNumber + limit - 1;
-    if (totalPage <= limit)
-      return Array.from({ length: totalPage }, (_, i) => i + 1);
-    return Array.from({ length: limit }, (_, i) => lastNumber - i).reverse();
-  };
-
-  // useEffect(() => {
-  //   if (page % limit === 1) {
-  //     setCurrentPageArray([totalPageArray[Math.floor(page / limit)]]);
-  //   } else if (page % limit === 0) {
-  //     return setCurrentPageArray([
-  //       totalPageArray[Math.floor(page / limit) - 1],
-  //     ]);
-  //   }
-  // }, [page]);
-
-  // useEffect(() => {
-  //   const slicedPageArray = sliceArrayByLimit(totalPage, limit);
-  //   setTotalPageArray(slicedPageArray);
-  //   setCurrentPageArray(slicedPageArray[0]);
-  // }, [totalPage]);
+  useEffect(() => {
+    const slicedPageArray = sliceArrayByLimit(totalPage, limit, page);
+    setCurrentPageArray(slicedPageArray);
+  }, [totalPage, limit, page]);
 
   console.log(currentPageArray);
 
@@ -61,11 +51,12 @@ const Pagination = ({ totalPage, limit, page, setPage }: PaginationProps) => {
         {currentPageArray.length > 0 &&
           currentPageArray?.map((i) => (
             <PageButton
-              key={i + 1}
-              onClick={() => setPage(i + 1)}
-              aria-current={page === i + 1 ? 'page' : null}
+              key={i}
+              onClick={() => setPage(i)}
+              autoFocus={true}
+              aria-current={page === i ? 'page' : undefined}
             >
-              {i + 1}
+              {i}
             </PageButton>
           ))}
         <FaAngleRight
