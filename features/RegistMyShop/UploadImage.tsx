@@ -3,7 +3,11 @@ import Image from 'next/image';
 
 import Add from '@/public/images/add-img.svg';
 
-const UploadImage: React.FC = () => {
+interface UploadImageProps {
+  onImageChange : (image: string | null ) => void;
+}
+
+const UploadImage: React.FC<UploadImageProps> = ({ onImageChange }) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -12,7 +16,9 @@ const UploadImage: React.FC = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setSelectedImage(reader.result as string);
+        const imageDataURL = reader.result as string;
+        setSelectedImage(imageDataURL);
+        onImageChange(imageDataURL);
       };
       reader.readAsDataURL(file);
     }
