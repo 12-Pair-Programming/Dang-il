@@ -9,18 +9,6 @@ interface PaginationProps {
   totalPage: number;
   limit: number;
 }
-/*
-1. FaAngleLeft:
-페이지 인덱스가 1일 때 disabled 된다.
-현재 페이지 인덱스가 11이고, limit가 10일 때 해당 버튼 클릭 시 1~10 리스트를 보여준다.
-
-2. FaAngleRight:
-현재 페이지 인덱스가 10이고, limit가 10일 때 해당 버튼 클릭 시 11~20 리스트를 보여준다.
-전체 페이지가 100이고, 현재 페이지 인덱스가 전체 페이지 - limit 보다 클 때 버튼이 disabled 된다.
-
-3. 페이지 버튼 클릭 시
-해당 페이지 버튼이 focus
-*/
 
 const Pagination = ({ totalPage, limit }: PaginationProps) => {
   const [currentPageArray, setCurrentPageArray] = useState<number[]>([]);
@@ -55,7 +43,7 @@ const Pagination = ({ totalPage, limit }: PaginationProps) => {
     const slicedPageArray = sliceArrayByLimit(totalPage, limit, currentPage);
     setCurrentPageArray(slicedPageArray);
   }, [totalPage]);
-  console.log(currentPageArray);
+
   return (
     <PaginationWrapper>
       <ButtonWrapper>
