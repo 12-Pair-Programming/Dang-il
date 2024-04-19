@@ -3,14 +3,14 @@ import React, { useEffect, useState } from "react";
 
 const Table: React.FC<{
   id: any,
-  name: string,
+  userName: string,
   date: number,
   hour: number,
   hourlypay: number,
   statuses: string,
   }> = ({ 
     id,
-    name,
+    userName,
     date,
     hour,
     hourlypay,
@@ -80,7 +80,7 @@ const Table: React.FC<{
         <tbody className="flex w-full h-full items-start bg-white">
           <tr className="flex w-full">
             <td className="flex w-[14rem] py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 ">
-              {name}
+              {userName}
             </td>
             <td className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 ">{date}, ({hour}시간)</td>
             <td className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 ">{hourlypay}</td>
