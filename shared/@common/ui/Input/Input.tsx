@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
-import Image from 'next/image'
+import Image from 'next/image';
 
 interface InputProps {
-  text?: string;
-  placeholder?: string;
+  title: string;
+  placeholder: string;
   type?: string;
   width?: string;
   isError?: boolean;
   errorText?: string;
   countText?: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Input = ({
-  text = '제목을 입력해주세요.',
+  title = '제목을 입력해주세요.',
   placeholder = '값을 입력해주세요.',
   type = 'text',
   width = '350px',
   isError = false,
   errorText,
   countText,
+  onChange,
 }: InputProps) => {
   const firstType = type;
   const [inputType, setInputType] = useState(type);
@@ -31,7 +33,7 @@ export const Input = ({
     <>
       <div className={`w-[${width}] flex flex-col items-start gap-2`}>
         <p className="text-black font-sans font-normal text-base leading-6">
-          {text}
+          {title}
         </p>
         <div className={`w-[${width}] relative`}>
           <input
@@ -40,6 +42,7 @@ export const Input = ({
             } bg-white items-start gap-2 self-stretch`}
             type={inputType}
             placeholder={placeholder}
+            onChange={onChange}
           />
           {firstType === 'password' && (
             <Image
@@ -51,7 +54,7 @@ export const Input = ({
                   ? 'images/eye-off.svg'
                   : 'images/eye-on.svg'
               }
-              alt={"눈 표시"}
+              alt={'눈 표시'}
               onClick={handleEye}
             />
           )}

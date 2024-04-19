@@ -5,7 +5,7 @@ interface ModalProps {
   modalType: string;
 }
 
-export const modalHook = ({ modalContent, modalType }: ModalProps) => {
+export const useModal = ({ modalContent, modalType }: ModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [type, setType] = useState(modalType);
   const [content, setContent] = useState(modalContent);
