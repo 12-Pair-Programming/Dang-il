@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import UploadImage from '@/features/RegistMyShop/UploadImage';
+import Button from '@/shared/@common/ui/Button/Button';
 
 const registMyShop = () => {
 
@@ -109,6 +110,13 @@ const registMyShop = () => {
                 <p className='text-base'>가게 이미지</p>
                 <UploadImage />
               </div>
+              <div className='w-full flex flex-col items-start gap-2'>
+                <p className='text-base'>가게 설명</p>
+                <input className='flex py-4 px-5 items-start self-stretch gap-[10px] min-h-[153px] border border-solid rounded-[5px] border-gray-30 bg-white' placeholder='입력' />
+              </div>
+              <Button size='large' color='colored' onClick={handleSubmit} disabled={true}>
+                등록하기
+              </Button>
             </div>
           </div>
         </div>
