@@ -53,7 +53,7 @@ const Pagination = ({ totalPage, limit, page, setPage }: PaginationProps) => {
             <PageButton
               key={i}
               onClick={() => setPage(i)}
-              autoFocus={true}
+              isActive={page === i}
               aria-current={page === i ? 'page' : undefined}
             >
               {i}

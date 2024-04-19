@@ -4,11 +4,11 @@ import { ReactNode } from 'react';
 const PageButton = ({
   children,
   onClick,
-  autoFocus,
+  isActive,
 }: {
   children: ReactNode;
   onClick: () => void;
-  autoFocus: boolean;
+  isActive: boolean;
 }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -19,9 +19,10 @@ const PageButton = ({
   return (
     <button
       ref={buttonRef}
-      className="bg-white focus:bg-purple-30 text-black focus:text-white rounded flex flex-col justify-center items-center gap-[10px] shrink-0 w-[40px] h-[40px] p-[12px]"
+      className={`${
+        isActive ? 'bg-purple-30 text-white' : 'bg-white text-black'
+      }  rounded flex flex-col justify-center items-center gap-[10px] shrink-0 w-10 h-10 p-3}`}
       onClick={handleClick}
-      tabIndex={autoFocus ? 0 : -1}
     >
       {children}
     </button>
