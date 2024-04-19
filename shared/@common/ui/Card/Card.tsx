@@ -22,21 +22,17 @@ interface ProductProps {
   @param originalHourlyPay 가게 기존 시급
   @param closed 공고 오픈여부
  */
-const Card = (props: ProductProps) => {
-  // TODO workingHours 및 컴포넌트 파일 분리 필요
-
-  const closed = props.closed;
-  const originalHourlyPay = `${props.originalHourlyPay.toLocaleString()}원`;
-  const payPercentage =
-    Math.round((props.hourlyPay / props.originalHourlyPay) * 100 * 100) / 100;
-
-  const startsAt: Date = new Date(props.startsAt);
-  const workhour: number = props.workhour;
-  const endDateTime: Date = new Date(
-    startsAt.getTime() + workhour * 60 * 60 * 1000,
-  );
-
-  const workingHours = () => {
+const Card = ({
+  name,
+  imageUrl,
+  address1,
+  startsAt,
+  workhour,
+  hourlyPay,
+  originalHourlyPay,
+  closed,
+}: ProductProps) => {
+  const getBusinessHoursString = () => {
     if (formattedStart.slice(0, 10) === formattedEnd.slice(0, 10)) {
       return `${formattedStart}~${formattedEnd.slice(
         11,
@@ -47,25 +43,30 @@ const Card = (props: ProductProps) => {
     }
   };
 
-  const stringToDate = (startsAt: Date) => {
-    const year = startsAt.getUTCFullYear();
-    const month = String(startsAt.getUTCMonth() + 1).padStart(2, '0');
-    const day = String(startsAt.getUTCDate()).padStart(2, '0');
-    const hours = String(startsAt.getUTCHours()).padStart(2, '0');
-    const minutes = String(startsAt.getUTCMinutes()).padStart(2, '0');
+  const startDateTime: Date = new Date(startsAt);
+  const endDateTime: Date = new Date(
+    startDateTime.getTime() + workhour * 60 * 60 * 1000,
+  );
+
+  const stringToDate = (startDateTime: Date) => {
+    const year = startDateTime.getUTCFullYear();
+    const month = String(startDateTime.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(startDateTime.getUTCDate()).padStart(2, '0');
+    const hours = String(startDateTime.getUTCHours()).padStart(2, '0');
+    const minutes = String(startDateTime.getUTCMinutes()).padStart(2, '0');
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   };
 
-  const formattedStart: string = stringToDate(startsAt);
+  const formattedStart: string = stringToDate(startDateTime);
   const formattedEnd: string = stringToDate(endDateTime);
+
+  const originalHourlyPayToString = `${originalHourlyPay.toLocaleString()}원`;
+  const payPercentage = Math.ceil((hourlyPay / originalHourlyPay) * 100);
 
   return (
     <div className="bg-white rounded-2xl w-[312px] h-auto p-[16px]">
       <div className="flex justify-center items-center relative w-[280px] h-[180px]">
-        <img
-          className="rounded-2xl bg-cover w-full h-full"
-          src={props.imageUrl}
-        />
+        <img className="rounded-2xl bg-cover w-full h-full" src={imageUrl} />
 
         {closed && (
           <>
@@ -83,7 +84,7 @@ const Card = (props: ProductProps) => {
             closed ? 'text-gray-20' : 'text-black'
           } font-bold text-xl`}
         >
-          {props.name}
+          {name}
         </p>
         <div className="flex flex-row my-2">
           <Image
@@ -97,7 +98,7 @@ const Card = (props: ProductProps) => {
               closed ? 'text-gray-20' : 'text-black'
             } text-sm ml-[6px]`}
           >
-            {workingHours()}
+            {getBusinessHoursString()}
           </p>
         </div>
         <div className="flex flex-row">
@@ -112,7 +113,7 @@ const Card = (props: ProductProps) => {
               closed ? 'text-gray-20' : 'text-black'
             } text-sm ml-[6px]`}
           >
-            {props.address1}
+            {address1}
           </p>
         </div>
         <div className="flex felx-row justify-between items-center mt-4">
@@ -121,7 +122,7 @@ const Card = (props: ProductProps) => {
               closed ? 'text-gray-20' : 'text-black'
             } font-bold text-[24px]`}
           >
-            {originalHourlyPay}
+            {originalHourlyPayToString}
           </p>
           <div
             className={`${
