@@ -1,10 +1,10 @@
-import TestPage from '@/features/RegistMyShop/UploadImage';
 import close from '@/public/images/close.svg';
 import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
 import { Input } from '@/shared/@common/ui/input/Input';
 import { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import UploadImage from '@/features/RegistMyShop/UploadImage';
 
 const registMyShop = () => {
 
@@ -105,8 +105,9 @@ const registMyShop = () => {
                   <Input text='상세 주소*' placeholder='입력' />
                 </div>
               </div>
-              <div className='flex items-start gap-5 mb-6'>
-                <TestPage />
+              <div className='flex flex-col items-start gap-5 mb-6'>
+                <p className='text-base'>가게 이미지</p>
+                <UploadImage />
               </div>
             </div>
           </div>
