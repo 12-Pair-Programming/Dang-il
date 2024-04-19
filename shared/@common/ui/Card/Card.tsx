@@ -88,7 +88,7 @@ const Card = (props: ProductProps) => {
         <div className="flex flex-row my-2">
           <Image
             src={`/images/icon-clock-${closed ? 'off' : 'on'}.svg`}
-            alt=""
+            alt="clock icon"
             width={20}
             height={20}
           />
@@ -103,7 +103,7 @@ const Card = (props: ProductProps) => {
         <div className="flex flex-row">
           <Image
             src={`/images/icon-location-${closed ? 'off' : 'on'}.svg`}
-            alt=""
+            alt="location icon"
             width={20}
             height={20}
           />
@@ -133,7 +133,7 @@ const Card = (props: ProductProps) => {
             </p>
             <Image
               src="/images/icon-upArrow.svg"
-              alt=""
+              alt="upArrow icon"
               width={20}
               height={20}
             />
