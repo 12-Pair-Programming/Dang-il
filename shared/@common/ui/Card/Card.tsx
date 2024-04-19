@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import businessHoursString from './businessHoursString';
+import dateToString from './dateToString';
 
 interface ProductProps {
   name: string; //가게명
@@ -32,33 +34,19 @@ const Card = ({
   originalHourlyPay,
   closed,
 }: ProductProps) => {
-  const getBusinessHoursString = () => {
-    if (formattedStart.slice(0, 10) === formattedEnd.slice(0, 10)) {
-      return `${formattedStart}~${formattedEnd.slice(
-        11,
-        18,
-      )} (${workhour}시간)`;
-    } else {
-      return `${formattedStart}~${formattedEnd.slice(5)} (${workhour}시간)`;
-    }
-  };
-
   const startDateTime: Date = new Date(startsAt);
   const endDateTime: Date = new Date(
     startDateTime.getTime() + workhour * 60 * 60 * 1000,
   );
 
-  const stringToDate = (startDateTime: Date) => {
-    const year = startDateTime.getUTCFullYear();
-    const month = String(startDateTime.getUTCMonth() + 1).padStart(2, '0');
-    const day = String(startDateTime.getUTCDate()).padStart(2, '0');
-    const hours = String(startDateTime.getUTCHours()).padStart(2, '0');
-    const minutes = String(startDateTime.getUTCMinutes()).padStart(2, '0');
-    return `${year}-${month}-${day} ${hours}:${minutes}`;
-  };
+  const formattedStart: string = dateToString(startDateTime);
+  const formattedEnd: string = dateToString(endDateTime);
 
-  const formattedStart: string = stringToDate(startDateTime);
-  const formattedEnd: string = stringToDate(endDateTime);
+  const businessHours = businessHoursString(
+    formattedStart,
+    formattedEnd,
+    workhour,
+  );
 
   const originalHourlyPayToString = `${originalHourlyPay.toLocaleString()}원`;
   const payPercentage = Math.ceil((hourlyPay / originalHourlyPay) * 100);
@@ -98,7 +86,7 @@ const Card = ({
               closed ? 'text-gray-20' : 'text-black'
             } text-sm ml-[6px]`}
           >
-            {getBusinessHoursString()}
+            {businessHours}
           </p>
         </div>
         <div className="flex flex-row">
