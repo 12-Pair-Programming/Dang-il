@@ -30,10 +30,6 @@ const Table: React.FC<{
   const [buttonVisible, setButtonVisible] = useState(true);
   const [status, setStatus] = useState('');
 
-  
-
-  
-
   const handleChangingStatus = (buttons : string) => {
     if(buttons === 'approve'){
       setStatus('승인 완료');

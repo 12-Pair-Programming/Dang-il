@@ -12,15 +12,15 @@ const myShopInfo = () => {
   }
 
   const [size, setSize] = useState('large');
-  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+  const isMobile = useMediaQuery({ query: '(min-width: 768px)' });
 
   useEffect(() => {
     if (isMobile) {
-      setSize('small');
-    } else {
       setSize('large');
+    } else {
+      setSize('small');
     }
-  }, []);
+  }, [isMobile]);
 
 
 
@@ -38,10 +38,6 @@ const myShopInfo = () => {
     </>
   );
 };
-
-/*
-  현재 Button이 반응형 동작할 때 mobile에서 size가 small로 변경되어야 하는데, 해결하지 못함. 주강사님께 여쭤보기로 함
-*/
 
 export default myShopInfo;
 
