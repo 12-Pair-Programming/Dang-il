@@ -8,13 +8,12 @@ import PageButton from './PageButton';
 interface PaginationProps {
   totalPage: number;
   limit: number;
-  page: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Pagination = ({ totalPage, limit, page, setPage }: PaginationProps) => {
+const Pagination = ({ totalPage, limit }: PaginationProps) => {
   const [currentPageArray, setCurrentPageArray] = useState<number[]>([]);
   const [totalPageArray, setTotalPageArray] = useState<number[]>([]);
+  const [page, setPage] = useState<number>(1);
 
   // const sliceArrayByLimit = (totalPage: number, limit: number) => {
   //   const totalPageArray = Array(totalPage)
