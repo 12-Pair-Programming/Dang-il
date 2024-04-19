@@ -3,11 +3,18 @@ import close from '@/public/images/close.svg';
 import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
 import { Input } from '@/shared/@common/ui/input/Input';
 import { useState } from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 const registMyShop = () => {
 
+  const router = useRouter();
   const [foodKinds, setFoodKinds] = useState('');
   const [location, setLocation] = useState('');
+
+  const handleClose = () => {
+    router.push('/myShopInfo');
+  }
 
   const handleSelectLocations = (option: string) => {
     setLocation(option);
@@ -65,9 +72,11 @@ const registMyShop = () => {
       <div className="flex w-full py-[60px] px-[238px] flex-col items-start gap-2 bg-gray-05">
         <div className="flex w-full flex-col items-center gap-8">
           <div className="flex flex-col items-start gap-8">
-            <div className="flex w-full content-between items-center">
+            <div className="flex w-full justify-between items-center">
               <p className='text-black text-[28px] font-bold'>가게 정보</p>
-              <img src={close} />
+              <button onClick={handleClose}>
+                <Image src={close} alt='닫기 버튼' />
+              </button>
             </div>
             <div>
               <div className='flex items-start gap-5 mb-6'>
