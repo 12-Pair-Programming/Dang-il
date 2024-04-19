@@ -4,7 +4,7 @@ interface InputHookProps {
   inputValue: string | number | Date;
 }
 
-export const inputHook = ({ inputValue }: InputHookProps) => {
+export const useInput = ({ inputValue }: InputHookProps) => {
   const [value, setValue] = useState(inputValue);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
