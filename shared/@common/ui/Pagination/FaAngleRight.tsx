@@ -17,6 +17,7 @@ const FaAngleRight = ({ onClick, disabled }: FaAngleRightProps) => {
         src="/images/rightChevron.svg"
         width={20}
         height={20}
+        onClick={onClick}
         alt="다음 페이지 이동 아이콘"
       />
     </div>

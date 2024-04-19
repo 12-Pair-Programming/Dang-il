@@ -9,58 +9,74 @@ interface PaginationProps {
   totalPage: number;
   limit: number;
 }
+/*
+1. FaAngleLeft:
+페이지 인덱스가 1일 때 disabled 된다.
+현재 페이지 인덱스가 11이고, limit가 10일 때 해당 버튼 클릭 시 1~10 리스트를 보여준다.
+
+2. FaAngleRight:
+현재 페이지 인덱스가 10이고, limit가 10일 때 해당 버튼 클릭 시 11~20 리스트를 보여준다.
+전체 페이지가 100이고, 현재 페이지 인덱스가 전체 페이지 - limit 보다 클 때 버튼이 disabled 된다.
+
+3. 페이지 버튼 클릭 시
+해당 페이지 버튼이 focus
+*/
 
 const Pagination = ({ totalPage, limit }: PaginationProps) => {
   const [currentPageArray, setCurrentPageArray] = useState<number[]>([]);
-  const [totalPageArray, setTotalPageArray] = useState<number[]>([]);
-  const [page, setPage] = useState<number>(1);
-
-  // const sliceArrayByLimit = (totalPage: number, limit: number) => {
-  //   const totalPageArray = Array(totalPage)
-  //     .fill(0)
-  //     .map((_, i) => i + 1);
-  //   return totalPageArray.slice(0, limit);
-  // };
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const sliceArrayByLimit = (
     totalPage: number,
     limit: number,
     currentPage: number,
   ) => {
-    const start = Math.max(1, currentPage - Math.floor(limit / 2));
+    const start = Math.max(1, currentPage - limit + 1);
     const end = Math.min(totalPage, start + limit - 1);
-    const slicedArray = Array.from(
-      { length: end - start + 1 },
-      (_, index) => start + index,
+    return Array.from({ length: totalPage }, (_, i) => i + 1).slice(
+      start - 1,
+      end,
     );
-    return slicedArray;
+  };
+
+  const handlePrevClick = () => {
+    const newCurrentPage = Math.max(1, currentPage - limit);
+    setCurrentPage(newCurrentPage);
+    setCurrentPageArray(sliceArrayByLimit(totalPage, limit, newCurrentPage));
+  };
+
+  const handleNextClick = () => {
+    const newCurrentPage = Math.min(totalPage, currentPage + limit);
+    setCurrentPage(newCurrentPage);
+    setCurrentPageArray(sliceArrayByLimit(totalPage, limit, newCurrentPage));
   };
 
   useEffect(() => {
-    const slicedPageArray = sliceArrayByLimit(totalPage, limit, page);
+    const slicedPageArray = sliceArrayByLimit(totalPage, limit, currentPage);
     setCurrentPageArray(slicedPageArray);
-  }, [totalPage, limit, page]);
-
+  }, [totalPage]);
   console.log(currentPageArray);
-
   return (
     <PaginationWrapper>
       <ButtonWrapper>
-        <FaAngleLeft onClick={() => setPage(page - 1)} disabled={page === 1} />
+        <FaAngleLeft
+          onClick={handlePrevClick}
+          disabled={currentPage === 1 || currentPage !== currentPageArray[0]}
+        />
         {currentPageArray.length > 0 &&
           currentPageArray?.map((i) => (
             <PageButton
               key={i}
-              onClick={() => setPage(i)}
-              isActive={page === i}
-              aria-current={page === i ? 'page' : undefined}
+              onClick={() => setCurrentPage(i)}
+              isActive={currentPage === i}
+              aria-current={currentPage === i ? 'page' : undefined}
             >
               {i}
             </PageButton>
           ))}
         <FaAngleRight
-          onClick={() => setPage(page + 1)}
-          disabled={page === totalPage}
+          onClick={handleNextClick}
+          disabled={currentPage === totalPage || currentPage % limit !== 0}
         />
       </ButtonWrapper>
     </PaginationWrapper>
