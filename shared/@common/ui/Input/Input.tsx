@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 
 interface InputProps {
-  text?: string;
-  placeholder?: string;
+  title: string;
+  placeholder: string;
   type?: string;
   width?: string;
   isError?: boolean;
   errorText?: string;
   countText?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Input = ({
-  text = '제목을 입력해주세요.',
+  title = '제목을 입력해주세요.',
   placeholder = '값을 입력해주세요.',
   type = 'text',
   width = '350px',
@@ -33,7 +33,7 @@ export const Input = ({
     <>
       <div className={`w-[${width}] flex flex-col items-start gap-2`}>
         <p className="text-black font-sans font-normal text-base leading-6">
-          {text}
+          {title}
         </p>
         <div className={`w-[${width}] relative`}>
           <input
