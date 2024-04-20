@@ -1,31 +1,33 @@
 import React from 'react';
-import Image from 'next/image';
 import Button from '@/shared/@common/ui/Button/Button';
 import PaginationBar from '@/pages/test/paginationBar';
+import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
 
 const FullNotice = () => {
   const handleClick = () => {
     () => {};
   };
+  const options = [
+    { value: '마감임박순', label: '마감임박순' },
+    { value: '시급많은순', label: '시급많은순' },
+    { value: '시간적은순', label: '시간적은순' },
+    { value: '가나다순', label: '가나다순' },
+  ];
+
+  const handleSelectOption = () => {};
+
   return (
     <div className="flex w-[1440px] py-[60px] px-[238px] flex-col items-start bg-white tracking-wide">
       <div className="flex flex-col gap-10">
         <div className="flex justify-between">
           <label className="text-[28px] font-bold">맞춤 공고</label>
           <div className="flex gap-3">
-            <Button
-              size="small"
-              color="none"
-              onClick={handleClick}
-              content="마감임박순"
-            >
-              {/* <Image
-                src="/images/poligon.svg"
-                alt="아래 화살표 아이콘"
-                width={10}
-                height={10}
-              /> */}
-            </Button>
+            <Dropdown
+              title={''}
+              options={options}
+              onSelect={handleSelectOption}
+              defaultValue="마감임박순"
+            />
             <Button
               size="small"
               color="colored"
