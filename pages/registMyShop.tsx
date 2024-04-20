@@ -5,7 +5,6 @@ import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
 import { Input } from '@/shared/@common/ui/Input/Input';
 import UploadImage from '@/features/RegistMyShop/UploadImage';
 import Button from '@/shared/@common/ui/Button/Button';
-import close from '@/public/images/close.svg';
 import { Footer } from '@/shared/@common/ui/Footer/Footer';
 
 const registMyShop = () => {
@@ -104,7 +103,7 @@ const registMyShop = () => {
             <div className="flex w-full justify-between items-center">
               <p className='text-black text-[28px] font-bold'>가게 정보</p>
               <button onClick={handleClose}>
-                <Image src={close} alt='닫기 버튼' />
+                <Image src={`/images/close.svg`} alt='닫기 버튼' width={32} height={32} />
               </button>
             </div>
             <form onSubmit={handleSubmit}>
