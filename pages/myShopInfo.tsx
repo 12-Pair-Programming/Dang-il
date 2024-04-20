@@ -1,7 +1,7 @@
-import { useMediaQuery } from "react-responsive";
-import Button from "@/shared/@common/ui/Button/Button";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
+import { useRouter } from "next/router";
+import Button from "@/shared/@common/ui/Button/Button";
 
 const myShopInfo = () => {
   const router = useRouter();
