@@ -6,6 +6,7 @@ import { Input } from '@/shared/@common/ui/input/Input';
 import UploadImage from '@/features/RegistMyShop/UploadImage';
 import Button from '@/shared/@common/ui/Button/Button';
 import close from '@/public/images/close.svg';
+import { Footer } from '@/shared/@common/ui/Footer/Footer';
 
 const registMyShop = () => {
 
@@ -111,7 +112,7 @@ const registMyShop = () => {
                 <div className='flex flex-col items-start gap-2 flex-shrink-0'>
                   <Input title='가게 이름*' placeholder='입력' value={title} onChange={(event) => setTitle(event.target.value)}/>
                 </div>
-                <div className='flex flex-col items-start gap-2 flex-shrink-0'>
+                <div className='flex flex-col items-start gap-2 flex-shrink-0 text-black'>
                   <Dropdown 
                     title={'분류*'}
                     options={kinds}
@@ -121,7 +122,7 @@ const registMyShop = () => {
                 </div>
               </div>
               <div className='flex items-start gap-5 mb-6'>
-                <div className='flex flex-col items-start gap-2 flex-shrink-0'>
+                <div className='flex flex-col items-start gap-2 flex-shrink-0 text-black'>
                   <Dropdown
                     title={'주소*'}
                     options={locations}
@@ -145,13 +146,17 @@ const registMyShop = () => {
                   value={description} 
                   onChange={handleDescriptionChange} />
               </div>
-              <Button size='large' color='colored' onClick={handleTotalSubmit}>
-                등록하기
-              </Button>
+              <div className='flex mt-8 justify-center'>
+                <Button size='large' color='colored' onClick={handleTotalSubmit}>
+                  등록하기
+                </Button>
+              </div>
+
             </form>
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
