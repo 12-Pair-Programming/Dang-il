@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Pagination from '../../shared/@common/ui/Pagination/Pagination';
-import PageButton from '@/shared/@common/ui/Pagination/PageButton';
 
 const PaginationBar = () => {
   const [page, setPage] = useState(0);

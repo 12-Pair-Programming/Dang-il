@@ -8,53 +8,63 @@ import PageButton from './PageButton';
 interface PaginationProps {
   totalPage: number;
   limit: number;
-  page: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Pagination = ({ totalPage, limit, page, setPage }: PaginationProps) => {
-  const [currentPageArray, setCurrentPageArray] = useState([]);
-  const [totalPageArray, setTotalPageArray] = useState([]);
+const Pagination = ({ totalPage, limit }: PaginationProps) => {
+  const [currentPageArray, setCurrentPageArray] = useState<number[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
   const sliceArrayByLimit = (
-    totalPageArray: string | number[],
+    totalPage: number,
     limit: number,
+    currentPage: number,
   ) => {
-    totalPageArray.slice(0, limit);
+    const start = Math.max(1, currentPage - limit + 1);
+    const end = Math.min(totalPage, start + limit - 1);
+    return Array.from({ length: totalPage }, (_, i) => i + 1).slice(
+      start - 1,
+      end,
+    );
+  };
+
+  const handlePrevClick = () => {
+    const newCurrentPage = Math.max(1, currentPage - limit);
+    setCurrentPage(newCurrentPage);
+    setCurrentPageArray(sliceArrayByLimit(totalPage, limit, newCurrentPage));
+  };
+
+  const handleNextClick = () => {
+    const newCurrentPage = Math.min(totalPage, currentPage + limit);
+    setCurrentPage(newCurrentPage);
+    setCurrentPageArray(sliceArrayByLimit(totalPage, limit, newCurrentPage));
   };
 
   useEffect(() => {
-    if (page % limit === 1) {
-      return setCurrentPageArray(totalPageArray[Math.floor(page / limit)]);
-    }
-    if (page % limit === 0) {
-      return setCurrentPageArray(totalPageArray[Math.floor(page / limit) - 1]);
-    }
-  }, [page]);
+    const slicedPageArray = sliceArrayByLimit(totalPage, limit, currentPage);
+    setCurrentPageArray(slicedPageArray);
+  }, [totalPage]);
 
   return (
     <PaginationWrapper>
       <ButtonWrapper>
-        <FaAngleLeft onClick={() => setPage(page - 1)} disabled={page === 1} />
-        {/* {currentPageArray?.map((i) => (
-          <PageButton
-            key={i + 1}
-            onClick={() => setPage(i + 1)}
-            aria-current={page === i + 1 ? 'page' : null}
-          >
-            {i + 1}
-          </PageButton>
-        ))} */}
-        <PageButton>1</PageButton>
-        <PageButton>2</PageButton>
-        <PageButton>3</PageButton>
-        <PageButton>4</PageButton>
-        <PageButton>5</PageButton>
-        <PageButton>6</PageButton>
-        <PageButton>7</PageButton>
-        <PageButton>8</PageButton>
+        <FaAngleLeft
+          onClick={handlePrevClick}
+          disabled={currentPage === 1 || currentPage !== currentPageArray[0]}
+        />
+        {currentPageArray.length > 0 &&
+          currentPageArray?.map((i) => (
+            <PageButton
+              key={i}
+              onClick={() => setCurrentPage(i)}
+              isActive={currentPage === i}
+              aria-current={currentPage === i ? 'page' : undefined}
+            >
+              {i}
+            </PageButton>
+          ))}
         <FaAngleRight
-          onClick={() => setPage(page + 1)}
-          disabled={page === totalPage}
+          onClick={handleNextClick}
+          disabled={currentPage === totalPage || currentPage % limit !== 0}
         />
       </ButtonWrapper>
     </PaginationWrapper>

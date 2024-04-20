@@ -1,8 +1,8 @@
-import { ReactNode } from 'react';
+import { PropsWithChildren } from 'react';
 
-const PaginationWrapper = ({ children }: { children: ReactNode }) => {
+const PaginationWrapper = ({ children }: PropsWithChildren) => {
   return (
-    <div className="flex justify-center items-center w-[964px] h-[64px] bg-white p-100%">
+    <div className="flex justify-center items-center w-241 h-16 bg-white p-100%">
       {children}
     </div>
   );
