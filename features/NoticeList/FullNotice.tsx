@@ -27,6 +27,7 @@ const FullNotice = () => {
               options={options}
               onSelect={handleSelectOption}
               defaultValue="마감임박순"
+              className="flex h-[30px] p-3 items-center gap-[6px] rounded-[5px]"
             />
             <Button
               size="small"
