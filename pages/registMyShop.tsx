@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
-import { Input } from '@/shared/@common/ui/input/Input';
+import { Input } from '@/shared/@common/ui/Input/Input';
 import UploadImage from '@/features/RegistMyShop/UploadImage';
 import Button from '@/shared/@common/ui/Button/Button';
 import close from '@/public/images/close.svg';
