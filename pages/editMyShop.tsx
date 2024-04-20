@@ -55,7 +55,7 @@ const editMyShop = () => {
     console.log(address);
     console.log(shopImage);
     console.log(description);
-    alert('등록이 완료되었습니다');
+    alert('수정이 완료되었습니다');
     router.push('/myShopInfo');
   };
 
