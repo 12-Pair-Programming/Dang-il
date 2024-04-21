@@ -7,7 +7,7 @@ interface FetchResponse<T> {
   execute: () => void;
 }
 
-export const useFetch = <T>(
+const useFetch = <T>(
   fetchFunction: () => Promise<{ data: T }>,
 ): FetchResponse<T> => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -39,3 +39,5 @@ export const useFetch = <T>(
   useEffectOnce(execute);
   return { execute, loading, error, data };
 };
+
+export default useFetch;
