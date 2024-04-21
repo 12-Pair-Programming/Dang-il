@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { Input } from '@/shared/@common/ui/Input/Input';
 import Button from '@/shared/@common/ui/Button/Button';
 
 const DetailFilter = () => {
+  const [clickedItem, setClickItem] = useState('');
+  const [hashtag, setHashtag] = useState([]);
+
+  const handleClickItem = (item: string) => {
+    setClickItem(item);
+    setHashtag((prevHashtags) => [...prevHashtags, `${item}`]);
+  };
+
   return (
     <div className="flex w-[390px] px-6 py-5 flex-col items-start gap-6 bg-white absolute right-[238px] bottom-[150px] rounded-[10px]">
       <div className="flex justify-between items-center self-stretch">
@@ -19,14 +27,64 @@ const DetailFilter = () => {
         <div className="flex flex-col items-start gap-3">
           <p>위치</p>
           <div className="w-[350px] h-[258px] rounded-[6px] border border-gray-200"></div>
-          <div></div>
+          <div className="flex flex-col items-start gap-2">
+            <div className="flex items-center gap-2">
+              <div className="flex px-[6px] py-[10px] justify-center items-center gap-1 rounded-[20px] bg-purple-10">
+                <p className="text-primary font-bold">
+                  {hashtag.join('')}서울시 강남구
+                </p>
+                <Image
+                  src="/images/purpleClose.png"
+                  alt="창 닫기 아이콘"
+                  height={24}
+                  width={24}
+                />
+              </div>
+              <div className="flex px-[6px] py-[10px] justify-center items-center gap-1 rounded-[20px] bg-purple-10">
+                <p className="text-primary font-bold">
+                  {hashtag.join('')}서울시 광진구
+                </p>
+                <Image
+                  src="/images/purpleClose.png"
+                  alt="창 닫기 아이콘"
+                  height={24}
+                  width={24}
+                />
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="flex px-[6px] py-[10px] justify-center items-center gap-1 rounded-[20px] bg-purple-10">
+                <p className="text-primary font-bold">
+                  {hashtag.join('')}서울시 강동구
+                </p>
+                <Image
+                  src="/images/purpleClose.png"
+                  alt="창 닫기 아이콘"
+                  height={24}
+                  width={24}
+                />
+              </div>
+              <div className="flex px-[6px] py-[10px] justify-center items-center gap-1 rounded-[20px] bg-purple-10">
+                <p className="text-primary font-bold">
+                  {hashtag.join('')}서울시 동대문구
+                </p>
+                <Image
+                  src="/images/purpleClose.png"
+                  alt="창 닫기 아이콘"
+                  height={24}
+                  width={24}
+                />
+              </div>
+            </div>
+          </div>
         </div>
         <div className="flex w-[350px] flex-col items-start gap-6">
-          <hr className="h-[2px] self-stretch bg-gray-10" />
+          <hr className="h-[2px] self-stretch bg-gray-10 mt-6" />
           <Input title="시작일" />
           <hr className="h-[2px] self-stretch bg-gray-10" />
           <Input title="금액" />
         </div>
+        {hashtag.join('')}
       </div>
       <div className="flex gap-2">
         <Button
