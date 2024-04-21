@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@/shared/@common/ui/Button/Button';
 import PaginationBar from '@/pages/test/paginationBar';
 import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
+import Card from '@/shared/@common/ui/Card/Card';
+import DetailFilter from './DetailFilter';
 
 const FullNotice = () => {
+  const [showDetailFilter, setShowDetailFilter] = useState(false);
   const handleClick = () => {
-    () => {};
+    setShowDetailFilter(true);
   };
   const options = [
     { value: '마감임박순', label: '마감임박순' },
@@ -20,7 +23,7 @@ const FullNotice = () => {
     <div className="flex w-[1440px] py-[60px] px-[238px] flex-col items-start bg-white tracking-wide">
       <div className="flex flex-col gap-10">
         <div className="flex justify-between">
-          <label className="text-[28px] font-bold">맞춤 공고</label>
+          <p className="text-[28px] font-bold">전체 공고</p>
           <div className="flex gap-3">
             <Dropdown
               title={''}
@@ -34,7 +37,9 @@ const FullNotice = () => {
               color="colored"
               onClick={handleClick}
               content="상세 필터"
-            ></Button>
+            >
+              {showDetailFilter && <DetailFilter />}
+            </Button>
           </div>
         </div>
         <div className="grid grid-cols-3 grid-rows-2 gap-4">
