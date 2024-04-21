@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Input } from '@/shared/@common/ui/Input/Input';
 import Button from '@/shared/@common/ui/Button/Button';
+import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
 
 const DetailFilter = () => {
   // 해시태그 기능 구현 중입니다.
   const [clickedItem, setClickItem] = useState('');
-  const [hashtag, setHashtag] = useState([]);
+  const [hashtag, setHashtag] = useState<string[]>([]);
 
   const handleClickItem = (item: string) => {
     setClickItem(item);
-    setHashtag((prevHashtags) => [...prevHashtags, `${item}`]);
+    setHashtag((prevHashtags) => [...prevHashtags, item]);
   };
+
+  const { data } = useGetNoticeData();
 
   return (
     <div className="flex w-[390px] px-6 py-5 flex-col items-start gap-6 bg-white absolute right-[238px] bottom-[150px] rounded-[10px]">
@@ -27,57 +30,70 @@ const DetailFilter = () => {
       <div>
         <div className="flex flex-col items-start gap-3">
           <p>위치</p>
-          <div className="w-[350px] h-[258px] rounded-[6px] border border-gray-200"></div>
-          <div className="flex flex-col items-start gap-2">
-            <div className="flex items-center gap-2">
-              <div className="flex px-[6px] py-[10px] justify-center items-center gap-1 rounded-[20px] bg-purple-10">
-                <p className="text-primary font-bold">
-                  {hashtag.join('')}서울시 강남구
-                </p>
-                <Image
-                  src="/images/purpleClose.png"
-                  alt="창 닫기 아이콘"
-                  height={24}
-                  width={24}
-                />
+          <>
+            <div className="flex flex-col gap-5 items-start flex-wrap p-6 flex-start w-[350px] h-[258px] rounded-[6px] border border-gray-200">
+              {data &&
+                data.items.length > 0 &&
+                data.items
+                  .map((item) => item.item.shop.item.address1)
+                  .reduce(
+                    (acc, value) =>
+                      acc.includes(value) ? acc : [...acc, value],
+                    [],
+                  )
+                  .map((address1) => <button>{address1}</button>)}
+            </div>
+            <div className="flex flex-col items-start gap-2">
+              <div className="flex items-center gap-2">
+                <div className="flex px-[6px] py-[10px] justify-center items-center gap-1 rounded-[20px] bg-purple-10">
+                  <p className="text-primary font-bold">
+                    {hashtag.join('')}서울시 강남구
+                  </p>
+                  <Image
+                    src="/images/purpleClose.png"
+                    alt="창 닫기 아이콘"
+                    height={24}
+                    width={24}
+                  />
+                </div>
+                <div className="flex px-[6px] py-[10px] justify-center items-center gap-1 rounded-[20px] bg-purple-10">
+                  <p className="text-primary font-bold">
+                    {hashtag.join('')}서울시 광진구
+                  </p>
+                  <Image
+                    src="/images/purpleClose.png"
+                    alt="창 닫기 아이콘"
+                    height={24}
+                    width={24}
+                  />
+                </div>
               </div>
-              <div className="flex px-[6px] py-[10px] justify-center items-center gap-1 rounded-[20px] bg-purple-10">
-                <p className="text-primary font-bold">
-                  {hashtag.join('')}서울시 광진구
-                </p>
-                <Image
-                  src="/images/purpleClose.png"
-                  alt="창 닫기 아이콘"
-                  height={24}
-                  width={24}
-                />
+              <div className="flex items-center gap-2">
+                <div className="flex px-[6px] py-[10px] justify-center items-center gap-1 rounded-[20px] bg-purple-10">
+                  <p className="text-primary font-bold">
+                    {hashtag.join('')}서울시 강동구
+                  </p>
+                  <Image
+                    src="/images/purpleClose.png"
+                    alt="창 닫기 아이콘"
+                    height={24}
+                    width={24}
+                  />
+                </div>
+                <div className="flex px-[6px] py-[10px] justify-center items-center gap-1 rounded-[20px] bg-purple-10">
+                  <p className="text-primary font-bold">
+                    {hashtag.join('')}서울시 동대문구
+                  </p>
+                  <Image
+                    src="/images/purpleClose.png"
+                    alt="창 닫기 아이콘"
+                    height={24}
+                    width={24}
+                  />
+                </div>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="flex px-[6px] py-[10px] justify-center items-center gap-1 rounded-[20px] bg-purple-10">
-                <p className="text-primary font-bold">
-                  {hashtag.join('')}서울시 강동구
-                </p>
-                <Image
-                  src="/images/purpleClose.png"
-                  alt="창 닫기 아이콘"
-                  height={24}
-                  width={24}
-                />
-              </div>
-              <div className="flex px-[6px] py-[10px] justify-center items-center gap-1 rounded-[20px] bg-purple-10">
-                <p className="text-primary font-bold">
-                  {hashtag.join('')}서울시 동대문구
-                </p>
-                <Image
-                  src="/images/purpleClose.png"
-                  alt="창 닫기 아이콘"
-                  height={24}
-                  width={24}
-                />
-              </div>
-            </div>
-          </div>
+          </>
         </div>
         <div className="flex w-[350px] flex-col items-start gap-6">
           <hr className="h-[2px] self-stretch bg-gray-10 mt-6" />

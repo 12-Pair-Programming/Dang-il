@@ -8,7 +8,7 @@ import PageButton from './PageButton';
 interface PaginationProps {
   totalPage: number;
   limit: number;
-  currentPage: number;
+  currentPage?: number;
 }
 
 const Pagination = ({ totalPage, limit }: PaginationProps) => {

@@ -1,4 +1,4 @@
-import API from '@/shared/utils/axiosInstance';
+import axiosInstance from '@/shared/utils/axiosInstance';
 import { AxiosRequestConfig } from 'axios';
 
 export interface NoticeData extends AxiosRequestConfig {
@@ -12,7 +12,7 @@ export interface NoticeData extends AxiosRequestConfig {
 
 const fetchNoticeData = async () => {
   try {
-    const responseData = await API.get('/notices');
+    const responseData = await axiosInstance.get('/notices');
     console.log(responseData);
     return responseData;
   } catch (error) {

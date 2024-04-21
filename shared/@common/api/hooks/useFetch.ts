@@ -11,7 +11,7 @@ const useFetch = <T>(
   fetchFunction: () => Promise<{ data: T }>,
 ): FetchResponse<T> => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>();
+  const [error, setError] = useState<boolean>(false);
   const [data, setData] = useState<T | null>(null);
 
   const useEffectOnce = (callback: () => void) => {
