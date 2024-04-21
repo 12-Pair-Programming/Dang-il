@@ -4,6 +4,7 @@ import { Input } from '@/shared/@common/ui/Input/Input';
 import Button from '@/shared/@common/ui/Button/Button';
 
 const DetailFilter = () => {
+  // 해시태그 기능 구현 중입니다.
   const [clickedItem, setClickItem] = useState('');
   const [hashtag, setHashtag] = useState([]);
 
