@@ -4,16 +4,22 @@ import FaAngleLeft from './FaAngleLeft';
 import FaAngleRight from './FaAngleRight';
 import ButtonWrapper from './ButtonWrapper';
 import PageButton from './PageButton';
+import { SetState } from '../../types/helper';
 
 interface PaginationProps {
   totalPage: number;
   limit: number;
-  currentPage?: number;
+  currentPage: number;
+  setCurrentPage: SetState<number>;
 }
 
-const Pagination = ({ totalPage, limit }: PaginationProps) => {
+const Pagination = ({
+  totalPage,
+  limit,
+  currentPage,
+  setCurrentPage,
+}: PaginationProps) => {
   const [currentPageArray, setCurrentPageArray] = useState<number[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const sliceArrayByLimit = (
     totalPage: number,

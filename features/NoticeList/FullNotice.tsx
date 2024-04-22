@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button from '@/shared/@common/ui/Button/Button';
-import PaginationBar from '@/pages/test/paginationBar';
+import Pagination from '@/shared/@common/ui/Pagination/Pagination';
 import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
 import Card from '@/shared/@common/ui/Card/Card';
 import DetailFilter from './DetailFilter';
@@ -8,6 +8,10 @@ import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
 
 const FullNotice = () => {
   const [showDetailFilter, setShowDetailFilter] = useState(false);
+  const [postPerPage, setPostPerPage] = useState(6);
+  const [currentPage, setCurrentPage] = useState(1);
+  const offset = (currentPage - 1) * postPerPage;
+
   const handleClick = () => {
     setShowDetailFilter(true);
   };
@@ -45,7 +49,7 @@ const FullNotice = () => {
           {data &&
             data.items.length > 0 &&
             data.items
-              .slice(0, 9)
+              .slice(offset, offset + postPerPage)
               .map((item) => item.item)
               .map((item) => (
                 <Card
@@ -60,7 +64,14 @@ const FullNotice = () => {
                 />
               ))}
         </div>
-        <PaginationBar />
+        {data && data.count && (
+          <Pagination
+            totalPage={Math.ceil(data.count / data.limit)}
+            limit={data.limit}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        )}
       </div>
     </div>
   );
