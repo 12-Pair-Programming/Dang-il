@@ -3,14 +3,22 @@ import Image from "next/image";
 import Calendar from "@/features/NoticeRegist/Calendar";
 import { useState } from "react";
 import { useInput } from "@/shared/@common/ui/Input/hook/inputHook";
+import Button from "@/shared/@common/ui/Button/Button";
+import { useRouter } from "next/router";
 
 const noticeRegist = () => {
+
+  const router = useRouter();
 
   const inputsConfigs = [
     { inputValue: '' },
     { inputValue: '' },
     { inputValue: '' },
   ];
+
+  const handleWritingNotice = () => {
+    router.push('/myShopInfo');
+  }
 
   const inputs = inputsConfigs.map((config) => useInput(config));
 
@@ -35,6 +43,9 @@ const noticeRegist = () => {
             <Input title="공고 설명" placeholder="설명을 작성해 주세요" type="text" onChange={inputs[2].handleInput}>
 
             </Input>
+            <Button size='large' color="colored" onClick={handleWritingNotice}>
+              등록하기
+            </Button>
           </div>
         </div>
       </div>

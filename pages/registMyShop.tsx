@@ -93,8 +93,6 @@ const registMyShop = () => {
     { value: '강남구', label: '서울시 강남구' },
     { value: '송파구', label: '서울시 송파구' },
     { value: '강동구', label: '서울시 강동구' },
-
-
   ]
 
   return (
