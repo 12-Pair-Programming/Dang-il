@@ -45,6 +45,7 @@ const FullNotice = () => {
           {data &&
             data.items.length > 0 &&
             data.items
+              .slice(0, 9)
               .map((item) => item.item)
               .map((item) => (
                 <Card

@@ -13,6 +13,7 @@ const CustomNotice = () => {
           {data &&
             data.items.length > 0 &&
             data.items
+              .slice(0, 3)
               .map((item) => item.item)
               .map((item) => (
                 <Card
