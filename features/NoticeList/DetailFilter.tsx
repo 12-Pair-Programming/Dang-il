@@ -41,7 +41,7 @@ const DetailFilter = () => {
                       acc.includes(value) ? acc : [...acc, value],
                     [],
                   )
-                  .map((address1) => <button>{address1}</button>)}
+                  .map((address) => <button>{address}</button>)}
             </div>
             <div className="flex flex-col items-start gap-2">
               <div className="flex items-center gap-2">
