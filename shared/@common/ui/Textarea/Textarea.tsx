@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { TextareaChangeEvent, TextareaOnBlurEvent } from '../../types/helper';
 
 interface TextareaProps {
   title: string;
@@ -8,8 +9,8 @@ interface TextareaProps {
   isError?: boolean;
   errorText?: string;
   countText?: string;
-  onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
+  onChange?: (event: TextareaChangeEvent) => void;
+  onBlur?: (event: TextareaOnBlurEvent) => void;
 }
 
 export const Textarea = ({
