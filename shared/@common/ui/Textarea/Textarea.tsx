@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextareaChangeEvent, TextareaOnBlurEvent } from '../../types/helper';
+import { TextareaChangeEvent, TextareaOnBlurEvent } from '@/shared/@common/types/helper';
 
 interface TextareaProps {
   title: string;

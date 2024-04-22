@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { InputChangeEvent, InputOnBlurEvent } from '../../types/helper';
+import { InputChangeEvent, InputOnBlurEvent } from '@/shared/@common/types/helper';
 
 interface InputProps {
   title?: string;
