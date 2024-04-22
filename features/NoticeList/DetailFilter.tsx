@@ -69,7 +69,10 @@ const DetailFilter = () => {
           <hr className="h-[2px] self-stretch bg-gray-10 mt-6" />
           <Input title="시작일" />
           <hr className="h-[2px] self-stretch bg-gray-10" />
-          <Input title="금액" />
+          <div className="flex items-center gap-3">
+            <Input title="금액" width="170px" countText="원" />
+            <p className="pt-9">이상부터</p>
+          </div>
         </div>
         {hashtag.join('')}
       </div>
