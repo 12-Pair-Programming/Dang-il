@@ -2,51 +2,64 @@ import React, { Children } from 'react';
 
 interface ButtonProps {
   size: string; // 크기 종류
-  color: 'colored' | 'none' /* | 'disabled'; */ // 색상 종류
+  color: 'colored' | 'none' /* | 'disabled'; */; // 색상 종류
   onClick: () => void; // 클릭 이벤트 핸들러
   children: string; // 버튼 내용
   disabled?: boolean; // 비활성화 여부
 }
 
-const Button: React.FC<ButtonProps> = ({ size, color, onClick, children, disabled = false }) => {
-  const styleInformation = (size: string, color: 'colored' | 'none' /*| 'disabled' */) => {
+const Button: React.FC<ButtonProps> = ({
+  size,
+  color,
+  onClick,
+  children,
+  disabled = false,
+}) => {
+  const styleInformation = (
+    size: string,
+    color: 'colored' | 'none' /*| 'disabled' */,
+  ) => {
     let sizeStyle, colorStyle, fontStyle;
 
-    switch(size){
-      case 'large': 
-        sizeStyle = 'py-[14px] px-[136px]'; 
-        fontStyle = 'font-bold text-base leading-5 align-center'; 
+    switch (size) {
+      case 'large':
+        sizeStyle = 'py-[14px] px-[136px]';
+        fontStyle = 'font-bold text-base leading-5 align-center';
         break;
-      case 'medium': 
-        sizeStyle = 'py-[10px] px-[20px]'; 
-        fontStyle = 'font-bold text-sm leading-5 align-center'; 
+      case 'mediumLarge':
+        sizeStyle = 'py-3 px-[58px]';
+        fontStyle = 'font-bold text-base leading-5 text-center';
         break;
-      case 'small': 
-        sizeStyle = 'py-[8px] px-[12px]'; 
-        fontStyle = 'font-bold text-xs leading-5 align-center'; 
+      case 'medium':
+        sizeStyle = 'py-[10px] px-[20px]';
+        fontStyle = 'font-bold text-sm leading-5 align-center';
         break;
-      default: 
+      case 'small':
+        sizeStyle = 'py-[8px] px-[12px]';
+        fontStyle = 'font-bold text-xs leading-5 align-center';
+        break;
+      default:
         sizeStyle = ''; // 기본값 처리
     }
-  
-    switch(color){
-      case 'colored': 
-        colorStyle = 'bg-primary'; 
+
+    switch (color) {
+      case 'colored':
+        colorStyle = 'bg-primary';
         fontStyle += ' text-white'; // 텍스트 색상 조정
         break;
-      case 'none': 
-        colorStyle = 'bg-white border-primary border border-solid'; 
+      case 'none':
+        colorStyle = 'bg-white border-primary border border-solid';
         fontStyle += ' text-primary'; // 텍스트 색상 조정
         break;
-      // case 'disabled': 
-      //   colorStyle = 'bg-gray-40'; 
+      // case 'disabled':
+      //   colorStyle = 'bg-gray-40';
       //   fontStyle += ' text-white'; // 텍스트 색상 조정
       //   break;
-      default: 
+      default:
         colorStyle = ''; // 기본값 처리
     }
 
-    if(disabled){
+    if (disabled) {
       colorStyle = 'bg-gray-40';
       fontStyle += ' text-white';
     }
@@ -54,7 +67,10 @@ const Button: React.FC<ButtonProps> = ({ size, color, onClick, children, disable
     return `${sizeStyle} ${colorStyle} ${fontStyle}`; // 크기, 색상 및 텍스트 스타일 조합
   };
 
-  const buttonClass = `inline-flex items-center gap-2 rounded-md ${styleInformation( size, color )}`;
+  const buttonClass = `inline-flex items-center gap-2 rounded-md ${styleInformation(
+    size,
+    color,
+  )}`;
 
   return (
     <button className={buttonClass} onClick={onClick} disabled={disabled}>

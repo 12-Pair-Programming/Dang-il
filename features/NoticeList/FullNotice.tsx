@@ -66,8 +66,8 @@ const FullNotice = () => {
         </div>
         {data && data.count && (
           <Pagination
-            totalPage={Math.ceil(data.count / data.limit)}
-            limit={data.limit}
+            totalPage={Math.ceil(data.count / 2)}
+            limit={2}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
           />

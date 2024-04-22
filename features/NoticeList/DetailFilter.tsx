@@ -73,12 +73,17 @@ const DetailFilter = () => {
         </div>
         {hashtag.join('')}
       </div>
-      <div className="flex gap-2">
-        <Button size="medium" color="none" onClick={() => {}} disabled={false}>
+      <div className="flex gap-[11px]">
+        <Button
+          size="mediumLarge"
+          color="none"
+          onClick={() => {}}
+          disabled={false}
+        >
           초기화
         </Button>
         <Button
-          size="medium"
+          size="mediumLarge"
           color="colored"
           onClick={() => {}}
           disabled={false}
