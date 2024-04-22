@@ -1,11 +1,7 @@
 import { useState } from 'react';
 
-interface InputHookProps {
-  inputValue: string | number | Date;
-}
-
-export const useInput = ({ inputValue }: InputHookProps) => {
-  const [value, setValue] = useState(inputValue);
+export const useInput = (defaultValue?: string) => {
+  const [value, setValue] = useState(defaultValue || '');
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -14,9 +10,18 @@ export const useInput = ({ inputValue }: InputHookProps) => {
   return { handleInput, value };
 };
 
-/* 
-훅 사용법
-const { handleInput, value } = inputHook({ inputValue: '' }); 값지정
-<Input type="text" onChange={handleInput} /> 인풋 지정
-handleInput<= 이거에 따라 값이 지정되는 곳이 달라집니다.
+/*
+사용법
+const [email, password] = new Array(2).map(() => useInput());
+
+  const {
+    emailError,
+    isEmailError,
+    passwordError,
+    isPasswordError,
+    handleLoginSystem,
+  } = useCheckUserData({
+    email: email.value,
+    password: password.value,
+  });
 */
