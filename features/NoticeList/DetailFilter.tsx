@@ -3,18 +3,24 @@ import Image from 'next/image';
 import { Input } from '@/shared/@common/ui/Input/Input';
 import Button from '@/shared/@common/ui/Button/Button';
 import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
+import { InputChangeEvent } from '@/shared/@common/types/helper';
 
 const DetailFilter = () => {
   // 해시태그 기능 구현 중입니다.
-  const [clickedItem, setClickItem] = useState('');
+  const [clickedItem, setClickedItem] = useState('');
   const [hashtag, setHashtag] = useState<string[]>([]);
 
-  const handleClickItem = (item: string) => {
-    setClickItem(item);
-    setHashtag((prevHashtags) => [...prevHashtags, item]);
+  const handleClickItem = (e: InputChangeEvent) => {
+    if (clickedItem.trim() !== '') {
+      setClickedItem(e.target.value);
+      setHashtag((hashtag) => [...hashtag, clickedItem]);
+    }
   };
 
   const { data } = useGetNoticeData();
+
+  console.log(hashtag);
+  console.log(clickedItem);
 
   return (
     <div className="flex w-[390px] px-6 py-5 flex-col items-start gap-6 bg-white absolute right-[238px] bottom-[150px] rounded-[10px]">
@@ -46,44 +52,8 @@ const DetailFilter = () => {
             <div className="flex flex-col items-start gap-2">
               <div className="flex items-center gap-2">
                 <div className="flex px-[6px] py-[10px] justify-center items-center gap-1 rounded-[20px] bg-purple-10">
-                  <p className="text-primary font-bold">
-                    {hashtag.join('')}서울시 강남구
-                  </p>
-                  <Image
-                    src="/images/purpleClose.png"
-                    alt="창 닫기 아이콘"
-                    height={24}
-                    width={24}
-                  />
-                </div>
-                <div className="flex px-[6px] py-[10px] justify-center items-center gap-1 rounded-[20px] bg-purple-10">
-                  <p className="text-primary font-bold">
-                    {hashtag.join('')}서울시 광진구
-                  </p>
-                  <Image
-                    src="/images/purpleClose.png"
-                    alt="창 닫기 아이콘"
-                    height={24}
-                    width={24}
-                  />
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="flex px-[6px] py-[10px] justify-center items-center gap-1 rounded-[20px] bg-purple-10">
-                  <p className="text-primary font-bold">
-                    {hashtag.join('')}서울시 강동구
-                  </p>
-                  <Image
-                    src="/images/purpleClose.png"
-                    alt="창 닫기 아이콘"
-                    height={24}
-                    width={24}
-                  />
-                </div>
-                <div className="flex px-[6px] py-[10px] justify-center items-center gap-1 rounded-[20px] bg-purple-10">
-                  <p className="text-primary font-bold">
-                    {hashtag.join('')}서울시 동대문구
-                  </p>
+                  <input value={hashtag} onChange={handleClickItem} />
+                  <p className="text-primary font-bold">{clickedItem}</p>
                   <Image
                     src="/images/purpleClose.png"
                     alt="창 닫기 아이콘"
@@ -99,25 +69,30 @@ const DetailFilter = () => {
           <hr className="h-[2px] self-stretch bg-gray-10 mt-6" />
           <Input title="시작일" />
           <hr className="h-[2px] self-stretch bg-gray-10" />
-          <Input title="금액" />
+          <div className="flex items-center gap-3">
+            <Input title="금액" width="170px" countText="원" />
+            <p className="pt-9">이상부터</p>
+          </div>
         </div>
         {hashtag.join('')}
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-[11px]">
         <Button
-          size="medium"
+          size="mediumLarge"
           color="none"
           onClick={() => {}}
-          content="초기화"
           disabled={false}
-        />
+        >
+          초기화
+        </Button>
         <Button
-          size="medium"
+          size="mediumLarge"
           color="colored"
           onClick={() => {}}
-          content="적용하기"
           disabled={false}
-        />
+        >
+          적용하기
+        </Button>
       </div>
     </div>
   );
