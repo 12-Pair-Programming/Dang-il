@@ -1,6 +1,8 @@
 
 interface ButtonComponentProps {
-  handleClick: (buttons: string) => void;
+  handleClick: (buttons: string) => void,
+  buttonVisible: boolean,
+  status: string,
 }
 
 const TableButton: React.FC<ButtonComponentProps> = ({ handleClick, buttonVisible, status }) => {
