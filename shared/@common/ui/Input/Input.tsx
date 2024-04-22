@@ -37,7 +37,7 @@ export const Input = ({
         </p>
         <div className={`w-[${width}] relative`}>
           <input
-            className={`flex py-4 px-5 w-full rounded-md border ${
+            className={`flex py-4 px-5 w-full rounded-md border text-black ${
               isError ? 'border-red-40' : 'border-gray-30'
             } bg-white items-start gap-2 self-stretch`}
             type={inputType}
