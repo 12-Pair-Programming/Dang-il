@@ -16,6 +16,10 @@ const noticeRegist = () => {
     { inputValue: '' },
   ];
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  }
+
   const handleWritingNotice = () => {
     router.push('/myShopInfo');
   }
@@ -32,23 +36,26 @@ const noticeRegist = () => {
             </p>
             <Image src={`/images/close.svg`} alt='닫기' width={32} height={32} />
           </div>
-          <div className="inline-flex items-start gap-5">
-            <Input title='시급*' placeholder="입력" type="text" countText="원" onChange={inputs[0].handleInput}>
-              
-            </Input>
-            <Calendar />
-            <Input title='업무 시간*' placeholder="입력" type="text" countText="시간" onChange={inputs[1].handleInput}>
+          <form onSubmit={handleSubmit}>
+            <div className="inline-flex items-start gap-5">
+              <Input title='시급*' placeholder="입력" type="text" countText="원" onChange={inputs[0].handleInput}>
+                
+              </Input>
+              <Calendar />
+              <Input title='업무 시간*' placeholder="입력" type="text" countText="시간" onChange={inputs[1].handleInput}>
 
-            </Input>
-          </div>
-          <div className="flex w-[964px] flex-col items-start gap-2">
-            <Input title="공고 설명" placeholder="설명을 작성해 주세요" type="text" onChange={inputs[2].handleInput}>
+              </Input>
+            </div>
+            <div className="flex w-[964px] flex-col items-start gap-2">
+              <Input title="공고 설명" placeholder="설명을 작성해 주세요" type="text" onChange={inputs[2].handleInput}>
 
-            </Input>
-            <Button size='large' color="colored" onClick={handleWritingNotice}>
-              등록하기
-            </Button>
-          </div>
+              </Input>
+              <Button size='large' color="colored" onClick={handleWritingNotice}>
+                등록하기
+              </Button>
+            </div>
+          </form>
+
         </div>
       </div>
     </>
