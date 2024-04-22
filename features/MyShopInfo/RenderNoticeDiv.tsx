@@ -1,5 +1,5 @@
 import Button from "@/shared/@common/ui/Button/Button";
-import Card from "@/src/shared/card/Card";
+import Card from "@/shared/@common/ui/Card/Card";
 import { useRouter } from "next/router";
 import { useState } from "react"
 

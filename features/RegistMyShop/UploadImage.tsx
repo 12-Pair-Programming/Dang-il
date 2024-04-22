@@ -1,8 +1,6 @@
 import { useState, useRef, ChangeEvent } from 'react';
 import Image from 'next/image';
 
-import Add from '@/public/images/add-img.svg';
-
 interface UploadImageProps {
   onImageChange : (image: string | null ) => void;
 }
@@ -46,7 +44,7 @@ const UploadImage: React.FC<UploadImageProps> = ({ onImageChange }) => {
           <Image src={selectedImage} alt="Uploaded Image" width={200} height={300} className='w-1/2 max-h-[300px]' />
         ) : (
           <div className='flex justify-center items-center flex-shrink-0 rounded-[5px] border border-solid border-gray-30 bg-gray-10 h-[300px] w-[400px]'>
-            <Image src={Add} alt="Placeholder Image" width={111} height={64} />
+            <Image src={`images/add-img.svg`} alt="Placeholder Image" width={111} height={64} />
           </div>
         )}
       </div>
