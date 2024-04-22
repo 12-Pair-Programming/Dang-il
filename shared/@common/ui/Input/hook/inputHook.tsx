@@ -1,9 +1,10 @@
+import { InputChangeEvent } from '@/shared/@common/types/helper';
 import { useState } from 'react';
 
 export const useInput = (defaultValue?: string) => {
   const [value, setValue] = useState(defaultValue || '');
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInput = (e: InputChangeEvent) => {
     setValue(e.target.value);
   };
 

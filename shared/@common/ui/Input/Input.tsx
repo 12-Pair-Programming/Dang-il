@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { InputChangeEvent, InputOnBlureEvent } from '../../types/helper';
 
 interface InputProps {
   title?: string;
   placeholder: string;
   type?: string;
   width?: string;
+  height?: string;
   isError?: boolean;
   errorText?: string;
   countText?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  onChange?: (event: InputChangeEvent) => void;
+  onBlur?: (event: InputOnBlureEvent) => void;
 }
 
 export const Input = ({
@@ -18,6 +20,7 @@ export const Input = ({
   placeholder = '값을 입력해주세요.',
   type = 'text',
   width = '350px',
+  height = 'auto',
   isError = false,
   errorText,
   countText,
@@ -32,13 +35,16 @@ export const Input = ({
   };
 
   return (
-    <div className={`w-[${width}] flex flex-col items-start gap-2`}>
+    <div className={`flex flex-col items-start gap-2`}>
       {title && (
         <p className="text-black font-sans font-normal text-base leading-6">
           {title}
         </p>
       )}
-      <div className={`w-[${width}] relative`}>
+      <div
+        className={`relative`}
+        style={{ width: `${width}`, height: `${height}` }}
+      >
         <input
           className={`flex py-4 px-5 w-full rounded-md border ${
             isError ? 'border-red-40' : 'border-gray-30'
@@ -63,7 +69,7 @@ export const Input = ({
           />
         )}
         {countText && (
-          <p className="h-[24px] absolute top-1/2 right-4 transform -translate-y-1/2 w-4  flex-shrink-0">
+          <p className="h-6 absolute top-1/2 right-4 transform -translate-y-1/2 w-4  flex-shrink-0">
             {countText}
           </p>
         )}
