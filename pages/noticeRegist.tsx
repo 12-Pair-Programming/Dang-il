@@ -6,10 +6,6 @@ import { useInput } from "@/shared/@common/ui/Input/hook/inputHook";
 
 const noticeRegist = () => {
 
-  const [hourlypay, setHourlypay] = useState(0);
-  const [hour, setHour] = useState(0);
-  const [description, setDescription] = useState('');
-
   const inputsConfigs = [
     { inputValue: '' },
     { inputValue: '' },
@@ -18,17 +14,6 @@ const noticeRegist = () => {
 
   const inputs = inputsConfigs.map((config) => useInput(config));
 
-  const handleHourlyPay = () => {
-    console.log('a');
-  };
-
-  const handleHour = () => {
-    console.log('b');
-  };
-
-  const handleDescription = () => {
-    console.log(c);
-  }
   return (
     <>
       <div className="flex py-[60px] px-[238px] flex-col items-start gap-2 bg-gray-05">
