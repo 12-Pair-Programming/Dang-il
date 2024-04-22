@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { Children } from 'react';
 
 interface ButtonProps {
-  size: 'large' | 'medium' | 'small'; // 크기 종류
+  size: string; // 크기 종류
   color: 'colored' | 'none' /* | 'disabled'; */ // 색상 종류
   onClick: () => void; // 클릭 이벤트 핸들러
-  content: string; // 버튼 내용
+  children: string; // 버튼 내용
   disabled?: boolean; // 비활성화 여부
 }
 
-const Button: React.FC<ButtonProps> = ({ size, color, onClick, content, disabled = false }) => {
-  const styleInformation = (size: 'large' | 'medium' | 'small', color: 'colored' | 'none' /*| 'disabled' */) => {
+const Button: React.FC<ButtonProps> = ({ size, color, onClick, children, disabled = false }) => {
+  const styleInformation = (size: string, color: 'colored' | 'none' /*| 'disabled' */) => {
     let sizeStyle, colorStyle, fontStyle;
 
     switch(size){
@@ -58,7 +58,7 @@ const Button: React.FC<ButtonProps> = ({ size, color, onClick, content, disabled
 
   return (
     <button className={buttonClass} onClick={onClick} disabled={disabled}>
-      {content}
+      {children}
     </button>
   );
 };

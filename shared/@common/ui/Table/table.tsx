@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import TableButton from "./TableButton";
 
 
 const Table: React.FC<{
@@ -27,29 +28,6 @@ const Table: React.FC<{
   // })
   const [buttonVisible, setButtonVisible] = useState(true);
   const [status, setStatus] = useState('');
-
-  interface ButtonComponentProps {
-    handleClick: (buttons: string) => void;
-  }
-  
-  const ButtonComponent: React.FC<ButtonComponentProps> = ({ handleClick }) => {
-    return (
-      <>
-        {buttonVisible && (
-          <>
-            <button className="border-red-30 flex py-2 px-3 content-center items-center rounded-md border border-solid " onClick={() => handleClick('reject')}>
-              <p className="text-red-40 font-bold text-sm">거절하기</p>
-            </button>  
-            <button className="border-blue-20 flex py-2 px-3 content-center items-center rounded-md border border-solid" onClick={() => handleClick('approve')}>
-              <p className="text-blue-20 font-bold text-sm">승인하기</p>
-            </button>  
-          </>
-        )}
-        {status && <p className={`p-4 ${status === '거절' ? 'bg-purple-20 text-purple-50' : 'bg-blue-10 text-blue-20'} flex py-1 px-2 content-center items-center rounded-2xl font-bold text-sm`}>{status}</p>}
-      </>
-    );
-  };
-  
 
   const handleChangingStatus = (buttons : string) => {
     if(buttons === 'approve'){
@@ -88,8 +66,8 @@ const Table: React.FC<{
               {id === 'a' ? (
                 {statuses}
               ) : id === 'b' ? (
-                <ButtonComponent handleClick={handleChangingStatus} />
-              ) : <ButtonComponent handleClick={handleChangingStatus} />}
+                <TableButton handleClick={handleChangingStatus} buttonVisible={buttonVisible} status={status} />
+              ) : <TableButton handleClick={handleChangingStatus} buttonVisible={buttonVisible} status={status} />}
             </td>
           </tr>
 

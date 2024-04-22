@@ -1,13 +1,25 @@
-import TestPage from '@/features/RegistMyShop/UploadImage';
-import close from '@/public/images/close.svg';
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
-import { Input } from '@/shared/@common/ui/input/Input';
-import { useState } from 'react';
+import { Input } from '@/shared/@common/ui/Input/Input';
+import UploadImage from '@/features/RegistMyShop/UploadImage';
+import Button from '@/shared/@common/ui/Button/Button';
+import { Footer } from '@/shared/@common/ui/Footer/Footer';
 
 const registMyShop = () => {
 
+  const router = useRouter();
   const [foodKinds, setFoodKinds] = useState('');
   const [location, setLocation] = useState('');
+  const [title, setTitle] = useState('');
+  const [address, setAddress] = useState('');
+  const [shopImage, setShopImage] = useState<string | null>(null);
+  const [description, setDescription] = useState('');
+
+  const handleClose = () => {
+    router.push('/myShopInfo');
+  }
 
   const handleSelectLocations = (option: string) => {
     setLocation(option);
@@ -16,8 +28,31 @@ const registMyShop = () => {
   const handleSelectFoodKinds = (option: string) => {
     setFoodKinds(option);
   };
-  console.log(foodKinds);
-  console.log(location);
+
+  const handleShopImage = (image: string | null) => {
+    setShopImage(image);
+  };
+
+  const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDescription(event.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  const handleTotalSubmit = () => {
+    console.log('제출 완료');
+    console.log(title);
+    console.log(foodKinds);
+    console.log(location);
+    console.log(address);
+    console.log(shopImage);
+    console.log(description);
+    alert('등록이 완료되었습니다');
+    router.push('/myShopInfo');
+  };
+
 
   const kinds = [
     { value: '한식', label: '한식' },
@@ -65,16 +100,18 @@ const registMyShop = () => {
       <div className="flex w-full py-[60px] px-[238px] flex-col items-start gap-2 bg-gray-05">
         <div className="flex w-full flex-col items-center gap-8">
           <div className="flex flex-col items-start gap-8">
-            <div className="flex w-full content-between items-center">
+            <div className="flex w-full justify-between items-center">
               <p className='text-black text-[28px] font-bold'>가게 정보</p>
-              <img src={close} />
+              <button onClick={handleClose}>
+                <Image src={`/images/close.svg`} alt='닫기 버튼' width={32} height={32} />
+              </button>
             </div>
-            <div>
+            <form onSubmit={handleSubmit}>
               <div className='flex items-start gap-5 mb-6'>
                 <div className='flex flex-col items-start gap-2 flex-shrink-0'>
-                  <Input text='가게 이름*' placeholder='입력' />
+                  <Input title='가게 이름*' placeholder='입력' value={title} onChange={(event) => setTitle(event.target.value)}/>
                 </div>
-                <div className='flex flex-col items-start gap-2 flex-shrink-0'>
+                <div className='flex flex-col items-start gap-2 flex-shrink-0 text-black'>
                   <Dropdown 
                     title={'분류*'}
                     options={kinds}
@@ -84,7 +121,7 @@ const registMyShop = () => {
                 </div>
               </div>
               <div className='flex items-start gap-5 mb-6'>
-                <div className='flex flex-col items-start gap-2 flex-shrink-0'>
+                <div className='flex flex-col items-start gap-2 flex-shrink-0 text-black'>
                   <Dropdown
                     title={'주소*'}
                     options={locations}
@@ -93,16 +130,32 @@ const registMyShop = () => {
                   />
                 </div>
                 <div className='flex flex-col items-start gap-2 flex-shrink-0'>
-                  <Input text='상세 주소*' placeholder='입력' />
+                  <Input title='상세 주소*' placeholder='입력' value={address} onChange={(event) => setAddress(event.target.value)}  />
                 </div>
               </div>
-              <div className='flex items-start gap-5 mb-6'>
-                <TestPage />
+              <div className='flex flex-col items-start gap-5 mb-6'>
+                <p className='text-base'>가게 이미지</p>
+                <UploadImage onImageChange={handleShopImage}/>
               </div>
-            </div>
+              <div className='w-full flex flex-col items-start gap-2'>
+                <p className='text-base'>가게 설명</p>
+                <input
+                  className='flex py-4 px-5 items-start self-stretch gap-[10px] min-h-[153px] border border-solid rounded-[5px] border-gray-30 bg-white'
+                  placeholder='입력' 
+                  value={description} 
+                  onChange={handleDescriptionChange} />
+              </div>
+              <div className='flex mt-8 justify-center'>
+                <Button size='large' color='colored' onClick={handleTotalSubmit}>
+                  등록하기
+                </Button>
+              </div>
+
+            </form>
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
