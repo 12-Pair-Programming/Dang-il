@@ -40,6 +40,8 @@ const noticeRegist = () => {
             <Input title='업무 시간*' placeholder="입력" type="text" countText="시간" onChange={inputs[1].handleInput}>
 
             </Input>
+          </div>
+          <div className="flex w-[964px] flex-col items-start gap-2">
             <Input title="공고 설명" placeholder="설명을 작성해 주세요" type="text" onChange={inputs[2].handleInput}>
 
             </Input>

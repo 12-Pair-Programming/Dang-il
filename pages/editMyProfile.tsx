@@ -80,6 +80,8 @@ const editMyProfile = () => {
 
               </Input>
               <Dropdown title="선호 지역" options={locations} onSelect={(option) => handleSelectLocations(option)} defaultValue="선택" />
+            </div>
+            <div className="flex w-[964px] flex-col items-start gap-2">
               <Input title="소개" placeholder="설명을 작성해 주세요" type="text" onChange={inputs[2].handleInput}>
 
               </Input>
