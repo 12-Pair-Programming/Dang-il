@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { InputChangeEvent, InputOnBlureEvent } from '../../types/helper';
 
 interface InputProps {
   title?: string;
@@ -10,8 +11,8 @@ interface InputProps {
   isError?: boolean;
   errorText?: string;
   countText?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  onChange?: (event: InputChangeEvent) => void;
+  onBlur?: (event: InputOnBlureEvent) => void;
 }
 
 export const Input = ({
@@ -68,7 +69,7 @@ export const Input = ({
           />
         )}
         {countText && (
-          <p className="h-[24px] absolute top-1/2 right-4 transform -translate-y-1/2 w-4  flex-shrink-0">
+          <p className="h-6 absolute top-1/2 right-4 transform -translate-y-1/2 w-4  flex-shrink-0">
             {countText}
           </p>
         )}
