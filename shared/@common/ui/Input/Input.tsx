@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { InputChangeEvent, InputOnBlureEvent } from '../../types/helper';
+import { InputChangeEvent, InputOnBlurEvent } from '../../types/helper';
 
 interface InputProps {
   title?: string;
@@ -12,7 +12,7 @@ interface InputProps {
   errorText?: string;
   countText?: string;
   onChange?: (event: InputChangeEvent) => void;
-  onBlur?: (event: InputOnBlureEvent) => void;
+  onBlur?: (event: InputOnBlurEvent) => void;
 }
 
 export const Input = ({
