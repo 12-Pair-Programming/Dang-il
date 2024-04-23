@@ -3,16 +3,17 @@ import Image from 'next/image';
 import { Input } from '@/shared/@common/ui/Input/Input';
 import Button from '@/shared/@common/ui/Button/Button';
 import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
+import { SetState } from '@/shared/@common/types/helper';
 
 const DetailFilter = () => {
   // 해시태그 기능 구현 중입니다.
-  const [clickedItem, setClickedItem] = useState();
+  const [clickedItem, setClickedItem] = useState('');
   const [hashtag, setHashtag] = useState<string[]>([]);
 
   const handleClickItem = (address: string) => {
     if (address.trim() !== '') {
       setClickedItem(address);
-      setHashtag((prevhashtag) => [...prevhashtag, clickedItem]);
+      setHashtag((prevhashtag) => [...prevhashtag, address]);
     }
   };
 
@@ -39,7 +40,7 @@ const DetailFilter = () => {
           <>
             <div className="flex flex-col gap-5 items-start flex-wrap p-6 flex-start w-[350px] h-[258px] rounded-[6px] border border-gray-200">
               {data &&
-                data.items.length > 1 &&
+                data.items.length > 0 &&
                 data.items
                   .map((item) => item.item.shop.item.address1)
                   .reduce(
@@ -72,7 +73,7 @@ const DetailFilter = () => {
                           <Image
                             src="/images/purpleClose.png"
                             alt="창 닫기 아이콘"
-                            onClick={handleDeleteTag}
+                            onClick={() => handleDeleteTag(tag)}
                             height={24}
                             width={24}
                           />
