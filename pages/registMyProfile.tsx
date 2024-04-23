@@ -12,8 +12,9 @@ const registMyProfile = () => {
 
   const router = useRouter();
 
-  const [name, phone] = new Array(2).map(() => useInput());
-  const [description] = new Array(1).map(() => useTextarea());
+  const name = useInput('');
+  const phone = useInput('');
+  const description = useTextarea('');
   const [location, setLocation] = useState('');
 
   const handleSelectLocations = (option: string) => {
@@ -57,8 +58,6 @@ const registMyProfile = () => {
     { value: '송파구', label: '서울시 송파구' },
     { value: '강동구', label: '서울시 강동구' },
   ]
-
-  const inputs = inputsConfigs.map((config) => useInput(config));
 
   return (
     <>

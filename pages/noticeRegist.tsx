@@ -5,17 +5,11 @@ import { useState } from "react";
 import { useInput } from "@/shared/@common/ui/Input/hook/inputHook";
 import Button from "@/shared/@common/ui/Button/Button";
 import { useRouter } from "next/router";
+import { useTextarea } from "@/shared/@common/ui/Textarea/hook/textareaHook";
 
 const noticeRegist = () => {
 
   const router = useRouter();
-
-  const inputsConfigs = [
-    { inputValue: '' },
-    { inputValue: '' },
-    { inputValue: '' },
-  ];
-
   const handleSubmit = (e) => {
     e.preventDefault();
   }
@@ -24,7 +18,9 @@ const noticeRegist = () => {
     router.push('/myShopInfo');
   }
 
-  const inputs = inputsConfigs.map((config) => useInput(config));
+  const hourlypay = useInput('');
+  const hour = useInput('');
+  const description = useTextarea('');
 
   return (
     <>
@@ -41,18 +37,12 @@ const noticeRegist = () => {
           </div>
           <form onSubmit={handleSubmit}>
             <div className="inline-flex items-start gap-5">
-              <Input title='시급*' placeholder="입력" type="text" countText="원" onChange={inputs[0].handleInput}>
-                
-              </Input>
+              <Input title='시급*' placeholder="입력" type="text" countText="원" onChange={hourlypay.handleInput} />
               <Calendar />
-              <Input title='업무 시간*' placeholder="입력" type="text" countText="시간" onChange={inputs[1].handleInput}>
-
-              </Input>
+              <Input title='업무 시간*' placeholder="입력" type="text" countText="시간" onChange={hour.handleInput} />
             </div>
             <div className="flex w-[964px] flex-col items-start gap-2">
-              <Input title="공고 설명" placeholder="설명을 작성해 주세요" type="text" onChange={inputs[2].handleInput}>
-
-              </Input>
+              <Input title="공고 설명" placeholder="설명을 작성해 주세요" type="text" onChange={description.handleTextarea} />
               <Button size='large' color="colored" onClick={handleWritingNotice}>
                 등록하기
               </Button>

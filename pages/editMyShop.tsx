@@ -17,8 +17,9 @@ const editMyShop = () => {
   const [location, setLocation] = useState('');
   const [shopImage, setShopImage] = useState<string | null>(null);
 
-  const [name, subLocation] = new Array(2).map(() => useInput());
-  const [description] = new Array(1).map(() => useTextarea());
+  const name = useInput('');
+  const subLocation = useInput('');
+  const description = useTextarea('');
 
   const handleClose = () => {
     router.push('/myShopInfo');

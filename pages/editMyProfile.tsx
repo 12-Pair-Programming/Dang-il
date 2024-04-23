@@ -12,8 +12,9 @@ const editMyProfile = () => {
 
   const router = useRouter();
 
-  const [name, phone] = new Array(2).map(() => useInput());
-  const [description] = new Array(1).map(() => useTextarea());
+  const name = useInput('');
+  const phone = useInput('');
+  const description = useTextarea('');
   const [location, setLocation] = useState('');
 
   const handleSelectLocations = (option: string) => {
@@ -72,7 +73,7 @@ const editMyProfile = () => {
             <div className="inline-flex items-start gap-5">
               <Input title='이름*' placeholder="입력" type="text" countText="원" onChange={name.handleInput} />
               <Input title='연락처*' placeholder="입력" type="text" onChange={phone.handleInput} />
-              <Dropdown title="선호 지역" options={locations} onSelect={(option) => handleSelectLocations(option)} defaultValue="선택" />
+              <Dropdown title="선호 지역" options={locations} onSelect={(option) => handleSelectLocations(option)}  />
             </div>
             <div className="flex w-[964px] flex-col items-start gap-2">
               <Textarea title="소개" placeholder="설명을 작성해 주세요" onChange={description.handleTextarea} />
@@ -81,7 +82,6 @@ const editMyProfile = () => {
               </Button>
             </div>
           </form>
-
         </div>
       </div>
     </>
