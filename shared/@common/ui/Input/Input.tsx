@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { InputChangeEvent, InputOnBlurEvent } from '@/shared/@common/types/helper';
+import {
+  InputChangeEvent,
+  InputOnBlurEvent,
+} from '@/shared/@common/types/helper';
 
 interface InputProps {
   title?: string;
@@ -61,8 +64,8 @@ export const Input = ({
             height={16}
             src={
               inputType === 'password'
-                ? 'images/eye-off.svg'
-                : 'images/eye-on.svg'
+                ? '/images/eye-off.png'
+                : '/images/eye-on.png'
             }
             alt={'눈 표시'}
             onClick={handleEye}
