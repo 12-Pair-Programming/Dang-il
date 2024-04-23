@@ -5,23 +5,20 @@ import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
 import { Input } from '@/shared/@common/ui/Input/Input';
 import UploadImage from '@/features/RegistMyShop/UploadImage';
 import Button from '@/shared/@common/ui/Button/Button';
-import close from '@/public/images/close.svg';
 import { Footer } from '@/shared/@common/ui/Footer/Footer';
+import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
+import { useTextarea } from '@/shared/@common/ui/Textarea/hook/textareaHook';
+import { Textarea } from '@/shared/@common/ui/Textarea/Textarea';
 
 const editMyShop = () => {
-
-  /*
-  registMyShop.tsx와 동일한 구조입니다. Get으로 API를 받아와
-  PUT으로 전송시킬 예정입니다.
-  */
 
   const router = useRouter();
   const [foodKinds, setFoodKinds] = useState('');
   const [location, setLocation] = useState('');
-  const [title, setTitle] = useState('');
-  const [address, setAddress] = useState('');
   const [shopImage, setShopImage] = useState<string | null>(null);
-  const [description, setDescription] = useState('');
+
+  const [name, subLocation] = new Array(2).map(() => useInput());
+  const [description] = new Array(1).map(() => useTextarea());
 
   const handleClose = () => {
     router.push('/myShopInfo');
@@ -39,22 +36,18 @@ const editMyShop = () => {
     setShopImage(image);
   };
 
-  const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDescription(event.target.value);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
   };
 
   const handleTotalSubmit = () => {
     console.log('제출 완료');
-    console.log(title);
+    console.log(inputs[0].value);
     console.log(foodKinds);
     console.log(location);
-    console.log(address);
+    console.log(inputs[1].value);
     console.log(shopImage);
-    console.log(description);
+    console.log(inputs[2].value);
     alert('수정이 완료되었습니다');
     router.push('/myShopInfo');
   };
@@ -109,13 +102,13 @@ const editMyShop = () => {
             <div className="flex w-full justify-between items-center">
               <p className='text-black text-[28px] font-bold'>가게 정보</p>
               <button onClick={handleClose}>
-                <Image src={close} alt='닫기 버튼' />
+                <Image src={`/images/close.svg`} alt='닫기 버튼' width={32} height={32} />
               </button>
             </div>
             <form onSubmit={handleSubmit}>
               <div className='flex items-start gap-5 mb-6'>
                 <div className='flex flex-col items-start gap-2 flex-shrink-0'>
-                  <Input title='가게 이름*' placeholder='입력' value={title} onChange={(event) => setTitle(event.target.value)}/>
+                  <Input title='가게 이름*' placeholder='입력' onChange={name.handleInput} />
                 </div>
                 <div className='flex flex-col items-start gap-2 flex-shrink-0 text-black'>
                   <Dropdown 
@@ -136,7 +129,7 @@ const editMyShop = () => {
                   />
                 </div>
                 <div className='flex flex-col items-start gap-2 flex-shrink-0'>
-                  <Input title='상세 주소*' placeholder='입력' value={address} onChange={(event) => setAddress(event.target.value)}  />
+                  <Input title='상세 주소*' placeholder='입력' onChange={subLocation.handleInput} />
                 </div>
               </div>
               <div className='flex flex-col items-start gap-5 mb-6'>
@@ -145,15 +138,15 @@ const editMyShop = () => {
               </div>
               <div className='w-full flex flex-col items-start gap-2'>
                 <p className='text-base'>가게 설명</p>
-                <input
-                  className='flex py-4 px-5 items-start self-stretch gap-[10px] min-h-[153px] border border-solid rounded-[5px] border-gray-30 bg-white'
+                <Textarea
+                  title='가게 설명'
+                  width='100%'
                   placeholder='입력' 
-                  value={description} 
-                  onChange={handleDescriptionChange} />
+                  onChange={description.handleTextarea} />
               </div>
               <div className='flex mt-8 justify-center'>
                 <Button size='large' color='colored' onClick={handleTotalSubmit}>
-                  등록하기
+                  완료하기
                 </Button>
               </div>
 

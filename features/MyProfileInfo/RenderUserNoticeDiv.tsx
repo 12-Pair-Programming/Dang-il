@@ -1,29 +1,28 @@
-import Button from '@/shared/@common/ui/Button/Button';
-import Card from '@/shared/@common/ui/Card/Card';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
+import Button from "@/shared/@common/ui/Button/Button";
+import Table from "@/shared/@common/ui/Table/table";
+import { useRouter } from "next/router";
+import { useState } from "react"
+
 
 
 const RenderNoticeDiv = () => {
+
   const router = useRouter();
-  const [isNotice, setIsNotice] = useState(false);
+  const [isNotice, setIsNotice] = useState(true);
   const handleWritingNotice = () => {
     /* 공고 작성하는 페이지로 이동시키기 */
-    router.push('noticeRegist');
-  };
+    router.push('/noticeList');
+  }
 
   if (isNotice) {
     return (
       <div className="flex pt-[60px] pb-[120px] px-[238px] flex-col items-start gap-2">
         <div className="flex flex-col items-start gap-8">
-          <p className="text-black text-[28px] font-bold">내가 등록한 공고</p>
+          <p className="text-black text-[28px] font-bold">
+            신청 내역
+          </p>
           <div className="flex flex-col items-start gap-8">
-            무한 스크롤 구현하기, api 받아오기
-            <div className="flex items-start gap-[14px]">
-              <Card />
-              <Card />
-              <Card />
-            </div>
+            <Table />
           </div>
         </div>
       </div>
@@ -31,11 +30,15 @@ const RenderNoticeDiv = () => {
   } else {
     return (
       <div className="flex flex-col items-start gap-8">
-        <p className="text-black text-[28px] font-bold">등록한 공고</p>
+        <p className="text-black text-[28px] font-bold">
+          신청 내역
+        </p>
         <div className="flex w-[964px] py-[60px] px-6 flex-col justify-center items-center gap-6 rounded-xl border border-solid border-gray-20">
-          <p className="text-black align-center">공고를 등록해 보세요.</p>
+          <p className="text-black align-center">
+            아직 신청 내역이 없어요.
+          </p>
           <Button size="large" color="colored" onClick={handleWritingNotice}>
-            공고 등록하기
+            공고 보러가기
           </Button>
         </div>
       </div>
