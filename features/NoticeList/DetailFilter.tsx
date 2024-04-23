@@ -71,8 +71,9 @@ const DetailFilter = () => {
                         <div className="flex px-[6px] py-[10px] justify-center items-center gap-1 rounded-[20px] bg-purple-10">
                           <p className="text-primary font-bold">{tag}</p>
                           <Image
-                            src="/images/purpleClose.png"
+                            src={`/images/purpleClose.png`}
                             alt="창 닫기 아이콘"
+                            className="cursor-pointer"
                             onClick={() => handleDeleteTag(tag)}
                             height={24}
                             width={24}
