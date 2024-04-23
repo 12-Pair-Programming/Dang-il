@@ -31,10 +31,13 @@ const noticeRegist = () => {
       <div className="flex py-[60px] px-[238px] flex-col items-start gap-2 bg-gray-05">
         <div className="flex flex-col items-center gap-8">
           <div className="flex justify-between items-center self-stretch">
-            <p className="text-black text-[28px] font-bold">
-              공고 등록
-            </p>
-            <Image src={`/images/close.svg`} alt='닫기' width={32} height={32} />
+            <p className="text-black text-[28px] font-bold">공고 등록</p>
+            <Image
+              src={`/images/close.svg`}
+              alt="닫기"
+              width={32}
+              height={32}
+            />
           </div>
           <form onSubmit={handleSubmit}>
             <div className="inline-flex items-start gap-5">

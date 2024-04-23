@@ -9,22 +9,22 @@ interface Option {
 interface DropdownProps {
   options: Option[];
   onSelect: (value: string) => void;
+  width?: string;
   defaultValue?: string;
-  title: string;
+  title?: string;
 }
 
-export const Dropdown: React.FC<DropdownProps> = ({
+export const Dropdown = ({
   options,
   onSelect,
-  defaultValue,
   title,
-}) => {
+  width = '350px',
+  defaultValue = '선택',
+}: DropdownProps) => {
   const dropDownClickRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const defaultOption = options.find((option) => option.value === defaultValue);
-  const [selectedOption, setSelectedOption] = useState(
-    defaultOption || options[0],
-  );
+  const [selectedOption, setSelectedOption] = useState(defaultOption || null);
 
   const handleToggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -53,13 +53,15 @@ export const Dropdown: React.FC<DropdownProps> = ({
   }, []);
 
   return (
-    <div className={`w-[350px] flex flex-col items-start gap-2`}>
-      <p className="font-sans font-normal text-base leading-6">{title}</p>
+    <div className={`flex flex-col items-start gap-2`}>
+      {title && (
+        <p className="font-sans font-normal text-base leading-6">{title}</p>
+      )}
       <div
         className="relative inline-block w-80"
         ref={dropDownClickRef}
         onClick={handleToggleDropdown}
-        style={{ width: '350px' }}
+        style={{ width: `${width}` }}
       >
         <Image
           className={`absolute top-1/2 right-4 transform -translate-y-1/2 w-4 h-4 flex-shrink-0`}
@@ -72,12 +74,12 @@ export const Dropdown: React.FC<DropdownProps> = ({
           style={{ width: '100%' }}
           className={`flex px-5 py-4 items-center border bg-white border-gray-30 rounded-md text-base font-normal leading-26px tracking-wide`}
         >
-          {selectedOption.label}
+          {selectedOption?.label ?? defaultValue}
         </button>
         <div
           className={`absolute ${
             isOpen ? 'inline-flex' : 'hidden'
-          } flex-col items-start rounded-md border-[2px] border-gray-20 bg-white shadow-md z-4 mt-2 overflow-y-auto overflow-x-hidden max-h-[200px] z-10`}
+          } flex-col items-start rounded-md border-[2px] border-gray-20 bg-white shadow-md z-4 mt-2 overflow-y-auto overflow-x-hidden max-h-[200px] z-dropdown right-[7px]`}
         >
           {options.map((option, index) => (
             <div

@@ -10,13 +10,13 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
-        sm: '480px',
         md: '768px',
-        lg: '1024px',
-        xl: '1280px',
+        lg: '1280px',
       },
       zIndex: {
-        modal: '10',
+        dropdown: '10',
+        modalbackground: '20',
+        modalbody: '30',
       },
       colors: {
         primary: '#9935ff',
