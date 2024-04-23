@@ -10,7 +10,9 @@ interface NavButtonProps {
 export const NavButton = ({ children, href, onClick }: NavButtonProps) => {
   const handleClick = () => {
     Router.push(href);
-    onClick();
+    if (onClick) {
+      onClick();
+    }
   };
 
   return (
