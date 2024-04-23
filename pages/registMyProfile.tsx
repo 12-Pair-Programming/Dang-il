@@ -17,6 +17,10 @@ const registMyProfile = () => {
   const description = useTextarea('');
   const [location, setLocation] = useState('');
 
+  const handleClose = () => {
+    router.push('./myProfileInfo');
+  }
+
   const handleSelectLocations = (option: string) => {
     setLocation(option);
   };
@@ -62,28 +66,29 @@ const registMyProfile = () => {
   return (
     <>
       <div className="flex py-[60px] px-[238px] flex-col items-start gap-2 bg-gray-05">
-        <div className="flex flex-col items-center gap-8">
+        <form onSubmit={handleSubmit} className="flex flex-col items-center gap-8">
           <div className="flex justify-between items-center self-stretch">
             <p className="text-black text-[28px] font-bold">
               내 프로필
             </p>
-            <Image src={`/images/close.svg`} alt='닫기' width={32} height={32} />
+            <button onClick={handleClose}>
+              <Image src={`/images/close.svg`} alt='닫기' width={32} height={32} />
+            </button>
           </div>
-          <form onSubmit={handleSubmit}>
-            <div className="inline-flex items-start gap-5">
-              <Input title='이름*' placeholder="입력" type="text" countText="원" onChange={name.handleInput} />
-              <Input title='연락처*' placeholder="입력" type="text" onChange={phone.handleInput} />
-              <Dropdown title="선호 지역" options={locations} onSelect={(option) => handleSelectLocations(option)} defaultValue="선택" />
-            </div>
-            <div className="flex w-[964px] flex-col items-start gap-2">
-              <Textarea title="소개" width="100%" height="153px" placeholder="설명을 작성해 주세요" onChange={description.handleTextarea} />
-              <Button size='large' color="colored" onClick={handleTotalSubmit}>
-                등록하기
-              </Button>
-            </div>
-          </form>
-
-        </div>
+          <div className="inline-flex items-start gap-5">
+            <Input title='이름*' placeholder="입력" type="text" countText="원" onChange={name.handleInput} />
+            <Input title='연락처*' placeholder="입력" type="text" onChange={phone.handleInput} />
+            <Dropdown title="선호 지역" options={locations} onSelect={(option) => handleSelectLocations(option)} defaultValue="선택" />
+          </div>
+          <div className="flex w-[964px] flex-col items-start gap-2">
+            <Textarea title="소개" width="100%" height="153px" placeholder="설명을 작성해 주세요" onChange={description.handleTextarea} />
+          </div>
+          <div className="flex items-center">
+            <Button size='large' color="colored" onClick={handleTotalSubmit}>
+              등록하기
+            </Button>
+          </div>
+        </form>
       </div>
     </>
   );

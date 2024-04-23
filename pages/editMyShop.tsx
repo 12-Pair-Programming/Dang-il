@@ -98,7 +98,7 @@ const editMyShop = () => {
   return (
     <>
       <div className="flex w-full py-[60px] px-[238px] flex-col items-start gap-2 bg-gray-05">
-        <div className="flex w-full flex-col items-center gap-8">
+        <form onSubmit={handleSubmit} className="flex w-full flex-col items-center gap-8">
           <div className="flex flex-col items-start gap-8">
             <div className="flex w-full justify-between items-center">
               <p className='text-black text-[28px] font-bold'>가게 정보</p>
@@ -106,54 +106,51 @@ const editMyShop = () => {
                 <Image src={`/images/close.svg`} alt='닫기 버튼' width={32} height={32} />
               </button>
             </div>
-            <form onSubmit={handleSubmit}>
-              <div className='flex items-start gap-5 mb-6'>
-                <div className='flex flex-col items-start gap-2 flex-shrink-0'>
-                  <Input title='가게 이름*' placeholder='입력' onChange={name.handleInput} />
-                </div>
-                <div className='flex flex-col items-start gap-2 flex-shrink-0 text-black'>
-                  <Dropdown 
-                    title={'분류*'}
-                    options={kinds}
-                    onSelect={(option) => handleSelectFoodKinds(option)}
-                    defaultValue={'선택'}
-                  />
-                </div>
+            <div className='flex items-start gap-5 mb-6'>
+              <div className='flex flex-col items-start gap-2 flex-shrink-0'>
+                <Input title='가게 이름*' placeholder='입력' onChange={name.handleInput} />
               </div>
-              <div className='flex items-start gap-5 mb-6'>
-                <div className='flex flex-col items-start gap-2 flex-shrink-0 text-black'>
-                  <Dropdown
-                    title={'주소*'}
-                    options={locations}
-                    onSelect={(option) => handleSelectLocations(option)}
-                    defaultValue={'선택'}
-                  />
-                </div>
-                <div className='flex flex-col items-start gap-2 flex-shrink-0'>
-                  <Input title='상세 주소*' placeholder='입력' onChange={subLocation.handleInput} />
-                </div>
+              <div className='flex flex-col items-start gap-2 flex-shrink-0 text-black'>
+                <Dropdown 
+                  title={'분류*'}
+                  options={kinds}
+                  onSelect={(option) => handleSelectFoodKinds(option)}
+                  defaultValue={'선택'}
+                />
               </div>
-              <div className='flex flex-col items-start gap-5 mb-6'>
-                <p className='text-base'>가게 이미지</p>
-                <UploadImage onImageChange={handleShopImage}/>
+            </div>
+            <div className='flex items-start gap-5 mb-6'>
+              <div className='flex flex-col items-start gap-2 flex-shrink-0 text-black'>
+                <Dropdown
+                  title={'주소*'}
+                  options={locations}
+                  onSelect={(option) => handleSelectLocations(option)}
+                  defaultValue={'선택'}
+                />
               </div>
-              <div className='w-full flex flex-col items-start gap-2'>
-                <p className='text-base'>가게 설명</p>
-                <Textarea
-                  title='가게 설명'
-                  width='100%'
-                  placeholder='입력' 
-                  onChange={description.handleTextarea} />
+              <div className='flex flex-col items-start gap-2 flex-shrink-0'>
+                <Input title='상세 주소*' placeholder='입력' onChange={subLocation.handleInput} />
               </div>
-              <div className='flex mt-8 justify-center'>
-                <Button size='large' color='colored' onClick={handleTotalSubmit}>
-                  완료하기
-                </Button>
-              </div>
-
-            </form>
+            </div>
+            <div className='flex flex-col items-start gap-5 mb-6'>
+              <p className='text-base'>가게 이미지</p>
+              <UploadImage onImageChange={handleShopImage}/>
+            </div>
+            <div className='w-full flex flex-col items-start gap-2'>
+              <p className='text-base'>가게 설명</p>
+              <Textarea
+                title='가게 설명'
+                width='100%'
+                placeholder='입력' 
+                onChange={description.handleTextarea} />
+            </div>
+            <div className='flex mt-8 justify-center'>
+              <Button size='large' color='colored' onClick={handleTotalSubmit}>
+                완료하기
+              </Button>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
       <Footer />
     </>
