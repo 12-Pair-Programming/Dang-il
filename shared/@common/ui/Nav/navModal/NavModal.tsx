@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { NavModalMessage } from './navModalMessage/NavModalMessage';
+import { SetState } from '@/shared/@common/types/helper';
 
 interface NavModalProps {
   isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpen: SetState<boolean>;
 }
 
 export const NavModal = ({ isOpen, setIsOpen }: NavModalProps) => {
