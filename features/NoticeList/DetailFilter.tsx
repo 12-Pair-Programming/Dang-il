@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
+import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
 import { Input } from '@/shared/@common/ui/Input/Input';
+import { InputChangeEvent } from '@/shared/@common/types/helper';
 import Button from '@/shared/@common/ui/Button/Button';
-import Calendar from '../NoticeList/Calendar';
+import FilterCalendar from './FilterCalendar';
 import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
 
 const DetailFilter = () => {
   const [clickedItem, setClickedItem] = useState('');
   const [hashtag, setHashtag] = useState<string[]>([]);
+  const [startDate, setStartDate] = useState();
+  const money = useInput('');
 
   const handleClickItem = (address: string) => {
     if (address.trim() !== '') {
@@ -18,6 +22,16 @@ const DetailFilter = () => {
 
   const handleDeleteTag = (address: string) => {
     setHashtag((prevhashtag) => prevhashtag.filter((tag) => tag !== address));
+  };
+
+  const handleDateChange = (date) => {
+    setStartDate(date); // 선택된 날짜를 상태에 반영합니다.
+  };
+
+  const handleResetValue = () => {
+    setHashtag([]);
+    handleDateChange(null);
+    money.handleInput({ target: { value: '' } } as InputChangeEvent);
   };
 
   const { data } = useGetNoticeData();
@@ -86,10 +100,17 @@ const DetailFilter = () => {
         </div>
         <div className="flex w-[350px] flex-col items-start gap-6">
           <hr className="h-[2px] self-stretch bg-gray-10 mt-6" />
-          <Calendar />
+          <FilterCalendar selected={startDate} onChange={handleDateChange} />
           <hr className="h-[2px] self-stretch bg-gray-10" />
           <div className="flex items-center gap-3">
-            <Input title="금액" width="190px" countText="원" />
+            <Input
+              title="금액"
+              width="190px"
+              countText="원"
+              type="number"
+              placeholder="값을 입력해주세요"
+              onBlur={money.handleInput}
+            />
             <p className="pt-9">이상부터</p>
           </div>
         </div>
@@ -98,7 +119,9 @@ const DetailFilter = () => {
         <Button
           size="mediumLarge"
           color="none"
-          onClick={() => {}}
+          onClick={() => {
+            handleResetValue();
+          }}
           disabled={false}
         >
           초기화
