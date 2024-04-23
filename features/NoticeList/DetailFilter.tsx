@@ -6,19 +6,21 @@ import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
 
 const DetailFilter = () => {
   // 해시태그 기능 구현 중입니다.
-  const [clickedItem, setClickedItem] = useState('');
+  const [clickedItem, setClickedItem] = useState();
   const [hashtag, setHashtag] = useState<string[]>([]);
 
   const handleClickItem = (address: string) => {
     if (address.trim() !== '') {
       setClickedItem(address);
-      setHashtag((prevhashtag) => [...prevhashtag, address]);
+      setHashtag((prevhashtag) => [...prevhashtag, clickedItem]);
     }
   };
 
-  const { data } = useGetNoticeData();
+  const handleDeleteTag = (address: string) => {
+    setHashtag((prevhashtag) => prevhashtag.filter((tag) => tag !== address));
+  };
 
-  console.log(hashtag);
+  const { data } = useGetNoticeData();
 
   return (
     <div className="flex w-[390px] px-6 py-5 flex-col items-start gap-6 bg-white absolute right-[238px] bottom-[150px] rounded-[10px]">
@@ -37,7 +39,7 @@ const DetailFilter = () => {
           <>
             <div className="flex flex-col gap-5 items-start flex-wrap p-6 flex-start w-[350px] h-[258px] rounded-[6px] border border-gray-200">
               {data &&
-                data.items.length > 0 &&
+                data.items.length > 1 &&
                 data.items
                   .map((item) => item.item.shop.item.address1)
                   .reduce(
@@ -55,20 +57,29 @@ const DetailFilter = () => {
                   ))}
             </div>
             <div className="flex flex-col items-start gap-2">
-              <div className="flex items-center gap-2">
-                <>
-                  {hashtag.map((tag, index) => (
-                    <div className="flex px-[6px] py-[10px] justify-center items-center gap-1 rounded-[20px] bg-purple-10">
-                      <p className="text-primary font-bold">{tag}</p>
-                      <Image
-                        src="/images/purpleClose.png"
-                        alt="창 닫기 아이콘"
-                        height={24}
-                        width={24}
-                      />
-                    </div>
-                  ))}
-                </>
+              <div className="flex items-center gap-2 flex-wrap">
+                {hashtag.length > 0 && (
+                  <>
+                    {hashtag
+                      .reduce(
+                        (acc, value) =>
+                          acc.includes(value) ? acc : [...acc, value],
+                        [],
+                      )
+                      .map((tag, index) => (
+                        <div className="flex px-[6px] py-[10px] justify-center items-center gap-1 rounded-[20px] bg-purple-10">
+                          <p className="text-primary font-bold">{tag}</p>
+                          <Image
+                            src="/images/purpleClose.png"
+                            alt="창 닫기 아이콘"
+                            onClick={handleDeleteTag}
+                            height={24}
+                            width={24}
+                          />
+                        </div>
+                      ))}
+                  </>
+                )}
               </div>
             </div>
           </>
