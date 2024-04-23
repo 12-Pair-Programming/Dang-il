@@ -1,6 +1,6 @@
-import Image from 'next/image';
-import businessHoursString from './businessHoursString';
-import dateToString from './dateToString';
+import HourlyPayForWon from './NoticePayInfo';
+import NoticeTimeAndLocation from './NoticeTimeAndLocation';
+import CardImage from './CardImage';
 
 interface ProductProps {
   name: string; //가게명
@@ -34,37 +34,14 @@ const Card = ({
   originalHourlyPay,
   closed,
 }: ProductProps) => {
-  const startDateTime: Date = new Date(startsAt);
-  const endDateTime: Date = new Date(
-    startDateTime.getTime() + workhour * 60 * 60 * 1000,
-  );
-
-  const formattedStart: string = dateToString(startDateTime);
-  const formattedEnd: string = dateToString(endDateTime);
-
-  const businessHours = businessHoursString(
-    formattedStart,
-    formattedEnd,
-    workhour,
-  );
-
-  const originalHourlyPayToString = `${originalHourlyPay.toLocaleString()}원`;
-  const payPercentage = Math.ceil((hourlyPay / originalHourlyPay) * 100);
-
   return (
-    <div className="bg-white rounded-2xl w-[312px] h-auto p-[16px]">
-      <div className="flex justify-center items-center relative w-[280px] h-[180px]">
-        <img className="rounded-2xl bg-cover w-full h-full" src={imageUrl} />
-
-        {closed && (
-          <>
-            <div className="absolute items-center bg-black opacity-50 w-full h-full rounded-2xl"></div>
-            <p className="absolute text-[28px] font-bold text-gray-30">
-              지난 공고
-            </p>
-          </>
-        )}
-      </div>
+    <div className="bg-white border-[1px] rounded-2xl w-[312px] h-auto p-[16px] ">
+      <CardImage
+        imageUrl={imageUrl}
+        closed={closed}
+        width="280px"
+        height="180px"
+      />
 
       <div className="w-[288px] mt-[15px]">
         <p
@@ -74,60 +51,20 @@ const Card = ({
         >
           {name}
         </p>
-        <div className="flex flex-row my-2">
-          <Image
-            src={`/images/icon-clock-${closed ? 'off' : 'on'}.svg`}
-            alt="clock icon"
-            width={20}
-            height={20}
-          />
-          <p
-            className={`${
-              closed ? 'text-gray-20' : 'text-black'
-            } text-sm ml-[6px]`}
-          >
-            {businessHours}
-          </p>
-        </div>
-        <div className="flex flex-row">
-          <Image
-            src={`/images/icon-location-${closed ? 'off' : 'on'}.svg`}
-            alt="location icon"
-            width={20}
-            height={20}
-          />
-          <p
-            className={`${
-              closed ? 'text-gray-20' : 'text-black'
-            } text-sm ml-[6px]`}
-          >
-            {address1}
-          </p>
-        </div>
-        <div className="flex felx-row justify-between items-center mt-4">
-          <p
-            className={`${
-              closed ? 'text-gray-20' : 'text-black'
-            } font-bold text-[24px]`}
-          >
-            {originalHourlyPayToString}
-          </p>
-          <div
-            className={`${
-              closed ? 'bg-gray-20' : 'bg-red-40'
-            } rounded-[20px] w-[168px] p-[12px] flex felx-row`}
-          >
-            <p className="text-[14px] font-bold">
-              기존 시급보다 {payPercentage}%
-            </p>
-            <Image
-              src="/images/icon-upArrow.svg"
-              alt="upArrow icon"
-              width={20}
-              height={20}
-            />
-          </div>
-        </div>
+
+        <NoticeTimeAndLocation
+          startsAt={startsAt}
+          workhour={workhour}
+          address1={address1}
+          closed={closed}
+        />
+
+        <HourlyPayForWon
+          hourlyPay={hourlyPay}
+          closed={closed}
+          fontSize="24px"
+          originalHourlyPay={originalHourlyPay}
+        />
       </div>
     </div>
   );
