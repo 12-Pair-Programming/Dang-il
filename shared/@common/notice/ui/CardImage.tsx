@@ -20,6 +20,7 @@ const CardImage = ({ imageUrl, closed, width, height }: props) => {
     <div
       className={`flex justify-center items-center relative w-[${width}] h-[${height}]`}
     >
+      {/* TODO: Image로 변경 필요 */}
       <img className="rounded-2xl bg-cover w-full h-full" src={imageUrl} />
       {closed && (
         <>

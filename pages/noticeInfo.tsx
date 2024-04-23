@@ -14,12 +14,8 @@ const NoticeInfo = () => {
   //  - 로그인 정보가 없는 경우 신청하기 버튼에서 모달이 떠야 함
   return (
     <div className="bg-white text-black">
-      <div className="">
-        <ShopInfo />
-      </div>
-      <div>
-        <RecentNotices />
-      </div>
+      <ShopInfo />
+      <RecentNotices />
     </div>
   );
 };

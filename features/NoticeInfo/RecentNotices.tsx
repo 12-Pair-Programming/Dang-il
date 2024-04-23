@@ -1,4 +1,4 @@
-import Card from '@/shared/@common/ui/Card/Card';
+import Card from '@/shared/@common/notice/ui/Card';
 
 /**
  * 최근에 본 공고 리스트 컴포넌트
@@ -11,7 +11,7 @@ const RecentNotices = () => {
   //데이터 직접 연결 필요
 
   return (
-    <div className="w-[963px] mt-[60px] mb-[12px] mx-[238px]">
+    <div className="w-[963px] mt-[60px] mb-3 mx-[238px]">
       <div>
         <p className="text-[28px] font-bold">최근에 본 공고</p>
       </div>

@@ -35,7 +35,7 @@ const Card = ({
   closed,
 }: ProductProps) => {
   return (
-    <div className="bg-white border-[1px] rounded-2xl w-[312px] h-auto p-[16px] ">
+    <div className="bg-white border-[1px] rounded-2xl w-[312px] h-auto p-4 ">
       <CardImage
         imageUrl={imageUrl}
         closed={closed}

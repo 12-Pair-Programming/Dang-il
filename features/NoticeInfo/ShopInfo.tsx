@@ -1,6 +1,6 @@
-import HourlyPayForWon from '@/shared/@common/ui/Card/NoticePayInfo';
-import NoticeTimeAndLocation from '@/shared/@common/ui/Card/NoticeTimeAndLocation';
-import CardImage from '@/shared/@common/ui/Card/CardImage';
+import HourlyPayForWon from '@/shared/@common/notice/ui/NoticePayInfo';
+import NoticeTimeAndLocation from '@/shared/@common/notice/ui/NoticeTimeAndLocation';
+import CardImage from '@/shared/@common/notice/ui/CardImage';
 
 /**
  * 가게 정보 카드 컴포넌트
