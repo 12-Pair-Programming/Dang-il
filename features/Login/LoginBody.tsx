@@ -24,10 +24,10 @@ export default function LoginBody() {
   return (
     <div className="w-full flex items-center justify-center bg-white z-modal">
       <div>
-        <div className="flex items-center justify-center mb-2">
+        <div className="flex items-center justify-center mb-7">
           <Image
-            width={350}
-            height={50}
+            width={250}
+            height={30}
             alt="큰 메인 로고"
             src={'/images/logo.png'}
           />
