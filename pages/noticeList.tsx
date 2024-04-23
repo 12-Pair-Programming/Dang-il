@@ -1,13 +1,13 @@
 import React from 'react';
 import CustomNotice from '@/features/NoticeList/CustomNotice';
-import FullNotice from '@/features/NoticeList/FullNotice';
+import AllNotice from '@/features/NoticeList/AllNotice';
 import { Footer } from '@/shared/@common/ui/Footer/Footer';
 
 const NoticeList = () => {
   return (
     <>
       <CustomNotice />
-      <FullNotice />
+      <AllNotice />
       <Footer />
     </>
   );
