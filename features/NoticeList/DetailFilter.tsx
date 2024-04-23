@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { Input } from '@/shared/@common/ui/Input/Input';
 import Button from '@/shared/@common/ui/Button/Button';
 import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
-import { SetState } from '@/shared/@common/types/helper';
 
 const DetailFilter = () => {
   // 해시태그 기능 구현 중입니다.
@@ -24,7 +23,7 @@ const DetailFilter = () => {
   const { data } = useGetNoticeData();
 
   return (
-    <div className="flex w-[390px] px-6 py-5 flex-col items-start gap-6 bg-white absolute right-[238px] bottom-[150px] rounded-[10px]">
+    <div className="flex w-[390px] px-6 py-5 flex-col items-start gap-6 bg-white absolute right-[238px] bottom-[150px] rounded-[10px] z-modal">
       <div className="flex justify-between items-center self-stretch">
         <h3 className="text-5 font-bold">상세 필터</h3>
         <Image
@@ -44,8 +43,8 @@ const DetailFilter = () => {
                 data.items
                   .map((item) => item.item.shop.item.address1)
                   .reduce(
-                    (acc, value) =>
-                      acc.includes(value) ? acc : [...acc, value],
+                    (items, value) =>
+                      items.includes(value) ? items : [...items, value],
                     [],
                   )
                   .map((address) => (

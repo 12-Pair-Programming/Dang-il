@@ -37,12 +37,13 @@ const AllNotice = () => {
               options={options}
               onSelect={handleSelectOption}
               defaultValue="마감임박순"
-              className="flex h-[30px] p-3 items-center gap-[6px] rounded-[5px]"
             />
-            <Button size="small" color="colored" onClick={handleClick}>
-              상세 필터
-              {showDetailFilter && <DetailFilter />}
-            </Button>
+            <div className="pt-2">
+              <Button size="mediumSmall" color="colored" onClick={handleClick}>
+                상세 필터
+                {showDetailFilter && <DetailFilter />}
+              </Button>
+            </div>
           </div>
         </div>
         <div className="grid grid-cols-3 grid-rows-2 gap-4">
