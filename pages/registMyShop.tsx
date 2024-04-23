@@ -7,6 +7,8 @@ import UploadImage from '@/features/RegistMyShop/UploadImage';
 import Button from '@/shared/@common/ui/Button/Button';
 import { Footer } from '@/shared/@common/ui/Footer/Footer';
 import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
+import { useTextarea } from '@/shared/@common/ui/Textarea/hook/textareaHook';
+import { Textarea } from '@/shared/@common/ui/Textarea/Textarea';
 
 const registMyShop = () => {
 
@@ -15,13 +17,8 @@ const registMyShop = () => {
   const [location, setLocation] = useState('');
   const [shopImage, setShopImage] = useState<string | null>(null);
 
-  const inputsConfigs = [
-    { inputValue: ''},
-    { inputValue: ''},
-    { inputValue: ''},
-  ];
-
-  const inputs = inputsConfigs.map((config) => useInput(config));
+  const [name, subLocation] = new Array(2).map(() => useInput());
+  const [description] = new Array(1).map(() => useTextarea());
 
   const handleClose = () => {
     router.push('/myShopInfo');
@@ -109,7 +106,7 @@ const registMyShop = () => {
             <form onSubmit={handleSubmit}>
               <div className='flex items-start gap-5 mb-6'>
                 <div className='flex flex-col items-start gap-2 flex-shrink-0'>
-                  <Input title='가게 이름*' placeholder='입력' onChange={inputs[0].handleInput} />
+                  <Input title='가게 이름*' placeholder='입력' onChange={name.handleInput} />
                 </div>
                 <div className='flex flex-col items-start gap-2 flex-shrink-0 text-black'>
                   <Dropdown 
@@ -130,7 +127,7 @@ const registMyShop = () => {
                   />
                 </div>
                 <div className='flex flex-col items-start gap-2 flex-shrink-0'>
-                  <Input title='상세 주소*' placeholder='입력' onChange={inputs[1].handleInput} />
+                  <Input title='상세 주소*' placeholder='입력' onChange={subLocation.handleInput} />
                 </div>
               </div>
               <div className='flex flex-col items-start gap-5 mb-6'>
@@ -139,11 +136,11 @@ const registMyShop = () => {
               </div>
               <div className='w-full flex flex-col items-start gap-2'>
                 <p className='text-base'>가게 설명</p>
-                <Input
+                <Textarea
                   title='가게 설명'
                   width='600px'
                   placeholder='입력' 
-                  onChange={inputs[2].handleInput} />
+                  onChange={description.handleTextarea} />
               </div>
               <div className='flex mt-8 justify-center'>
                 <Button size='large' color='colored' onClick={handleTotalSubmit}>

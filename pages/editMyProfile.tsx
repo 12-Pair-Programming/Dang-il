@@ -5,16 +5,15 @@ import { useInput } from "@/shared/@common/ui/Input/hook/inputHook";
 import Button from "@/shared/@common/ui/Button/Button";
 import { useRouter } from "next/router";
 import Dropdown from "@/shared/@common/ui/Dropdown/Dropdown";
+import { Textarea } from "@/shared/@common/ui/Textarea/Textarea";
+import { useTextarea } from "@/shared/@common/ui/Textarea/hook/textareaHook";
 
 const editMyProfile = () => {
 
   const router = useRouter();
 
-  const inputsConfigs = [
-    { inputValue: '' },
-    { inputValue: '' },
-    { inputValue: '' },
-  ];
+  const [name, phone] = new Array(2).map(() => useInput());
+  const [description] = new Array(1).map(() => useTextarea());
   const [location, setLocation] = useState('');
 
   const handleSelectLocations = (option: string) => {
@@ -59,8 +58,6 @@ const editMyProfile = () => {
     { value: '강동구', label: '서울시 강동구' },
   ]
 
-  const inputs = inputsConfigs.map((config) => useInput(config));
-
   return (
     <>
       <div className="flex py-[60px] px-[238px] flex-col items-start gap-2 bg-gray-05">
@@ -73,18 +70,12 @@ const editMyProfile = () => {
           </div>
           <form onSubmit={handleSubmit}>
             <div className="inline-flex items-start gap-5">
-              <Input title='이름*' placeholder="입력" type="text" countText="원" onChange={inputs[0].handleInput}>
-                
-              </Input>
-              <Input title='연락처*' placeholder="입력" type="text" countText="시간" onChange={inputs[1].handleInput}>
-
-              </Input>
+              <Input title='이름*' placeholder="입력" type="text" countText="원" onChange={name.handleInput} />
+              <Input title='연락처*' placeholder="입력" type="text" onChange={phone.handleInput} />
               <Dropdown title="선호 지역" options={locations} onSelect={(option) => handleSelectLocations(option)} defaultValue="선택" />
             </div>
             <div className="flex w-[964px] flex-col items-start gap-2">
-              <Input title="소개" placeholder="설명을 작성해 주세요" type="text" onChange={inputs[2].handleInput}>
-
-              </Input>
+              <Textarea title="소개" placeholder="설명을 작성해 주세요" onChange={description.handleTextarea} />
               <Button size='large' color="colored" onClick={handleTotalSubmit}>
                 수정하기
               </Button>

@@ -1,5 +1,5 @@
 import Button from "@/shared/@common/ui/Button/Button";
-import Table from "@/shared/@common/ui/Table/Table";
+import Table from "@/shared/@common/ui/Table/table";
 import { useRouter } from "next/router";
 import { useState } from "react"
 
