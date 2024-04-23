@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Input } from '@/shared/@common/ui/Input/Input';
-import Button from '@/shared/@common/ui/Button/Button';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Input } from '@/shared/@common/ui/Input/Input';
+import Button from '@/shared/@common/ui/Button/Button';
 import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
 import { useCheckUserData } from '@/shared/@common/auth/hooks/useCheckUserData';
 import { RadioButton } from './radioButton/RadioButton';
