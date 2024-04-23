@@ -79,7 +79,7 @@ export const Dropdown = ({
         <div
           className={`absolute ${
             isOpen ? 'inline-flex' : 'hidden'
-          } flex-col items-start rounded-md border-[2px] border-gray-20 bg-white shadow-md z-4 mt-2 overflow-y-auto overflow-x-hidden max-h-[200px] z-10 right-[7px]`}
+          } flex-col items-start rounded-md border-[2px] border-gray-20 bg-white shadow-md z-4 mt-2 overflow-y-auto overflow-x-hidden max-h-[200px] z-dropdown right-[7px]`}
         >
           {options.map((option, index) => (
             <div
