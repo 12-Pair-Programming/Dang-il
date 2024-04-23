@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Input } from '@/shared/@common/ui/Input/Input';
 import Button from '@/shared/@common/ui/Button/Button';
+import Calendar from '../NoticeRegist/Calendar';
 import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
 
 const DetailFilter = () => {
-  // 해시태그 기능 구현 중입니다.
   const [clickedItem, setClickedItem] = useState('');
   const [hashtag, setHashtag] = useState<string[]>([]);
 
@@ -86,7 +86,7 @@ const DetailFilter = () => {
         </div>
         <div className="flex w-[350px] flex-col items-start gap-6">
           <hr className="h-[2px] self-stretch bg-gray-10 mt-6" />
-          <Input title="시작일" />
+          <Calendar />
           <hr className="h-[2px] self-stretch bg-gray-10" />
           <div className="flex items-center gap-3">
             <Input title="금액" width="190px" countText="원" />
