@@ -8,19 +8,19 @@ import FilterCalendar from './FilterCalendar';
 import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
 
 const DetailFilter = () => {
-  const [clickedItem, setClickedItem] = useState('');
+  const [clickedAddress, setClickedAddress] = useState('');
   const [hashtag, setHashtag] = useState<string[]>([]);
   const [startDate, setStartDate] = useState();
   const money = useInput('');
 
-  const handleClickItem = (address: string) => {
+  const handleClickAddress = (address: string) => {
     if (address.trim() !== '') {
-      setClickedItem(address);
+      setClickedAddress(address);
       setHashtag((prevhashtag) => [...prevhashtag, address]);
     }
   };
 
-  const handleDeleteTag = (address: string) => {
+  const handleFilterTag = (address: string) => {
     setHashtag((prevhashtag) => prevhashtag.filter((tag) => tag !== address));
   };
 
@@ -32,6 +32,12 @@ const DetailFilter = () => {
     setHashtag([]);
     handleDateChange(null);
     money.handleInput({ target: { value: '' } } as InputChangeEvent);
+  };
+
+  const handleApplyValues = () => {
+    handleClickAddress(clickedAddress);
+    money.handleInput({ target: { value: money.value } } as InputChangeEvent);
+    handleDateChange(startDate);
   };
 
   const { data } = useGetNoticeData();
@@ -62,7 +68,7 @@ const DetailFilter = () => {
                     [],
                   )
                   .map((address) => (
-                    <button onClick={() => handleClickItem(address)}>
+                    <button onClick={() => handleClickAddress(address)}>
                       {address}
                     </button>
                   ))}
@@ -86,7 +92,7 @@ const DetailFilter = () => {
                             src={`/images/purpleClose.png`}
                             alt="창 닫기 아이콘"
                             className="cursor-pointer"
-                            onClick={() => handleDeleteTag(tag)}
+                            onClick={() => handleFilterTag(tag)}
                             height={24}
                             width={24}
                           />
@@ -129,7 +135,9 @@ const DetailFilter = () => {
         <Button
           size="mediumLarge"
           color="colored"
-          onClick={() => {}}
+          onClick={() => {
+            handleApplyValues();
+          }}
           disabled={false}
         >
           적용하기
