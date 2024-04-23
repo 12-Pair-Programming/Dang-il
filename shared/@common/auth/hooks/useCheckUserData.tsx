@@ -6,14 +6,14 @@ interface useCheckUserDataProps {
   email?: string;
   password?: string;
   passwordRepeat?: string;
-  tpye?: string;
+  type?: string;
 }
 
 export function useCheckUserData({
   email = '',
   password = '',
   passwordRepeat = password,
-  tpye = 'boss',
+  type = 'boss',
 }: useCheckUserDataProps) {
   const [emailError, setEmailError] = useState<string | undefined>('');
   const [passwordError, setPasswordError] = useState<string | undefined>('');
@@ -28,7 +28,7 @@ export function useCheckUserData({
   const [isPasswordCheck, setIsPasswordCheck] = useState(false);
   const [isPasswordRepeatCheck, setIsPasswordRepeatCheck] = useState(false);
 
-  const [selectedUserType, setSelectedUserType] = useState(tpye);
+  const [selectedUserType, setSelectedUserType] = useState(type);
 
   const EMAIL_CHECK = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
   const PASSWORD_CHECK = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,30}$/;
