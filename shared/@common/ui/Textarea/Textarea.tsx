@@ -25,14 +25,13 @@ export const Textarea = ({
   onBlur,
 }: TextareaProps) => {
   return (
-    <div className={`w-auto h-auto flex flex-col items-start gap-2`}>
+    <div 
+      className={`flex flex-col items-start gap-2`}
+      style={{ width: `${width}`, height: `${height}` }} 
+    >
       <p className="text-black font-sans font-normal text-base leading-6">
         {title}
       </p>
-      <div
-        className={`relative`}
-        style={{ width: `${width}`, height: `${height}` }}
-      >
         <textarea
           className={`flex py-4 px-5 w-full h-full rounded-md border ${
             isError ? 'border-red-40' : 'border-gray-30'
@@ -46,7 +45,6 @@ export const Textarea = ({
             {countText}
           </p>
         )}
-      </div>
       {isError && <p className="text-red-500 pl-2 text-xs">{errorText}</p>}
     </div>
   );

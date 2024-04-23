@@ -53,7 +53,7 @@ export const Dropdown = ({
   }, []);
 
   return (
-    <div className={`flex flex-col items-start gap-2`}>
+    <div className={`flex flex-col items-start gap-2 text-black`}>
       {title && (
         <p className="font-sans font-normal text-base leading-6">{title}</p>
       )}
