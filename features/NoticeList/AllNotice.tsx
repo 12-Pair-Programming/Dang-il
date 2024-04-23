@@ -6,7 +6,7 @@ import Card from '@/shared/@common/ui/Card/Card';
 import DetailFilter from './DetailFilter';
 import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
 
-const FullNotice = () => {
+const AllNotice = () => {
   const [showDetailFilter, setShowDetailFilter] = useState(false);
   const [postPerPage, setPostPerPage] = useState(6);
   const [currentPage, setCurrentPage] = useState(1);
@@ -77,4 +77,4 @@ const FullNotice = () => {
   );
 };
 
-export default FullNotice;
+export default AllNotice;
