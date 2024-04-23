@@ -49,10 +49,7 @@ const DetailFilter = () => {
                     [],
                   )
                   .map((address) => (
-                    <button
-                      key={address}
-                      onClick={() => handleClickItem(address)}
-                    >
+                    <button onClick={() => handleClickItem(address)}>
                       {address}
                     </button>
                   ))}
@@ -63,11 +60,13 @@ const DetailFilter = () => {
                   <>
                     {hashtag
                       .reduce(
-                        (acc, value) =>
-                          acc.includes(value) ? acc : [...acc, value],
+                        (hashTags, value) =>
+                          hashTags.includes(value)
+                            ? hashTags
+                            : [...hashTags, value],
                         [],
                       )
-                      .map((tag, index) => (
+                      .map((tag) => (
                         <div className="flex px-[6px] py-[10px] justify-center items-center gap-1 rounded-[20px] bg-purple-10">
                           <p className="text-primary font-bold">{tag}</p>
                           <Image
