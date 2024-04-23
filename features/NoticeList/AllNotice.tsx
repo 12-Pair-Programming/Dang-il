@@ -8,9 +8,9 @@ import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
 
 const AllNotice = () => {
   const [showDetailFilter, setShowDetailFilter] = useState(false);
-  const [postPerPage, setPostPerPage] = useState(6);
+  const [showCard, setShowCard] = useState(6);
   const [currentPage, setCurrentPage] = useState(1);
-  const offset = (currentPage - 1) * postPerPage;
+  const cardOffset = (currentPage - 1) * showCard;
 
   const handleClick = () => {
     setShowDetailFilter(true);
@@ -49,7 +49,7 @@ const AllNotice = () => {
           {data &&
             data.items.length > 0 &&
             data.items
-              .slice(offset, offset + postPerPage)
+              .slice(cardOffset, cardOffset + showCard)
               .map((item) => item.item)
               .map((item) => (
                 <Card
