@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Input } from '@/shared/@common/ui/Input/Input';
 import Button from '@/shared/@common/ui/Button/Button';
-import Calendar from '../NoticeRegist/Calendar';
+import Calendar from '../NoticeList/Calendar';
 import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
 
 const DetailFilter = () => {
