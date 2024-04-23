@@ -39,9 +39,9 @@ export const Modal = ({
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-50 bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-50 bg-opacity-50 z-modalbackground">
           <div
-            className="flex flex-col justify-center items-center bg-white rounded-[12px] relative"
+            className="flex flex-col justify-center items-center bg-white rounded-[12px] relative z-modalbase"
             ref={modalClick}
             onMouseDown={(e) => e.stopPropagation()}
           >

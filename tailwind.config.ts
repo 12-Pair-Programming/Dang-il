@@ -14,7 +14,9 @@ const config: Config = {
         lg: '1280px',
       },
       zIndex: {
-        modal: '10',
+        dropdown: '10',
+        modalbackground: '20',
+        modalbody: '30',
       },
       colors: {
         primary: '#9935ff',

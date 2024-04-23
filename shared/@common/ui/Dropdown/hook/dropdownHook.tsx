@@ -7,11 +7,10 @@ interface Option {
 
 interface DropdownHookProps {
   options: Option[];
-  defaultOption: string;
 }
 
-export const useDropdown = ({ defaultOption, options }: DropdownHookProps) => {
-  const [selectedOption, setSelectedOption] = useState(defaultOption);
+export const useDropdown = ({ options }: DropdownHookProps) => {
+  const [selectedOption, setSelectedOption] = useState('');
 
   const handleSelectOption = (option: string) => {
     setSelectedOption(option);
