@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import Button from '@/shared/Button/Button';
+import Button from '@/shared/@common/ui/Button/Button';
 
 interface WarningModalProps {
   content: string;

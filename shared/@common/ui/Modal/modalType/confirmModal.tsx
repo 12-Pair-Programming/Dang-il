@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import Button from '@/shared/Button/Button';
+import Button from '@/shared/@common/ui/Button/Button';
 
 interface ConfirmModalProps {
   content: string;
@@ -27,7 +27,7 @@ export const ConfirmModal = ({ content, closeModal }: ConfirmModalProps) => {
           아니오
         </Button>
         <Button size="medium" color="colored" onClick={closeModal}>
-          취소하기{' '}
+          취소하기
         </Button>
       </div>
     </div>

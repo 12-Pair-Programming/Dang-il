@@ -1,4 +1,4 @@
-import Button from '@/shared/Button/Button';
+import Button from '@/shared/@common/ui/Button/Button';
 import React from 'react';
 
 interface NoticeModalProps {
