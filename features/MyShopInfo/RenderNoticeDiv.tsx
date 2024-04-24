@@ -3,7 +3,6 @@ import Card from '@/shared/@common/ui/Card/Card';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-
 const RenderNoticeDiv = () => {
   const router = useRouter();
   const [isNotice, setIsNotice] = useState(false);
