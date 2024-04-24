@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 interface CalendarProps {
-  onDateChange: string; // 선택된 날짜를 전달하기 위한 콜백 함수
+  onDateChange: (date: string | null) => void; // 선택된 날짜를 전달하기 위한 콜백 함수
 }
 
 const Calendar: React.FC<CalendarProps> = ({ onDateChange }) => {

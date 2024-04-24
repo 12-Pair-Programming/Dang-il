@@ -29,7 +29,7 @@ const noticeRegist = () => {
     router.push('/myShopInfo');
   }
 
-  const handleDateChange = (date: Date | null) => {
+  const handleDateChange = (date: string | null) => {
     setSelectedDate(date);
   };
 
