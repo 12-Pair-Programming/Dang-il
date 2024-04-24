@@ -46,7 +46,7 @@ const DetailFilter = () => {
   const { data } = useGetNoticeData();
 
   return (
-    <div className="flex w-[390px] px-6 py-5 flex-col items-start gap-6 bg-white absolute right-[238px] bottom-[150px] rounded-[10px] z-modal">
+    <div className="flex w-[390px] px-6 py-5 flex-col items-start gap-6 bg-white absolute right-[238px] bottom-[150px] rounded-[10px] z-modalbody">
       <div className="flex justify-between items-center self-stretch">
         <h3 className="text-5 font-bold">상세 필터</h3>
         <Image
