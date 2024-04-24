@@ -8,7 +8,7 @@ import EmployeeList from '@/features/NoticeInfo/EmployeeList';
  */
 const NoticeInfo = () => {
   // TODO: 로그인 정보 연결 필요
-  const userType = 'employer'; //user.item.type : employer | employee;
+  const userType = 'employee'; //user.item.type : employer | employee;
   const isLogin = true;
 
   //TODO: 목업 데이터 api연결해서 받아와야 함
@@ -30,9 +30,9 @@ const NoticeInfo = () => {
         address2: 'string',
         description:
           '알바하기 편한 너구리네 라면집! 라면 올려두고 끓이기만 하면 되어서 쉬운 편에 속하는 가게입니다.',
-        imageUrl:
-          'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxODA4MDlfMzkg%2FMDAxNTMzNzc0NDQzMjM0.2tTaXYEZ5qoD4tSKJb1b_RReTCNCgCdYhSKO52GpxKog.0JV9pl0bPnDRZhEkAG3YAzOyu5_d3CpH4p4uQ2ciCZYg.JPEG.gyubin0804%2F1533774357467.jpg&type=sc960_832',
-        originalHourlyPay: 1000,
+        imageUrl: '/images/icon-clock-on.svg',
+        // 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxODA4MDlfMzkg%2FMDAxNTMzNzc0NDQzMjM0.2tTaXYEZ5qoD4tSKJb1b_RReTCNCgCdYhSKO52GpxKog.0JV9pl0bPnDRZhEkAG3YAzOyu5_d3CpH4p4uQ2ciCZYg.JPEG.gyubin0804%2F1533774357467.jpg&type=sc960_832',
+        originalHourlyPay: 10000,
       },
       href: 'string',
     },

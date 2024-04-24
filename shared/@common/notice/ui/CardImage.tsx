@@ -3,8 +3,8 @@ import Image from 'next/image';
 interface props {
   imageUrl: string;
   closed: boolean;
-  width: string;
-  height: string;
+  width: number;
+  height: number;
 }
 /**
  * 카드 내 이미지를 보여주는 컴포넌트
@@ -16,12 +16,20 @@ interface props {
  * @returns
  */
 const CardImage = ({ imageUrl, closed, width, height }: props) => {
+  console.log(imageUrl);
   return (
-    <div
-      className={`flex justify-center items-center relative w-[${width}] h-[${height}]`}
-    >
-      {/* TODO: Image로 변경 필요 */}
-      <img className="rounded-2xl bg-cover w-full h-full" src={imageUrl} />
+    <>
+      {/* <div
+      className={`flex justify-center items-center relative  rounded-2xl object-cover`}
+    > */}
+      <Image
+        className="object-cover"
+        src={imageUrl}
+        alt="가게 이미지"
+        width={width}
+        height={height}
+      />
+
       {closed && (
         <>
           <div className="absolute items-center bg-black opacity-50 w-full h-full rounded-2xl"></div>
@@ -30,7 +38,8 @@ const CardImage = ({ imageUrl, closed, width, height }: props) => {
           </p>
         </>
       )}
-    </div>
+    </>
+    // </div>
   );
 };
 

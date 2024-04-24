@@ -79,12 +79,14 @@ const ShopInfo = ({
         <p className="text-[28px] font-bold">도토리 식당</p>
       </div>
       <div className="flex w-[963px] h-[365px] border-[1px] rounded-2xl p-6 mt-4">
-        <CardImage
-          imageUrl={shopImageUrl}
-          closed={closed}
-          width="596px"
-          height="full"
-        />
+        <div className="w-[596px] h-[292px] overflow-hidden">
+          <CardImage
+            imageUrl={shopImageUrl}
+            closed={closed}
+            width={596}
+            height={292}
+          />
+        </div>
         <div className="w-[346px] ml-6">
           <p className="text-base font-bold text-primary">시급</p>
           <HourlyPayForWon
