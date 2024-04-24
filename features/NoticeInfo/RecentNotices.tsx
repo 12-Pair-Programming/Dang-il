@@ -1,4 +1,4 @@
-import Card from '@/shared/@common/ui/Card/Card';
+import Card from '@/shared/@common/notice/ui/Card';
 
 /**
  * 최근에 본 공고 리스트 컴포넌트
@@ -11,14 +11,14 @@ const RecentNotices = () => {
   //데이터 직접 연결 필요
 
   return (
-    <div className="w-[963px] mt-[60px] mb-[12px] mx-[238px]">
+    <div className="w-[963px] mt-[60px] mb-3 mx-[238px]">
       <div>
         <p className="text-[28px] font-bold">최근에 본 공고</p>
       </div>
       <div className="mt-8 flex gap-[14px]">
         <Card
           name="시급 비싼 가게"
-          imageUrl="https://img.sbs.co.kr/newsnet/etv/upload/2022/09/19/30000790950.jpg"
+          imageUrl="https://bootcamp-project-api.s3.ap-northeast-2.amazonaws.com/0-1/the-julge/afebf6d2-a410-4dba-84bc-c123468d7905-dump%20image.png"
           address1="서울시 강남구"
           startsAt="2023-07-07T18:00:00.000Z"
           workhour={12}
@@ -28,7 +28,7 @@ const RecentNotices = () => {
         />
         <Card
           name=" 시급 동일 가게"
-          imageUrl="https://img.sbs.co.kr/newsnet/etv/upload/2022/09/19/30000790950.jpg"
+          imageUrl="https://bootcamp-project-api.s3.ap-northeast-2.amazonaws.com/0-1/the-julge/afebf6d2-a410-4dba-84bc-c123468d7905-dump%20image.png"
           address1="서울시 강남구"
           startsAt="2023-07-07T18:00:00.000Z"
           workhour={12}
@@ -38,7 +38,7 @@ const RecentNotices = () => {
         />
         <Card
           name="시급 낮은 가게"
-          imageUrl="https://img.sbs.co.kr/newsnet/etv/upload/2022/09/19/30000790950.jpg"
+          imageUrl="https://bootcamp-project-api.s3.ap-northeast-2.amazonaws.com/0-1/the-julge/afebf6d2-a410-4dba-84bc-c123468d7905-dump%20image.png"
           address1="서울시 강남구"
           startsAt="2023-07-07T18:00:00.000Z"
           workhour={12}
@@ -50,7 +50,7 @@ const RecentNotices = () => {
       <div className="mt-8 flex gap-[14px]">
         <Card
           name="시급 비싼 가게"
-          imageUrl="https://img.sbs.co.kr/newsnet/etv/upload/2022/09/19/30000790950.jpg"
+          imageUrl="https://bootcamp-project-api.s3.ap-northeast-2.amazonaws.com/0-1/the-julge/afebf6d2-a410-4dba-84bc-c123468d7905-dump%20image.png"
           address1="서울시 강남구"
           startsAt="2023-07-07T18:00:00.000Z"
           workhour={12}
@@ -60,7 +60,7 @@ const RecentNotices = () => {
         />
         <Card
           name=" 시급 동일 가게"
-          imageUrl="https://img.sbs.co.kr/newsnet/etv/upload/2022/09/19/30000790950.jpg"
+          imageUrl="https://bootcamp-project-api.s3.ap-northeast-2.amazonaws.com/0-1/the-julge/afebf6d2-a410-4dba-84bc-c123468d7905-dump%20image.png"
           address1="서울시 강남구"
           startsAt="2023-07-07T18:00:00.000Z"
           workhour={12}
@@ -70,7 +70,7 @@ const RecentNotices = () => {
         />
         <Card
           name="시급 낮은 가게"
-          imageUrl="https://img.sbs.co.kr/newsnet/etv/upload/2022/09/19/30000790950.jpg"
+          imageUrl="https://bootcamp-project-api.s3.ap-northeast-2.amazonaws.com/0-1/the-julge/afebf6d2-a410-4dba-84bc-c123468d7905-dump%20image.png"
           address1="서울시 강남구"
           startsAt="2023-07-07T18:00:00.000Z"
           workhour={12}

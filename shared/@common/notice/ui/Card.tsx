@@ -35,14 +35,17 @@ const Card = ({
   closed,
 }: ProductProps) => {
   return (
-    <div className="bg-white border-[1px] rounded-2xl w-[312px] h-auto p-[16px] ">
-      <CardImage
-        imageUrl={imageUrl}
-        closed={closed}
-        width="280px"
-        height="180px"
-      />
-
+    <div className="bg-white border-[1px] rounded-2xl w-[312px] h-auto p-4 ">
+      <div
+        className={`flex justify-center items-center relative  rounded-2xl object-cover`}
+      >
+        <CardImage
+          imageUrl={imageUrl}
+          closed={closed}
+          width={280}
+          height={180}
+        />
+      </div>
       <div className="w-[288px] mt-[15px]">
         <p
           className={`${
