@@ -37,11 +37,8 @@ const DetailFilter = () => {
   const handleApplyValues = () => {
     setHashtag(hashtag);
     money.handleInput({ target: { value: money.value } } as InputChangeEvent);
-    handleDateChange(startDate);
+    setStartDate(startDate);
   };
-
-  console.log(clickedAddress);
-  console.log(hashtag);
 
   const { data } = useGetNoticeData();
 
