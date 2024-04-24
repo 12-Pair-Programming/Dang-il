@@ -23,7 +23,14 @@ const editMyProfile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  }
+    const data = {
+      name: name.value,
+      phone: phone.value,
+      address: location,
+      bio: description.value,
+    };
+    console.log(data);
+  };
 
   const handleTotalSubmit = () => {
     alert('수정이 완료되었습니다.');
@@ -76,8 +83,10 @@ const editMyProfile = () => {
           </div>
           <div className="flex w-[964px] flex-col items-start gap-2">
             <Textarea title="소개" width="100%" height="153px" placeholder="설명을 작성해 주세요" onChange={description.handleTextarea} />
+          </div>
+          <div className="flex items-center">
             <Button size='large' color="colored" onClick={handleTotalSubmit}>
-              수정하기
+              등록하기
             </Button>
           </div>
         </form>
