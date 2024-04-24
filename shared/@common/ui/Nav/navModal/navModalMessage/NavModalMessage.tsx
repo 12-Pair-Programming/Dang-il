@@ -28,7 +28,7 @@ export const NavModalMessage = ({
       <Image
         width={5}
         height={5}
-        alt={'상태 표시등'}
+        alt="상태 표시등"
         src={
           isResult === 'accepted'
             ? '/images/accepted.png'
