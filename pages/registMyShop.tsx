@@ -19,6 +19,7 @@ const registMyShop = () => {
 
   const name = useInput('');
   const subLocation = useInput('');
+  const originalHourlyPay = useInput('');
   const description = useTextarea('');
 
   const handleClose = () => {
@@ -39,16 +40,23 @@ const registMyShop = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const data = {
+      name: name.value,
+      category: foodKinds,
+      address1: location,
+      address2: subLocation.value,
+      description: description.value,
+      imageUrl: shopImage,
+      originalHourlyPay: originalHourlyPay.value,
+    };
+    console.log(data);
   };
 
   const handleTotalSubmit = () => {
     console.log('제출 완료');
-    console.log(inputs[0].value);
     console.log(foodKinds);
     console.log(location);
-    console.log(inputs[1].value);
     console.log(shopImage);
-    console.log(inputs[2].value);
     alert('등록이 완료되었습니다');
     router.push('/myShopInfo');
   };
@@ -130,6 +138,12 @@ const registMyShop = () => {
                 <Input title='상세 주소*' placeholder='입력' onChange={subLocation.handleInput} />
               </div>
             </div>
+            <div className='flex items-start gap-5 mb-6'>
+              <div className='flex flex-col items-start gap-2 flex-shrink-0 text-black'>
+                <Input title='기본 시급*' placeholder='입력' countText='원' onChange={originalHourlyPay.handleInput} />
+              </div>
+            </div>
+
             <div className='flex flex-col items-start gap-5 mb-6'>
               <p className='text-base'>가게 이미지</p>
               <UploadImage onImageChange={handleShopImage}/>

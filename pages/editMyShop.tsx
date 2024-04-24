@@ -20,6 +20,7 @@ const editMyShop = () => {
 
   const name = useInput('');
   const subLocation = useInput('');
+  const originalHourlyPay = useInput('');
   const description = useTextarea('');
 
   const handleClose = () => {
@@ -40,6 +41,16 @@ const editMyShop = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const data = {
+      name: name.value,
+      category: foodKinds,
+      address1: location,
+      address2: subLocation.value,
+      description: description.value,
+      imageUrl: shopImage,
+      originalHourlyPay: originalHourlyPay.value,
+    };
+    console.log(data);
   };
 
   const handleTotalSubmit = () => {
@@ -129,6 +140,11 @@ const editMyShop = () => {
               </div>
               <div className='flex flex-col items-start gap-2 flex-shrink-0'>
                 <Input title='상세 주소*' placeholder='입력' onChange={subLocation.handleInput} />
+              </div>
+            </div>
+            <div className='flex items-start gap-5 mb-6'>
+              <div className='flex flex-col items-start gap-2 flex-shrink-0 text-black'>
+                <Input title='기본 시급*' placeholder='입력' countText='원' onChange={originalHourlyPay.handleInput} />
               </div>
             </div>
             <div className='flex flex-col items-start gap-5 mb-6'>
