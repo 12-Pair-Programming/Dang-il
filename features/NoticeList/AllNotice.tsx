@@ -7,7 +7,7 @@ import DetailFilter from './DetailFilter';
 import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
 
 const AllNotice = () => {
-  const [showDetailFilter, setShowDetailFilter] = useState(false);
+  const [showDetailFilter, setShowDetailFilter] = useState(Boolean);
   const [showCard, setShowCard] = useState(6);
   const [currentPage, setCurrentPage] = useState(1);
   const cardOffset = (currentPage - 1) * showCard;

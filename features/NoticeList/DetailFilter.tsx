@@ -25,13 +25,13 @@ const DetailFilter = () => {
   };
 
   const handleDateChange = (date) => {
-    setStartDate(date); // 선택된 날짜를 상태에 반영합니다.
+    setStartDate(date);
   };
 
   const handleResetValue = () => {
     setHashtag([]);
     handleDateChange(null);
-    money.handleInput({ target: { value: '' } } as InputChangeEvent);
+    money.handleReset();
   };
 
   const handleApplyValues = () => {
@@ -39,6 +39,9 @@ const DetailFilter = () => {
     money.handleInput({ target: { value: money.value } } as InputChangeEvent);
     setStartDate(startDate);
   };
+
+  console.log(money);
+  console.log(startDate);
 
   const { data } = useGetNoticeData();
 
@@ -115,7 +118,8 @@ const DetailFilter = () => {
               countText="원"
               type="number"
               placeholder="값을 입력해주세요"
-              onBlur={money.handleInput}
+              onChange={money.handleInput}
+              value={money.value}
             />
             <p className="pt-9">이상부터</p>
           </div>

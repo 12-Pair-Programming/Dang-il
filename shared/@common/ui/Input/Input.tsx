@@ -14,6 +14,7 @@ interface InputProps {
   isError?: boolean;
   errorText?: string;
   countText?: string;
+  value?: string | number;
   onChange?: (event: InputChangeEvent) => void;
   onBlur?: (event: InputOnBlurEvent) => void;
 }
@@ -27,6 +28,7 @@ export const Input = ({
   isError = false,
   errorText,
   countText,
+  value,
   onChange,
   onBlur,
 }: InputProps) => {
@@ -56,6 +58,7 @@ export const Input = ({
           placeholder={placeholder}
           onChange={onChange}
           onBlur={onBlur}
+          value={value}
         />
         {firstType === 'password' && (
           <Image
