@@ -8,7 +8,11 @@ export const useInput = (defaultValue?: string) => {
     setValue(e.target.value);
   };
 
-  return { handleInput, value };
+  const handleReset = () => {
+    setValue('');
+  };
+
+  return { handleInput, value, handleReset };
 };
 
 /*
