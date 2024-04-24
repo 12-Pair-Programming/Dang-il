@@ -1,30 +1,49 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
+import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
 import { Input } from '@/shared/@common/ui/Input/Input';
+import { InputChangeEvent } from '@/shared/@common/types/helper';
 import Button from '@/shared/@common/ui/Button/Button';
+import FilterCalendar from './FilterCalendar';
 import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
-import { SetState } from '@/shared/@common/types/helper';
 
 const DetailFilter = () => {
-  // 해시태그 기능 구현 중입니다.
-  const [clickedItem, setClickedItem] = useState('');
+  const [clickedAddress, setClickedAddress] = useState('');
   const [hashtag, setHashtag] = useState<string[]>([]);
+  const [startDate, setStartDate] = useState<Date>();
+  const money = useInput('');
 
-  const handleClickItem = (address: string) => {
+  const handleClickAddress = (address: string) => {
     if (address.trim() !== '') {
-      setClickedItem(address);
-      setHashtag((prevhashtag) => [...prevhashtag, address]);
+      setClickedAddress(address);
+      setHashtag((prevHashtag) => [...prevHashtag, address]);
     }
   };
 
-  const handleDeleteTag = (address: string) => {
-    setHashtag((prevhashtag) => prevhashtag.filter((tag) => tag !== address));
+  const handleFilterTag = (address: string) => {
+    setHashtag((prevHashtag) => prevHashtag.filter((tag) => tag !== address));
+  };
+
+  const handleDateChange = (date: Date) => {
+    setStartDate(date);
+  };
+
+  const handleResetValue = () => {
+    setHashtag([]);
+    setStartDate(undefined);
+    money.handleReset();
+  };
+
+  const handleApplyValues = () => {
+    setHashtag(hashtag);
+    money.handleInput({ target: { value: money.value } } as InputChangeEvent);
+    setStartDate(startDate);
   };
 
   const { data } = useGetNoticeData();
 
   return (
-    <div className="flex w-[390px] px-6 py-5 flex-col items-start gap-6 bg-white absolute right-[238px] bottom-[150px] rounded-[10px]">
+    <div className="flex w-[390px] px-6 py-5 flex-col items-start gap-6 bg-white absolute right-[238px] bottom-[150px] rounded-[10px] z-modalbody">
       <div className="flex justify-between items-center self-stretch">
         <h3 className="text-5 font-bold">상세 필터</h3>
         <Image
@@ -44,12 +63,12 @@ const DetailFilter = () => {
                 data.items
                   .map((item) => item.item.shop.item.address1)
                   .reduce(
-                    (acc, value) =>
-                      acc.includes(value) ? acc : [...acc, value],
+                    (items, value) =>
+                      items.includes(value) ? items : [...items, value],
                     [],
                   )
                   .map((address) => (
-                    <button onClick={() => handleClickItem(address)}>
+                    <button onClick={() => handleClickAddress(address)}>
                       {address}
                     </button>
                   ))}
@@ -73,7 +92,7 @@ const DetailFilter = () => {
                             src={`/images/purpleClose.png`}
                             alt="창 닫기 아이콘"
                             className="cursor-pointer"
-                            onClick={() => handleDeleteTag(tag)}
+                            onClick={() => handleFilterTag(tag)}
                             height={24}
                             width={24}
                           />
@@ -87,10 +106,18 @@ const DetailFilter = () => {
         </div>
         <div className="flex w-[350px] flex-col items-start gap-6">
           <hr className="h-[2px] self-stretch bg-gray-10 mt-6" />
-          <Input title="시작일" />
+          <FilterCalendar selected={startDate} onChange={handleDateChange} />
           <hr className="h-[2px] self-stretch bg-gray-10" />
           <div className="flex items-center gap-3">
-            <Input title="금액" width="190px" countText="원" />
+            <Input
+              title="금액"
+              width="190px"
+              countText="원"
+              type="number"
+              placeholder="값을 입력해주세요"
+              onChange={money.handleInput}
+              value={money.value}
+            />
             <p className="pt-9">이상부터</p>
           </div>
         </div>
@@ -99,7 +126,9 @@ const DetailFilter = () => {
         <Button
           size="mediumLarge"
           color="none"
-          onClick={() => {}}
+          onClick={() => {
+            handleResetValue();
+          }}
           disabled={false}
         >
           초기화
@@ -107,7 +136,9 @@ const DetailFilter = () => {
         <Button
           size="mediumLarge"
           color="colored"
-          onClick={() => {}}
+          onClick={() => {
+            handleApplyValues();
+          }}
           disabled={false}
         >
           적용하기
