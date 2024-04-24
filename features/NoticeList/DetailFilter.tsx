@@ -40,9 +40,6 @@ const DetailFilter = () => {
     setStartDate(startDate);
   };
 
-  console.log(money);
-  console.log(startDate);
-
   const { data } = useGetNoticeData();
 
   return (
