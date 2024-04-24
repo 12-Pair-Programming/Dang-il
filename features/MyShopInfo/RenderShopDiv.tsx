@@ -14,6 +14,16 @@ import RenderNoticeDiv from "./RenderNoticeDiv";
 
     const router = useRouter();
 
+    const userData = {
+      // GET으로 받아올 DATA
+      name: '진주회관',
+      category: '한식',
+      address1: '중구',
+      address2: '세종대로11길 26',
+      description: '콩국수 맛집 인정따리',
+      imageUrl: `/images/icon-location-on.svg`,
+    };
+
     const handleWritingShopInfo = () => {
       /* 가게 등록하는 페이지로 이동시키기 */
       router.push('/registMyShop');
@@ -50,17 +60,17 @@ import RenderNoticeDiv from "./RenderNoticeDiv";
               <div className="flex w-[346px] flex-col items-start gap-3">
                 <div className="flex flex-col items-start gap-2">
                   <p className=" text-primary font-bold text-base">
-                    식당
+                    {userData.category}
                   </p>
                   <p className="text-black text-[28px] font-bold">
-                    도토리 식당
+                    {userData.name}
                   </p>
                 </div>
                 <div className="flex items-center gap-[6px]">
-                  <Image src={`/images/icon-location-on.svg`} alt='위치 로고' width={20} height={20} />
-                  <p className=" text-gray-50">서울시 송파구</p>
+                  <Image src={userData.imageUrl} alt='위치 로고' width={20} height={20} />
+                  <p className=" text-gray-50">{userData.address1} {userData.address2}</p>
                 </div>
-                <p className="self-stretch text-black">어쩌구 저쩌구</p>
+                <p className="self-stretch text-black">{userData.description}</p>
               </div>
               <div className="flex items-start gap-2 self-stretch">
                 <Button size='medium' color='none' onClick={handleEditingShopInfo}>
