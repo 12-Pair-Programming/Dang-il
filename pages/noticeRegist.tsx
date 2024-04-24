@@ -11,13 +11,27 @@ import { Textarea } from "@/shared/@common/ui/Textarea/Textarea";
 const noticeRegist = () => {
 
   const router = useRouter();
+
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+
   const handleSubmit = (e) => {
     e.preventDefault();
-  }
+    const data = {
+      hourlypay: hourlypay.value,
+      startsAt: selectedDate,
+      workhour: hour.value,
+      description: description.value,
+    };
+    console.log(data);
+  };
 
   const handleWritingNotice = () => {
     router.push('/myShopInfo');
   }
+
+  const handleDateChange = (date: Date | null) => {
+    setSelectedDate(date);
+  };
 
   const hourlypay = useInput('');
   const hour = useInput('');
@@ -38,7 +52,7 @@ const noticeRegist = () => {
           </div>
           <div className="inline-flex items-start gap-5">
             <Input title='시급*' placeholder="입력" type="text" countText="원" width="300px" onChange={hourlypay.handleInput} />
-            <Calendar />
+            <Calendar onDateChange={handleDateChange} />
             <Input title='업무 시간*' placeholder="입력" type="text" countText="시간" width="300px" onChange={hour.handleInput} />
           </div>
           <div className="flex w-[964px] flex-col items-start gap-2">
