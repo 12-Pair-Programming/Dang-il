@@ -4,7 +4,7 @@ import Pagination from '@/shared/@common/ui/Pagination/Pagination';
 import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
 import Card from '@/shared/@common/ui/Card/Card';
 import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
-import { FilterModal } from './navModal/FilterModal';
+import { FilterModal } from './FilterModal';
 
 const AllNotice = () => {
   const [showDetailFilter, setShowDetailFilter] = useState(false);

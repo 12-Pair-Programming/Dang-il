@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import DetailFilter from '../DetailFilter';
+import DetailFilter from './DetailFilter';
 
 interface FilterModalProps {
   isOpen: boolean;
