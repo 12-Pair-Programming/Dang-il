@@ -27,7 +27,14 @@ const registMyProfile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  }
+    const data = {
+      name: name.value,
+      phone: phone.value,
+      address: location,
+      bio: description.value,
+    };
+    console.log(data);
+  };
 
   const handleTotalSubmit = () => {
     alert('등록이 완료되었습니다.');
