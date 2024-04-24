@@ -3,8 +3,8 @@ import Button from '@/shared/@common/ui/Button/Button';
 import Pagination from '@/shared/@common/ui/Pagination/Pagination';
 import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
 import Card from '@/shared/@common/ui/Card/Card';
-import DetailFilter from './DetailFilter';
 import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
+import { FilterModal } from './navModal/FilterModal';
 
 const AllNotice = () => {
   const [showDetailFilter, setShowDetailFilter] = useState(false);
@@ -15,6 +15,7 @@ const AllNotice = () => {
   const handleClick = () => {
     setShowDetailFilter(true);
   };
+
   const options = [
     { value: '마감임박순', label: '마감임박순' },
     { value: '시급많은순', label: '시급많은순' },
@@ -34,15 +35,19 @@ const AllNotice = () => {
           <div className="flex gap-3">
             <Dropdown
               title={''}
+              width="130px"
               options={options}
               onSelect={handleSelectOption}
               defaultValue="마감임박순"
             />
-            <div className="pt-2">
+            <div className="relative">
               <Button size="mediumSmall" color="colored" onClick={handleClick}>
                 상세 필터
-                {showDetailFilter && <DetailFilter />}
               </Button>
+              <FilterModal
+                isOpen={showDetailFilter}
+                setIsOpen={setShowDetailFilter}
+              />
             </div>
           </div>
         </div>

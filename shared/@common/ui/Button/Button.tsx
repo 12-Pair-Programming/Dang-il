@@ -27,7 +27,7 @@ const Button: React.FC<ButtonProps> = ({
         fontStyle = 'font-bold text-base leading-5 align-center';
         break;
       case 'mediumLarge':
-        sizeStyle = 'py-3 px-[58px]';
+        sizeStyle = 'py-3 px-[57px]';
         fontStyle = 'font-bold text-base leading-5 text-center';
         break;
       case 'medium':
