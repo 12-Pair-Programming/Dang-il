@@ -9,6 +9,7 @@ import { Footer } from '@/shared/@common/ui/Footer/Footer';
 import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
 import { useTextarea } from '@/shared/@common/ui/Textarea/hook/textareaHook';
 import { Textarea } from '@/shared/@common/ui/Textarea/Textarea';
+import { NavigationBar } from '@/shared/@common/ui/Nav/NavigationBar';
 
 const editMyShop = () => {
 
@@ -43,12 +44,9 @@ const editMyShop = () => {
 
   const handleTotalSubmit = () => {
     console.log('제출 완료');
-    console.log(inputs[0].value);
     console.log(foodKinds);
     console.log(location);
-    console.log(inputs[1].value);
     console.log(shopImage);
-    console.log(inputs[2].value);
     alert('수정이 완료되었습니다');
     router.push('/myShopInfo');
   };
@@ -97,6 +95,7 @@ const editMyShop = () => {
 
   return (
     <>
+      <NavigationBar />
       <div className="flex w-full py-[60px] px-[238px] flex-col items-start gap-2 bg-gray-05">
         <form onSubmit={handleSubmit} className="flex w-full flex-col items-center gap-8">
           <div className="flex flex-col items-start gap-8">
@@ -137,7 +136,6 @@ const editMyShop = () => {
               <UploadImage onImageChange={handleShopImage}/>
             </div>
             <div className='w-full flex flex-col items-start gap-2'>
-              <p className='text-base'>가게 설명</p>
               <Textarea
                 title='가게 설명'
                 width='100%'

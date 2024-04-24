@@ -135,7 +135,6 @@ const registMyShop = () => {
               <UploadImage onImageChange={handleShopImage}/>
             </div>
             <div className='w-full flex flex-col items-start gap-2'>
-              <p className='text-base'>가게 설명</p>
               <Textarea
                 title='가게 설명'
                 width='600px'
