@@ -1,4 +1,4 @@
-import Button from '@/shared/Button/Button';
+import Button from '@/shared/@common/ui/Button/Button';
 import React from 'react';
 
 interface NoticeModalProps {
@@ -15,12 +15,9 @@ export const NoticeModal = ({ content, closeModal }: NoticeModalProps) => {
         </p>
       </div>
       <div className="flex justify-end w-full">
-        <Button
-          size="medium"
-          color="colored"
-          onClick={closeModal}
-          content="확인"
-        />
+        <Button size="medium" color="colored" onClick={closeModal}>
+          확인
+        </Button>
       </div>
     </div>
   );
