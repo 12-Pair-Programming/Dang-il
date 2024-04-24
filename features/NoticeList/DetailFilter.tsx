@@ -10,7 +10,7 @@ import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
 const DetailFilter = () => {
   const [clickedAddress, setClickedAddress] = useState('');
   const [hashtag, setHashtag] = useState<string[]>([]);
-  const [startDate, setStartDate] = useState();
+  const [startDate, setStartDate] = useState<Date>();
   const money = useInput('');
 
   const handleClickAddress = (address: string) => {
@@ -24,13 +24,13 @@ const DetailFilter = () => {
     setHashtag((prevHashtag) => prevHashtag.filter((tag) => tag !== address));
   };
 
-  const handleDateChange = (date) => {
+  const handleDateChange = (date: Date) => {
     setStartDate(date);
   };
 
   const handleResetValue = () => {
     setHashtag([]);
-    handleDateChange(null);
+    setStartDate(undefined);
     money.handleReset();
   };
 

@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { ChangeEvent } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const FilterCalendar = ({ onChange, selected }) => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>('');
+interface FilterCalendarProps {
+  selected: Date | undefined;
+  onChange: (date: Date) => void;
+}
 
+const FilterCalendar = ({ selected, onChange }: FilterCalendarProps) => {
   return (
     <div className="flex flex-col items-start gap-2">
       <p className="text-black">시작일</p>
