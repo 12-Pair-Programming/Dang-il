@@ -15,12 +15,9 @@ export const NoticeModal = ({ content, closeModal }: NoticeModalProps) => {
         </p>
       </div>
       <div className="flex justify-end w-full">
-        <Button
-          size="medium"
-          color="colored"
-          onClick={closeModal}
-          content="확인"
-        />
+        <Button size="medium" color="colored" onClick={closeModal}>
+          확인
+        </Button>
       </div>
     </div>
   );

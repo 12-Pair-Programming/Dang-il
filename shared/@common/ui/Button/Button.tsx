@@ -24,25 +24,27 @@ const Button: React.FC<ButtonProps> = ({
     switch (size) {
       case 'large':
         sizeStyle = 'py-[14px] px-[136px]';
-        fontStyle = 'font-bold text-base leading-5 align-center';
+        fontStyle = 'font-bold text-base leading-5 align-center whitespace-nowrap';
         break;
       case 'mediumLarge':
+
         sizeStyle = 'py-3 px-[57px]';
         fontStyle = 'font-bold text-base leading-5 text-center';
+
         break;
       case 'medium':
         sizeStyle = 'py-[10px] px-[20px]';
-        fontStyle = 'font-bold text-sm leading-5 align-center';
+        fontStyle = 'font-bold text-sm leading-5 align-center whitespace-nowrap';
         break;
 
       case 'mediumSmall':
         sizeStyle = 'py-[18px] px-[20px]';
-        fontStyle = 'font-bold text-base leading-5 text-center';
+        fontStyle = 'font-bold text-base leading-5 text-center whitespace-nowrap';
         break;
 
       case 'small':
         sizeStyle = 'py-[8px] px-[12px]';
-        fontStyle = 'font-bold text-xs leading-5 align-center';
+        fontStyle = 'font-bold text-xs leading-5 align-center whitespace-nowrap';
         break;
       default:
         sizeStyle = ''; // 기본값 처리

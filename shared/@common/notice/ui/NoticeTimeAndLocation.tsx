@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import businessHoursString from './businessHoursString';
+import businessHoursString from '../utils/businessHoursString';
 
 interface props {
   startsAt: string;

@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import Button from '@/shared/Button/Button';
+import Button from '@/shared/@common/ui/Button/Button';
 
 interface ConfirmModalProps {
   content: string;
@@ -23,18 +23,12 @@ export const ConfirmModal = ({ content, closeModal }: ConfirmModalProps) => {
         </p>
       </div>
       <div className="flex gap-1">
-        <Button
-          size="medium"
-          color="none"
-          onClick={closeModal}
-          content="아니오"
-        />
-        <Button
-          size="medium"
-          color="colored"
-          onClick={closeModal}
-          content="취소하기"
-        />
+        <Button size="medium" color="none" onClick={closeModal}>
+          아니오
+        </Button>
+        <Button size="medium" color="colored" onClick={closeModal}>
+          취소하기
+        </Button>
       </div>
     </div>
   );
