@@ -22,12 +22,9 @@ export const WarningModal = ({ content, closeModal }: WarningModalProps) => {
         </p>
       </div>
       <div className="flex gap-1">
-        <Button
-          size="medium"
-          color="none"
-          onClick={closeModal}
-          content="확인"
-        />
+        <Button size="medium" color="none" onClick={closeModal}>
+          확인
+        </Button>
       </div>
     </div>
   );
