@@ -16,12 +16,12 @@ const DetailFilter = () => {
   const handleClickAddress = (address: string) => {
     if (address.trim() !== '') {
       setClickedAddress(address);
-      setHashtag((prevhashtag) => [...prevhashtag, address]);
+      setHashtag((prevHashtag) => [...prevHashtag, address]);
     }
   };
 
   const handleFilterTag = (address: string) => {
-    setHashtag((prevhashtag) => prevhashtag.filter((tag) => tag !== address));
+    setHashtag((prevHashtag) => prevHashtag.filter((tag) => tag !== address));
   };
 
   const handleDateChange = (date) => {
@@ -35,10 +35,13 @@ const DetailFilter = () => {
   };
 
   const handleApplyValues = () => {
-    handleClickAddress(clickedAddress);
+    setHashtag(hashtag);
     money.handleInput({ target: { value: money.value } } as InputChangeEvent);
     handleDateChange(startDate);
   };
+
+  console.log(clickedAddress);
+  console.log(hashtag);
 
   const { data } = useGetNoticeData();
 
