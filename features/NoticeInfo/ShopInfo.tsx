@@ -6,51 +6,61 @@ import Button from '@/shared/@common/ui/Button/Button';
 interface props {
   userType: string;
   isLogin: boolean;
-  closed: boolean;
-  status?: string;
-  hourlyPay: number;
-  address1: string;
-  originalHourlyPay: number;
-  startsAt: string;
-  workhour: number;
-  shopDescription: string;
-  noticeDescription: string;
-  shopImageUrl: string;
+
+  shopId: string;
+  noticeId: string;
 }
+
+const item = {
+  id: 'string',
+  hourlyPay: 30000,
+  startsAt: '2023-07-07T18:00:00.000Z',
+  workhour: 5,
+  description:
+    '기존 알바 친구가 그만둬서 새로운 친구를 구했는데, 그 사이에 하루가 비네요. 급해서 시급도 높였고 그렇게 바쁜 날이 아니라서 괜찮을거예요.',
+  closed: false,
+  shop: {
+    item: {
+      id: 'string',
+      name: 'string',
+      category: 'string',
+      address1: '서울시 영등포구',
+      address2: 'string',
+      description:
+        '알바하기 편한 너구리네 라면집! 라면 올려두고 끓이기만 하면 되어서 쉬운 편에 속하는 가게입니다.',
+      imageUrl: '/images/icon-clock-on.svg',
+      // 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxODA4MDlfMzkg%2FMDAxNTMzNzc0NDQzMjM0.2tTaXYEZ5qoD4tSKJb1b_RReTCNCgCdYhSKO52GpxKog.0JV9pl0bPnDRZhEkAG3YAzOyu5_d3CpH4p4uQ2ciCZYg.JPEG.gyubin0804%2F1533774357467.jpg&type=sc960_832',
+      originalHourlyPay: 10000,
+    },
+    href: 'string',
+  },
+  currentUserApplication: {
+    item: {
+      id: 'string', // application.id,
+      status: 'pending | accepted | rejected | canceled', // application.status
+      createdAt: 'string', // application.createdAt
+    },
+  },
+};
 
 /**
  * 가게 정보 카드 컴포넌트
  * @param userType 사용자 타입 employer | employee;
  * @param isLogin 로그인 여부
- * @param status 미지원은 공백 , 지원 상태 pending | accepted | rejected | canceled
- * @param closed 공고 닫힘 여부
- * @param hourlyPay 시급
- * @param address1 위치
- * @param originalHourlyPay 가게 원래 시급
- * @param startsAt 시작시간
- * @param workhour 근무시간
- * @param shopDescription 가게 설명
- * @param noticeDescription 공고 설명
- * @param shopImageUrl 가게 이미지
+ *
+ * @param shopId 가게 ID
+ * @param noticeId 공고 ID
  */
 const ShopInfo = ({
   userType,
   isLogin,
-  status,
-  closed,
-  hourlyPay,
-  address1,
-  originalHourlyPay,
-  startsAt,
-  workhour,
-  shopDescription,
-  noticeDescription,
-  shopImageUrl,
+
+  shopId,
+  noticeId,
 }: props) => {
   //TODO 테스트 데이터 실제 데이터 연결 필요
-  closed = false; //test위한 임시 코드
-  isLogin = false; //test위한 임시 코드
-  console.log('ShopInfo');
+
+  //GET /shops/{shop_id}/notices/{notice_id}
 
   const handleClick = (state: string) => {
     if (isLogin) {
@@ -81,8 +91,8 @@ const ShopInfo = ({
       <div className="flex w-[963px] h-[365px] border-[1px] rounded-2xl p-6 mt-4">
         <div className="w-[596px] h-[292px] overflow-hidden">
           <CardImage
-            imageUrl={shopImageUrl}
-            closed={closed}
+            imageUrl={item.shop.item.imageUrl}
+            closed={item.closed}
             width={596}
             height={292}
           />
@@ -90,18 +100,18 @@ const ShopInfo = ({
         <div className="w-[346px] ml-6">
           <p className="text-base font-bold text-primary">시급</p>
           <HourlyPayForWon
-            hourlyPay={hourlyPay}
-            closed={closed}
+            hourlyPay={item.hourlyPay}
+            closed={item.closed}
             fontSize="24px"
-            originalHourlyPay={originalHourlyPay}
+            originalHourlyPay={item.shop.item.originalHourlyPay}
           />
           <NoticeTimeAndLocation
-            startsAt={startsAt}
-            workhour={workhour}
-            address1={address1}
+            startsAt={item.startsAt}
+            workhour={item.workhour}
+            address1={item.shop.item.address1}
             closed={false}
           />
-          <p className="my-3">{shopDescription}</p>
+          <p className="my-3">{item.shop.item.description}</p>
           {userType === 'employer' ? (
             <Button
               size="large"
@@ -113,7 +123,7 @@ const ShopInfo = ({
             >
               공고편집
             </Button>
-          ) : status ? (
+          ) : item.currentUserApplication.item.status ? (
             <Button
               size="large"
               color="none"
@@ -140,7 +150,7 @@ const ShopInfo = ({
       </div>
       <div className="bg-gray-10 p-8 mt-6 rounded-lg w-[963px]">
         <p className="font-bold text-base">공고 설명</p>
-        <p>{noticeDescription}</p>
+        <p>{item.description}</p>
       </div>
     </div>
   );
