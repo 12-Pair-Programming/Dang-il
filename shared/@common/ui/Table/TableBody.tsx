@@ -33,15 +33,15 @@ const TableBody: React.FC<{
           <td className="flex w-1/5 py-8 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20">
             {name}
           </td>
-          <td className="flex w-2/5 py-5 px-3 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20">
+          <td className="flex w-2/5 py-5 px-3 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-x-scroll whitespace-pre scrollbar-hide">
             {/* {date}, ({hour}시간) */}
             {introduce}
           </td>
-          <td className="flex w-1/5 py-5 px-4 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20">
+          <td className="flex w-1/5 py-5 px-4 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-auto whitespace-pre">
             {/* {hourlypay} */}
             {phone}
           </td>
-          <td className="flex w-1/5 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20">
+          <td className="flex w-1/5 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 overflow-auto whitespace-pre">
             {id === 'a' ? (
               status
             ) : id === 'b' ? (
