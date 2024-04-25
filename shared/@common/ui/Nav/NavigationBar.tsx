@@ -10,6 +10,7 @@ export const NavigationBar = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [userType, setUserType] = useState<string | null>('');
   const [userId, setUserId] = useState<string>('');
+    
   const { isOpen, closeModal, openModal } = useNavModal();
 
   useEffect(() => {
@@ -95,3 +96,5 @@ export const NavigationBar = () => {
     </div>
   );
 };
+
+export default NavigationBar;

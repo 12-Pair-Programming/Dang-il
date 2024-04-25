@@ -68,7 +68,7 @@ const DetailFilter = ({ setIsOpen }: DetailFilterProps) => {
               {data &&
                 data.items.length > 0 &&
                 data.items
-                  .map((item: ItemData) => item.shop.item.address1)
+                  .map((item: ItemData) => item.item.shop.item.address1)
                   .reduce(
                     (items: ItemData[], value: ItemData) =>
                       items.some((item) => item === value)
