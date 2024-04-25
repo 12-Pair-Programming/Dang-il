@@ -7,19 +7,21 @@ import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
 import { FilterModal } from './FilterModal';
 
 export interface ItemData {
-  shop: {
-    item: {
-      name: string;
-      imageUrl: string;
-      address1: string;
-      address2: string;
-      originalHourlyPay: number;
+  item: {
+    shop: {
+      item: {
+        name: string;
+        imageUrl: string;
+        address1: string;
+        address2: string;
+        originalHourlyPay: number;
+      };
     };
+    startsAt: string;
+    workhour: number;
+    hourlyPay: number;
+    closed: boolean;
   };
-  startsAt: string;
-  workhour: number;
-  hourlyPay: number;
-  closed: boolean;
 }
 
 const AllNotice = () => {
@@ -74,14 +76,14 @@ const AllNotice = () => {
               .slice(cardOffset, cardOffset + showCard)
               .map((item: ItemData) => (
                 <Card
-                  name={item.shop.item.name}
-                  imageUrl={item.shop.item.imageUrl}
-                  address1={`${item.shop.item.address1} ${item.shop.item.address2}`}
-                  startsAt={item.startsAt}
-                  workhour={item.workhour}
-                  hourlyPay={item.hourlyPay}
-                  originalHourlyPay={item.shop.item.originalHourlyPay}
-                  closed={item.closed}
+                  name={item.item.shop.item.name}
+                  imageUrl={item.item.shop.item.imageUrl}
+                  address1={`${item.item.shop.item.address1} ${item.item.shop.item.address2}`}
+                  startsAt={item.item.startsAt}
+                  workhour={item.item.workhour}
+                  hourlyPay={item.item.hourlyPay}
+                  originalHourlyPay={item.item.shop.item.originalHourlyPay}
+                  closed={item.item.closed}
                 />
               ))}
         </div>

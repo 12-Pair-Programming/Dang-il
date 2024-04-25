@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export const Footer = () => {
+const Footer = () => {
   return (
     <footer className="w-full px-[238px] py-8 flex flex-col bg-gray-10 gap-2">
       <div className="flex self-stretch justify-between flex-row">
@@ -43,3 +43,5 @@ export const Footer = () => {
     </footer>
   );
 };
+
+export default Footer;

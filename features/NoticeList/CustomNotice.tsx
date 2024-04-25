@@ -17,14 +17,14 @@ const CustomNotice = () => {
               .slice(0, 3)
               .map((item: ItemData) => (
                 <Card
-                  name={item.shop.item.name}
-                  imageUrl={item.shop.item.imageUrl}
-                  address1={`${item.shop.item.address1} ${item.shop.item.address2}`}
-                  startsAt={item.startsAt}
-                  workhour={item.workhour}
-                  hourlyPay={item.hourlyPay}
-                  originalHourlyPay={item.shop.item.originalHourlyPay}
-                  closed={item.closed}
+                  name={item.item.shop.item.name}
+                  imageUrl={item.item.shop.item.imageUrl}
+                  address1={`${item.item.shop.item.address1} ${item.item.shop.item.address2}`}
+                  startsAt={item.item.startsAt}
+                  workhour={item.item.workhour}
+                  hourlyPay={item.item.hourlyPay}
+                  originalHourlyPay={item.item.shop.item.originalHourlyPay}
+                  closed={item.item.closed}
                 />
               ))}
         </div>
