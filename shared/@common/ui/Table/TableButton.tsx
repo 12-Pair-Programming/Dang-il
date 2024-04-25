@@ -27,7 +27,7 @@ const TableButton: React.FC<ButtonComponentProps> = ({
           </button>
         </>
       )}
-      {status && (
+      {status ? (
         <p
           className={`p-4 ${
             status === '거절'
@@ -37,6 +37,12 @@ const TableButton: React.FC<ButtonComponentProps> = ({
         >
           {status}
         </p>
+      ) : (
+        !buttonVisible && (
+          <p className="p-4 flex py-1 px-2 content-center items-center rounded-2xl font-bold text-sm bg-green-10 text-green-20">
+            대기중
+          </p>
+        )
       )}
     </>
   );

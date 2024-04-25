@@ -1,48 +1,17 @@
 import React, { useState } from 'react';
 import TableBody from '@/shared/@common/ui/Table/TableBody';
 import TableHead from '@/shared/@common/ui/Table/TableHead';
-import { useGetApplicationData } from '@/shared/@common/ui/Table/test/tableTest';
 
-interface UserData {
-  item: {
-    user: {
-      item: {
-        id: string;
-        name: string;
-        bio: string;
-        phone: string;
-      };
-    };
-  };
+export interface TableProps {
+  isEmployee: boolean;
 }
 
-const Table = () => {
-  const [disabled, setDisabled] = useState(false);
-  const handleClick = () => {
-    console.log('클릭되었습니다.');
-    setDisabled(!disabled);
-  };
-
-  const { data } = useGetApplicationData();
-
-  let users = [];
-  if (data && data.items) {
-    users = data.items.map((v: UserData) => v.item.user.item);
-  }
-
+const Table: React.FC<TableProps> = ({ isEmployee }) => {
   return (
     <>
       <table className="inline-flex flex-col items-start rounded-2xl border-gray-20 border border-solid w-full">
-        <TableHead />
-        {users &&
-          users.map((v: any) => (
-            <TableBody
-              id={v.id}
-              name={v.name}
-              introduce={v.bio}
-              phone={v.phone}
-            />
-          ))}
+        <TableHead isEmployee={isEmployee} />
+        <TableBody isEmployee={isEmployee} />
       </table>
     </>
   );

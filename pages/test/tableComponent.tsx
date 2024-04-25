@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import Table from '@/shared/@common/ui/Table/Table';
 
 const TableComponent = () => {
+  const [isEmployee, setIsEmployee] = useState(false);
   return (
     <>
-      <Table />
+      <Table isEmployee={isEmployee} />
+      <Table isEmployee />
     </>
   );
 };

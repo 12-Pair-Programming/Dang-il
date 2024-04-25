@@ -1,17 +1,57 @@
 import React, { useState } from 'react';
+import { useGetApplicationData } from '@/shared/@common/ui/Table/test/tableTest';
 import TableButton from './TableButton';
+import { TableProps } from './Table';
 
-//테이블 공통화 할건지 논의해야 합니다.
-
-const TableBody: React.FC<{
+interface EmployeeItemData {
   id: string;
   name: string;
-  introduce: string;
+  bio: string;
   phone: string;
-  date?: number;
-  hour?: number;
-  hourlypay?: number;
-}> = ({ id, name, introduce, phone }) => {
+}
+
+interface EmployeeData {
+  item: {
+    user: {
+      item: {
+        item: EmployeeItemData;
+      };
+    };
+  };
+}
+
+interface EmployerItemData {
+  id: string;
+  name: string;
+  startsAt: string;
+  hourlyPay: number;
+  workhour: number;
+  description: string;
+}
+
+interface EmployerData {
+  item: {
+    notice: {
+      item: {
+        item: EmployerItemData;
+      };
+    };
+  };
+}
+
+const TableBody: React.FC<TableProps> = ({ isEmployee }) => {
+  const { data } = useGetApplicationData();
+
+  let employee = [];
+  if (data && data.items) {
+    employee = data.items.map((v: EmployeeData) => v.item.user.item);
+  }
+
+  let employer = [];
+  if (data && data.items) {
+    employer = data.items.map((v: EmployerData) => v.item.notice.item);
+  }
+
   const [buttonVisible, setButtonVisible] = useState(true);
   const [status, setStatus] = useState('');
 
@@ -28,37 +68,77 @@ const TableBody: React.FC<{
 
   return (
     <>
-      <tbody className="flex w-full h-full items-start bg-white">
-        <tr className="flex w-full">
-          <td className="flex w-1/5 py-8 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20">
-            {name}
-          </td>
-          <td className="flex w-2/5 py-5 px-3 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-x-scroll whitespace-pre scrollbar-hide">
-            {/* {date}, ({hour}시간) */}
-            {introduce}
-          </td>
-          <td className="flex w-1/5 py-5 px-4 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-auto whitespace-pre">
-            {/* {hourlypay} */}
-            {phone}
-          </td>
-          <td className="flex w-1/5 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 overflow-auto whitespace-pre">
-            {id === 'a' ? (
-              status
-            ) : id === 'b' ? (
-              <TableButton
-                handleClick={handleChangingStatus}
-                buttonVisible={buttonVisible}
-                status={status}
-              />
-            ) : (
-              <TableButton
-                handleClick={handleChangingStatus}
-                buttonVisible={buttonVisible}
-                status={status}
-              />
-            )}
-          </td>
-        </tr>
+      <tbody className="flex flex-col w-full h-full items-start bg-white">
+        {isEmployee
+          ? employee &&
+            employee.map((v: EmployeeItemData) => (
+              <tr className="flex w-full">
+                <td
+                  key={v.id}
+                  className="flex w-1/4 py-8 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20"
+                >
+                  {v.name}
+                </td>
+                <td
+                  key={v.id}
+                  className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-x-scroll whitespace-pre scrollbar-hide"
+                >
+                  {v.bio}
+                </td>
+                <td
+                  key={v.id}
+                  className="flex w-1/4 py-5 px-4 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-auto whitespace-pre"
+                >
+                  {v.phone}
+                </td>
+                <td className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 ">
+                  <TableButton
+                    handleClick={handleChangingStatus}
+                    buttonVisible={buttonVisible}
+                    status={status}
+                  />
+                </td>
+              </tr>
+            ))
+          : employer &&
+            employer.map((v: EmployerItemData) => (
+              <tr className="flex w-full">
+                <td
+                  key={v.id}
+                  className="flex w-1/4 py-8 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20"
+                >
+                  {v.description}
+                </td>
+                <td
+                  key={v.id}
+                  className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-x-scroll whitespace-pre scrollbar-hide"
+                >
+                  {v.startsAt.slice(0, 10)} {v.startsAt.slice(12, 13)}~
+                  {Number(v.startsAt.slice(12, 13)) + Number(v.workhour)}시
+                </td>
+                <td
+                  key={v.id}
+                  className="flex w-1/4 py-5 px-4 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-auto whitespace-pre"
+                >
+                  {v.hourlyPay}
+                </td>
+                <td className="flex w-1/5 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 overflow-auto whitespace-pre">
+                  {!isEmployee ? (
+                    <TableButton
+                      handleClick={handleChangingStatus}
+                      buttonVisible={false}
+                      status={status}
+                    />
+                  ) : (
+                    <TableButton
+                      handleClick={handleChangingStatus}
+                      buttonVisible={true}
+                      status={status}
+                    />
+                  )}
+                </td>
+              </tr>
+            ))}
       </tbody>
     </>
   );
