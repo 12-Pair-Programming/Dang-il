@@ -18,7 +18,7 @@ const item = {
   workhour: 5,
   description:
     '기존 알바 친구가 그만둬서 새로운 친구를 구했는데, 그 사이에 하루가 비네요. 급해서 시급도 높였고 그렇게 바쁜 날이 아니라서 괜찮을거예요.',
-  closed: false,
+  closed: true,
   shop: {
     item: {
       id: 'string',
@@ -47,7 +47,6 @@ const item = {
  * 가게 정보 카드 컴포넌트
  * @param userType 사용자 타입 employer | employee;
  * @param isLogin 로그인 여부
- *
  * @param shopId 가게 ID
  * @param noticeId 공고 ID
  */
@@ -60,7 +59,13 @@ const ShopInfo = ({
 }: props) => {
   //TODO 테스트 데이터 실제 데이터 연결 필요
 
+  //가게의 특정 공고의 지원 목록 조회
   //GET /shops/{shop_id}/notices/{notice_id}
+
+  //유저의 지원 목록에서 items.item.notice.item.id로 공고 id를 찾아서
+  //해당 items.item.status로 status 조회 필요
+  //GET /users/{user_id}/applications
+  const status = 'pending';
 
   const handleClick = (state: string) => {
     if (isLogin) {
@@ -89,15 +94,15 @@ const ShopInfo = ({
         <p className="text-[28px] font-bold">도토리 식당</p>
       </div>
       <div className="flex w-[963px] h-[365px] border-[1px] rounded-2xl p-6 mt-4">
-        <div className="w-[596px] h-[292px] overflow-hidden">
+        <div className="w-[596px] h-[320px] overflow-hidden">
           <CardImage
             imageUrl={item.shop.item.imageUrl}
             closed={item.closed}
             width={596}
-            height={292}
+            height={365}
           />
         </div>
-        <div className="w-[346px] ml-6">
+        <div className="w-[346px] ml-6 flex flex-col justify-between">
           <p className="text-base font-bold text-primary">시급</p>
           <HourlyPayForWon
             hourlyPay={item.hourlyPay}
@@ -122,6 +127,17 @@ const ShopInfo = ({
               disabled={false}
             >
               공고편집
+            </Button>
+          ) : item.closed ? (
+            <Button
+              size="large"
+              color="none"
+              onClick={() => {
+                handleClick('cancel');
+              }}
+              disabled={true}
+            >
+              신청 불가
             </Button>
           ) : item.currentUserApplication.item.status ? (
             <Button
