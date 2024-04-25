@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import HourlyPayForWon from '@/shared/@common/notice/ui/NoticePayInfo';
 import NoticeTimeAndLocation from '@/shared/@common/notice/ui/NoticeTimeAndLocation';
 import CardImage from '@/shared/@common/notice/ui/CardImage';
@@ -59,6 +60,8 @@ const ShopInfo = ({
   shopId,
   noticeId,
 }: props) => {
+  const router = useRouter();
+
   //TODO:  16L부터 item을 테스트 데이터 실제 데이터 연결 필요
 
   //가게의 특정 공고의 지원 목록 조회
@@ -72,7 +75,9 @@ const ShopInfo = ({
 
   const handleEditeNotice = () => {
     console.log('click 로그인 중 - 공고 편집');
-    // TODO: 편집페이지 이동 - 공고 id전달 필요
+    // TODO: 편집페이지 이동 - 공고 id전달
+    // 현재 공고 등록 페이지만 있는 듯 하여 확인 필요
+    router.push(`/noticeRegist?noticeId=${noticeId}`);
   };
 
   const handleApplyNotice = () => {
@@ -84,6 +89,8 @@ const ShopInfo = ({
     } else {
       console.log('click 로그인 중 - 공고 신청 - 프로필 등록 필요');
       // TODO: 프로필 등록 필요 모달 팝업
+      // 확인 선택 시 아래 링크 이동
+      //router.push(`/registMyProfile?noticeId=${noticeId}`);
     }
   };
 
