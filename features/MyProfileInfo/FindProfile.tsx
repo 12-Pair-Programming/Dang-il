@@ -3,7 +3,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useRouter } from 'next/router';
 import Button from '@/shared/@common/ui/Button/Button';
 import Image from 'next/image';
-import RenderUserNoticeDiv from './RenderUserNoticeDiv';
+import RenderUserNoticeDiv from './FindNotice';
 
 // 가게 상태에 따라 다른 div 출력
 const RenderProfileDiv = () => {

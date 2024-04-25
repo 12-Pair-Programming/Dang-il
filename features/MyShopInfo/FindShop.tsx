@@ -3,7 +3,7 @@ import { useMediaQuery } from "react-responsive";
 import { useRouter } from "next/router";
 import Button from "@/shared/@common/ui/Button/Button";
 import Image from "next/image";
-import RenderNoticeDiv from "./RenderNoticeDiv";
+import RenderNoticeDiv from "./FindNotice";
 
 
 
