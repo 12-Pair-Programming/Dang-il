@@ -68,7 +68,7 @@ const ShopInfo = ({
   //결과 값 에서 items.item.notice.item.id로 공고 id를 찾아서?
   //해당 items.item.status로 status 조회 필요
   //GET /users/{user_id}/applications
-  const status = 'pending';
+  const status = ''; //신청 여부 값. 이에 따라 취소 또는 신청 버튼 노출
 
   const handleEditeNotice = () => {
     console.log('click 로그인 중 - 공고 편집');
@@ -76,14 +76,13 @@ const ShopInfo = ({
   };
 
   const handleApplyNotice = () => {
-    console.log('click 로그인 중 - 공고 신청');
     if (name) {
       console.log('click 로그인 중 - 공고 신청');
       // TODO: 신청 모달 팝업
       // 공고 지원 등록
       //POST /shops/{shop_id}/notices/{notice_id}/applications
     } else {
-      console.log('click 로그인 중 - 프로필 등록 필요');
+      console.log('click 로그인 중 - 공고 신청 - 프로필 등록 필요');
       // TODO: 프로필 등록 필요 모달 팝업
     }
   };
@@ -145,7 +144,8 @@ const ShopInfo = ({
             >
               신청 불가
             </Button>
-          ) : item.currentUserApplication.item.status ? (
+          ) : status ? (
+            // ) : item.currentUserApplication.item.status ? (
             <Button
               size="large"
               color="none"
