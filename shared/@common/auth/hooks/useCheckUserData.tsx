@@ -13,7 +13,7 @@ export function useCheckUserData({
   email = '',
   password = '',
   passwordRepeat = password,
-  type = 'boss',
+  type = 'employee',
 }: useCheckUserDataProps) {
   const [emailError, setEmailError] = useState<string | undefined>('');
   const [passwordError, setPasswordError] = useState<string | undefined>('');
@@ -101,8 +101,8 @@ export function useCheckUserData({
             password: passwordValue,
           },
         );
-        const token = response.data.token;
-        localStorage.setItem('token', token);
+        localStorage.setItem('token', response.data.item.token);
+        localStorage.setItem('user', response.data.item.user.item.type);
         router.push('/regist'); //페이지 아직 안 봐서 임시방편
       } catch (error) {
         // Handle error
