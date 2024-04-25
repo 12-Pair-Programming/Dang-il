@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
 import { Input } from '@/shared/@common/ui/Input/Input';
-import { InputChangeEvent } from '@/shared/@common/types/helper';
+import { InputChangeEvent, SetState } from '@/shared/@common/types/helper';
 import Button from '@/shared/@common/ui/Button/Button';
 import FilterCalendar from './FilterCalendar';
 import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
+import { ItemData } from './AllNotice';
 
-const DetailFilter = ({ setIsOpen }) => {
+type DetailFilterProps = {
+  setIsOpen: SetState<boolean>;
+};
+
+const DetailFilter: React.FC<DetailFilterProps> = ({ setIsOpen }) => {
   const [clickedAddress, setClickedAddress] = useState('');
   const [hashtag, setHashtag] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<Date>();
@@ -63,13 +68,15 @@ const DetailFilter = ({ setIsOpen }) => {
               {data &&
                 data.items.length > 0 &&
                 data.items
-                  .map((item) => item.item.shop.item.address1)
+                  .map((item: ItemData) => item.shop.item.address1)
                   .reduce(
-                    (items, value) =>
-                      items.includes(value) ? items : [...items, value],
+                    (items: ItemData[], value: ItemData) =>
+                      items.some((item) => item === value)
+                        ? items
+                        : [...items, value],
                     [],
                   )
-                  .map((address) => (
+                  .map((address: string) => (
                     <button onClick={() => handleClickAddress(address)}>
                       {address}
                     </button>
@@ -81,8 +88,8 @@ const DetailFilter = ({ setIsOpen }) => {
                   <>
                     {hashtag
                       .reduce(
-                        (hashTags, value) =>
-                          hashTags.includes(value)
+                        (hashTags: string[], value: string) =>
+                          hashTags.some((hashtag) => hashtag === value)
                             ? hashTags
                             : [...hashTags, value],
                         [],

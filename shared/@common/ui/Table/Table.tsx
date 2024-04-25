@@ -60,7 +60,7 @@ const Table: React.FC<{
             </td>
             <td className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 ">
               {id === 'a' ? (
-                { status }
+                status
               ) : id === 'b' ? (
                 <TableButton
                   handleClick={handleChangingStatus}

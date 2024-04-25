@@ -1,5 +1,5 @@
 import Button from '@/shared/@common/ui/Button/Button';
-import Card from '@/shared/@common/ui/Card/Card';
+import Card from '@/shared/@common/notice/ui/Card';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -19,9 +19,9 @@ const RenderNoticeDiv = () => {
           <div className="flex flex-col items-start gap-8">
             무한 스크롤 구현하기, api 받아오기
             <div className="flex items-start gap-[14px]">
+              {/* <Card />
               <Card />
-              <Card />
-              <Card />
+              <Card /> */}
             </div>
           </div>
         </div>

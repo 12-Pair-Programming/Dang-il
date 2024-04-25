@@ -2,9 +2,25 @@ import React, { useState } from 'react';
 import Button from '@/shared/@common/ui/Button/Button';
 import Pagination from '@/shared/@common/ui/Pagination/Pagination';
 import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
-import Card from '@/shared/@common/ui/Card/Card';
+import Card from '@/shared/@common/notice/ui/Card';
 import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
 import { FilterModal } from './FilterModal';
+
+export interface ItemData {
+  shop: {
+    item: {
+      name: string;
+      imageUrl: string;
+      address1: string;
+      address2: string;
+      originalHourlyPay: number;
+    };
+  };
+  startsAt: string;
+  workhour: number;
+  hourlyPay: number;
+  closed: boolean;
+}
 
 const AllNotice = () => {
   const [showDetailFilter, setShowDetailFilter] = useState(false);
@@ -56,8 +72,7 @@ const AllNotice = () => {
             data.items.length > 0 &&
             data.items
               .slice(cardOffset, cardOffset + showCard)
-              .map((item) => item.item)
-              .map((item) => (
+              .map((item: ItemData) => (
                 <Card
                   name={item.shop.item.name}
                   imageUrl={item.shop.item.imageUrl}

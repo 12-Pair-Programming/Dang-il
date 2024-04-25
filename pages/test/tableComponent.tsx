@@ -16,13 +16,13 @@ const TableComponent = () => {
 
   let users = [];
   if (data && data.items) {
-    users = data.items.map((v) => v.item.user.item);
+    users = data.items.map((v: any) => v.item.user.item);
   }
   console.log(users);
   return (
     <>
       {users &&
-        users.map((v) => (
+        users.map((v: any) => (
           <Table id={v.id} name={v.name} introduce={v.bio} phone={v.phone} />
         ))}
     </>

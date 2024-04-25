@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import DetailFilter from './DetailFilter';
+import { SetState } from '@/shared/@common/types/helper';
 
 interface FilterModalProps {
   isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpen: SetState<boolean>;
 }
 
 export const FilterModal = ({ isOpen, setIsOpen }: FilterModalProps) => {

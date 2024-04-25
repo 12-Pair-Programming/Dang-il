@@ -1,6 +1,7 @@
 import React from 'react';
-import Card from '@/shared/@common/ui/Card/Card';
+import Card from '@/shared/@common/notice/ui/Card';
 import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
+import { ItemData } from './AllNotice';
 
 const CustomNotice = () => {
   const { data } = useGetNoticeData();
@@ -14,8 +15,7 @@ const CustomNotice = () => {
             data.items.length > 0 &&
             data.items
               .slice(0, 3)
-              .map((item) => item.item)
-              .map((item) => (
+              .map((item: ItemData) => (
                 <Card
                   name={item.shop.item.name}
                   imageUrl={item.shop.item.imageUrl}
