@@ -1,7 +1,7 @@
 
 import RenderProfileDiv from "@/features/MyProfileInfo/RenderProfileDiv";
-import { Footer } from "@/shared/@common/ui/Footer/Footer";
-import { NavigationBar } from "@/shared/@common/ui/Nav/NavigationBar";
+import Footer from "@/shared/@common/ui/Footer/Footer";
+import NavigationBar from "@/shared/@common/ui/Nav/NavigationBar";
 
 const MyProfileInfo = () => {
 
