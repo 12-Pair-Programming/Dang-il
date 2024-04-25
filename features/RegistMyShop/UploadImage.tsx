@@ -2,10 +2,10 @@ import { useState, useRef, ChangeEvent } from 'react';
 import Image from 'next/image';
 
 interface UploadImageProps {
-  onImageChange : (image: string | null ) => void;
+  onImageChange: (image: string | null) => void;
 }
 
-const UploadImage: React.FC<UploadImageProps> = ({ onImageChange }) => {
+const UploadImage = ({ onImageChange }: UploadImageProps) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -29,7 +29,7 @@ const UploadImage: React.FC<UploadImageProps> = ({ onImageChange }) => {
   };
 
   return (
-    <div className='inline-block relative' >
+    <div className="inline-block relative">
       <input
         type="file"
         accept="image/*"
@@ -38,13 +38,24 @@ const UploadImage: React.FC<UploadImageProps> = ({ onImageChange }) => {
         style={{ display: 'none' }}
       />
       {/* 이미지 표시 영역 (클릭 시 파일 업로드 버튼 클릭) */}
-      <div onClick={handleClick} className='cursor-pointer' >
+      <div onClick={handleClick} className="cursor-pointer">
         {/* 선택한 이미지 표시 (없으면 placeholder 이미지 사용) */}
         {selectedImage ? (
-          <Image src={selectedImage} alt="Uploaded Image" width={200} height={300} className='w-1/2 max-h-[300px]' />
+          <Image
+            src={selectedImage}
+            alt="Uploaded Image"
+            width={200}
+            height={300}
+            className="w-1/2 max-h-[300px]"
+          />
         ) : (
-          <div className='flex justify-center items-center flex-shrink-0 rounded-[5px] border border-solid border-gray-30 bg-gray-10 h-[300px] w-[400px]'>
-            <Image src={`images/add-img.svg`} alt="Placeholder Image" width={111} height={64} />
+          <div className="flex justify-center items-center flex-shrink-0 rounded-[5px] border border-solid border-gray-30 bg-gray-10 h-[300px] w-[400px]">
+            <Image
+              src={`images/add-img.svg`}
+              alt="Placeholder Image"
+              width={111}
+              height={64}
+            />
           </div>
         )}
       </div>

@@ -1,28 +1,23 @@
-import { useEffect, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import { useRouter } from "next/router";
-import Button from "@/shared/@common/ui/Button/Button";
-import Image from "next/image";
-import RenderUserNoticeDiv from "./RenderUserNoticeDiv";
+import { useEffect, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
+import { useRouter } from 'next/router';
+import Button from '@/shared/@common/ui/Button/Button';
+import Image from 'next/image';
+import RenderUserNoticeDiv from './RenderUserNoticeDiv';
 
+// 가게 상태에 따라 다른 div 출력
+const RenderProfileDiv = () => {
+  const router = useRouter();
 
+  const handleWritingShopInfo = () => {
+    /* 가게 등록하는 페이지로 이동시키기 */
+    router.push('/registMyProfile');
+  };
 
-
-
-  // 가게 상태에 따라 다른 div 출력
-  const RenderProfileDiv = () => {
-
-    const router = useRouter();
-
-    const handleWritingShopInfo = () => {
-      /* 가게 등록하는 페이지로 이동시키기 */
-      router.push('/registMyProfile');
-    }
-  
-    const handleEditingProfileInfo = () => {
-      /* 가게 정보 편집하는 페이지로 이동시키기 */
-      router.push('/editMyProfile');
-    }
+  const handleEditingProfileInfo = () => {
+    /* 가게 정보 편집하는 페이지로 이동시키기 */
+    router.push('/editMyProfile');
+  };
 
     const [size, setSize] = useState('large');
     const isMobile = useMediaQuery({ query: '(min-width: 768px)' });
@@ -63,43 +58,58 @@ import RenderUserNoticeDiv from "./RenderUserNoticeDiv";
                         </p>
                       </div>
                       <div className="flex items-center gap-[6px]">
-                        <Image src={`/images/phone-icon.svg`} alt="핸드폰 로고" width={10} height={14} />
+                        <Image
+                          src={`/images/phone-icon.svg`} 
+                          alt="핸드폰 로고" 
+                          width={20} 
+                          height={20} 
+                        />
                         <p className="text-gray-50">{data.phone}</p>
                       </div>
                       <div className="flex items-center gap-[6px]">
-                        <Image src={`/images/icon-location-on.svg`} alt='위치 로고' width={20} height={20} />
+                        <Image 
+                          src={`/images/icon-location-on.svg`} 
+                          alt='위치 로고' 
+                          width={20} 
+                          height={20} 
+                        />
                         <p className=" text-gray-50">{data.address}</p>
                       </div>
+
                     </div>
                     <p className="self-stretch text-black">{data.bio}</p>
                   </div>
                   <div className="flex items-start gap-2">
-                    <Button size='mediumLarge' color='none' onClick={handleEditingProfileInfo}>
+                    <Button 
+                      size='mediumLarge' 
+                      color='none' 
+                      onClick={handleEditingProfileInfo}
+                    >
                       편집하기
                     </Button>
                   </div>
                 </div>
               </div>
             </div>
-            <RenderUserNoticeDiv />
           </div>
+          <RenderUserNoticeDiv />
         </>
-
-
-      );
-    } else {
-      return (
-        <div className="flex py-[60px] px-[238px] flex-col items-start gap-2 bg-white ">
-          <p className="text-black text-[28px] font-bold">내 가게</p>
-          <div className="flex w-full py-[60px] px-[24px] flex-col content-center items-center gap-6 rounded-xl border border-solid border-gray-20">
-            <p className="text-black self-stretch text-center text-base">내 프로필을 등록하고 원하는 가게에 지원해 보세요.</p>
-            <Button size={size} color='colored' onClick={handleWritingShopInfo}>
-              내 프로필 등록하기
-            </Button>
-          </div>
+    );
+  } else {
+    return (
+      <div className="flex py-[60px] px-[238px] flex-col items-start gap-2 bg-white ">
+        <p className="text-black text-[28px] font-bold">내 가게</p>
+        <div className="flex w-full py-[60px] px-[24px] flex-col content-center items-center gap-6 rounded-xl border border-solid border-gray-20">
+          <p className="text-black self-stretch text-center text-base">
+            내 프로필을 등록하고 원하는 가게에 지원해 보세요.
+          </p>
+          <Button size={size} color="colored" onClick={handleWritingShopInfo}>
+            내 프로필 등록하기
+          </Button>
         </div>
-      );
-    }
-  };
+      </div>
+    );
+  }
+};
 
-  export default RenderProfileDiv;
+export default RenderProfileDiv;

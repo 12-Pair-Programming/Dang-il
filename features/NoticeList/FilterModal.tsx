@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react';
+import DetailFilter from './DetailFilter';
+import { SetState } from '@/shared/@common/types/helper';
 
 interface FilterModalProps {
   isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpen: SetState<boolean>;
 }
 
 export const FilterModal = ({ isOpen, setIsOpen }: FilterModalProps) => {
@@ -25,11 +27,11 @@ export const FilterModal = ({ isOpen, setIsOpen }: FilterModalProps) => {
     <>
       {isOpen && (
         <div
-          className="absolute flex flex-col align-top px-5 py-6 bg-white rounded-[10px] gap-2 right-0 ml-[-336px] min-h-[250px] top-10"
+          className="border-[1px] border-purple-30 flex w-[390px] px-6 py-5 flex-col items-start gap-6 bg-white absolute right-[0px] top-[70px] rounded-[10px] z-modalbody"
           ref={modalClick}
           onMouseDown={(e) => e.stopPropagation()}
         >
-          여기에 모달 내용 넣으시면 됩니다.
+          <DetailFilter setIsOpen={setIsOpen} />
         </div>
       )}
     </>

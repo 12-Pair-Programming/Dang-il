@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
 import { Input } from '@/shared/@common/ui/Input/Input';
-import { InputChangeEvent } from '@/shared/@common/types/helper';
+import { InputChangeEvent, SetState } from '@/shared/@common/types/helper';
 import Button from '@/shared/@common/ui/Button/Button';
 import FilterCalendar from './FilterCalendar';
 import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
+import { ItemData } from './AllNotice';
 
-const DetailFilter = () => {
+type DetailFilterProps = {
+  setIsOpen: SetState<boolean>;
+};
+
+const DetailFilter = ({ setIsOpen }: DetailFilterProps) => {
   const [clickedAddress, setClickedAddress] = useState('');
   const [hashtag, setHashtag] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<Date>();
@@ -43,12 +48,14 @@ const DetailFilter = () => {
   const { data } = useGetNoticeData();
 
   return (
-    <div className="flex w-[390px] px-6 py-5 flex-col items-start gap-6 bg-white absolute right-[238px] bottom-[150px] rounded-[10px] z-modalbody">
+    <>
       <div className="flex justify-between items-center self-stretch">
-        <h3 className="text-5 font-bold">상세 필터</h3>
+        <p className="text-5 font-bold">상세 필터</p>
         <Image
           src="/images/close.svg"
           alt="필터창 닫힘 아이콘"
+          onClick={() => setIsOpen(false)}
+          className="cursor-pointer"
           width={24}
           height={24}
         />
@@ -57,17 +64,19 @@ const DetailFilter = () => {
         <div className="flex flex-col items-start gap-3">
           <p>위치</p>
           <>
-            <div className="flex flex-col gap-5 items-start flex-wrap p-6 flex-start w-[350px] h-[258px] rounded-[6px] border border-gray-200">
+            <div className="flex flex-col gap-5 items-start flex-wrap p-6 flex-start w-[350px] h-[258px] rounded-[6px] border border-gray-300">
               {data &&
                 data.items.length > 0 &&
                 data.items
-                  .map((item) => item.item.shop.item.address1)
+                  .map((item: ItemData) => item.item.shop.item.address1)
                   .reduce(
-                    (items, value) =>
-                      items.includes(value) ? items : [...items, value],
+                    (items: ItemData[], value: ItemData) =>
+                      items.some((item) => item === value)
+                        ? items
+                        : [...items, value],
                     [],
                   )
-                  .map((address) => (
+                  .map((address: string) => (
                     <button onClick={() => handleClickAddress(address)}>
                       {address}
                     </button>
@@ -79,8 +88,8 @@ const DetailFilter = () => {
                   <>
                     {hashtag
                       .reduce(
-                        (hashTags, value) =>
-                          hashTags.includes(value)
+                        (hashTags: string[], value: string) =>
+                          hashTags.some((hashtag) => hashtag === value)
                             ? hashTags
                             : [...hashTags, value],
                         [],
@@ -144,7 +153,7 @@ const DetailFilter = () => {
           적용하기
         </Button>
       </div>
-    </div>
+    </>
   );
 };
 
