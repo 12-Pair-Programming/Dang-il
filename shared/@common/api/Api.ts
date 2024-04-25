@@ -134,20 +134,20 @@ const applicationAPI = {
   },
 };
 
-const authenticationAPI = {
+export const authenticationAPI = {
   post: async <T>(body: T) => {
     const data = await axiosInstance.post(`/token`, body);
     return data.data;
   },
 };
 
-const userAPI = {
+export const userAPI = {
   get: async (user_id) => {
     const data = await axiosInstance.get(`/users/${user_id}`);
     return data.data;
   },
-  post: async <T>(user_id, body: T) => {
-    const data = await axiosInstance.post(`/users/${user_id}`, body);
+  post: async <T>(body: T) => {
+    const data = await axiosInstance.post(`/users`, body);
     return data.data;
   },
   put: async <T>(user_id, body: T) => {
