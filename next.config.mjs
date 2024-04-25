@@ -9,6 +9,15 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/noticeList',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
