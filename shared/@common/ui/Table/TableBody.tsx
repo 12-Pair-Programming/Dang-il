@@ -39,7 +39,7 @@ interface EmployerData {
   };
 }
 
-const TableBody: React.FC<TableProps> = ({ isEmployee }) => {
+const TableBody = ({ isEmployee }: TableProps) => {
   const { data } = useGetApplicationData();
 
   let employee = [];
@@ -93,6 +93,7 @@ const TableBody: React.FC<TableProps> = ({ isEmployee }) => {
                 </td>
                 <td className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 ">
                   <TableButton
+                    key={v.id}
                     handleClick={handleChangingStatus}
                     buttonVisible={buttonVisible}
                     status={status}
@@ -125,12 +126,14 @@ const TableBody: React.FC<TableProps> = ({ isEmployee }) => {
                 <td className="flex w-1/5 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 overflow-auto whitespace-pre">
                   {!isEmployee ? (
                     <TableButton
+                      key={v.id}
                       handleClick={handleChangingStatus}
                       buttonVisible={false}
                       status={status}
                     />
                   ) : (
                     <TableButton
+                      key={v.id}
                       handleClick={handleChangingStatus}
                       buttonVisible={true}
                       status={status}
@@ -157,7 +160,7 @@ interface TableRow {
   status: string;
 }
 
-const ParentComponent: React.FC = () => {
+const ParentComponent = () => {
   // 데이터를 정의합니다.
   const data: TableRow[] = [
     { store: '가게1', date: '2024-04-17', hourlyPay: 15, status: 'Open' },

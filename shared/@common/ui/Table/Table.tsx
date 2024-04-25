@@ -6,7 +6,7 @@ export interface TableProps {
   isEmployee: boolean;
 }
 
-const Table: React.FC<TableProps> = ({ isEmployee }) => {
+const Table = ({ isEmployee }: TableProps) => {
   return (
     <>
       <table className="inline-flex flex-col items-start rounded-2xl border-gray-20 border border-solid w-full">

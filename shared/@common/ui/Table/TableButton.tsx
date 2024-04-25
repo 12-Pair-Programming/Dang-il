@@ -4,11 +4,11 @@ interface ButtonComponentProps {
   status: string;
 }
 
-const TableButton: React.FC<ButtonComponentProps> = ({
+const TableButton = ({
   handleClick,
   buttonVisible,
   status,
-}) => {
+}: ButtonComponentProps) => {
   return (
     <>
       {buttonVisible && (

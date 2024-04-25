@@ -6,7 +6,7 @@ interface CalendarProps {
   onDateChange: (date: Date | null) => void; // 선택된 날짜를 전달하기 위한 콜백 함수
 }
 
-const Calendar: React.FC<CalendarProps> = ({ onDateChange }) => {
+const Calendar = ({ onDateChange }: CalendarProps) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   // 날짜가 변경될 때마다 선택된 날짜를 상위 컴포넌트로 전달하는 함수

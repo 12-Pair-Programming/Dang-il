@@ -12,7 +12,7 @@ type DetailFilterProps = {
   setIsOpen: SetState<boolean>;
 };
 
-const DetailFilter: React.FC<DetailFilterProps> = ({ setIsOpen }) => {
+const DetailFilter = ({ setIsOpen }: DetailFilterProps) => {
   const [clickedAddress, setClickedAddress] = useState('');
   const [hashtag, setHashtag] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<Date>();

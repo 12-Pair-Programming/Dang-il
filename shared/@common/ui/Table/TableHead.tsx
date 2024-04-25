@@ -1,6 +1,6 @@
 import { TableProps } from './Table';
 
-const TableHead: React.FC<TableProps> = ({ isEmployee }) => {
+const TableHead = ({ isEmployee }: TableProps) => {
   return (
     <thead className="flex w-full items-start flex-start bg-purple-10 justify-between">
       <tr className="flex w-full">
