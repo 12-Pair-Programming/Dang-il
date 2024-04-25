@@ -3,7 +3,7 @@ import Table from '@/shared/@common/ui/Table/TableBody';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-const RenderNoticeDiv = () => {
+const FindNotice = () => {
   const router = useRouter();
   const [isNotice, setIsNotice] = useState(false);
   const handleWritingNotice = () => {
@@ -44,4 +44,4 @@ const RenderNoticeDiv = () => {
   }
 };
 
-export default RenderNoticeDiv;
+export default FindNotice;

@@ -3,10 +3,10 @@ import { useMediaQuery } from 'react-responsive';
 import { useRouter } from 'next/router';
 import Button from '@/shared/@common/ui/Button/Button';
 import Image from 'next/image';
-import RenderUserNoticeDiv from './FindNotice';
+import FindNotice from './FindNotice';
 
 // 가게 상태에 따라 다른 div 출력
-const RenderProfileDiv = () => {
+const FindProfile = () => {
   const router = useRouter();
 
   const handleWritingShopInfo = () => {
@@ -92,7 +92,7 @@ const RenderProfileDiv = () => {
               </div>
             </div>
           </div>
-          <RenderUserNoticeDiv />
+          <FindNotice />
         </>
     );
   } else {
@@ -112,4 +112,4 @@ const RenderProfileDiv = () => {
   }
 };
 
-export default RenderProfileDiv;
+export default FindProfile;

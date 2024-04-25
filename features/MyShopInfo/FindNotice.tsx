@@ -3,12 +3,12 @@ import Card from '@/shared/@common/notice/ui/Card';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-const RenderNoticeDiv = () => {
+const FindNotice = () => {
   const router = useRouter();
   const [isNotice, setIsNotice] = useState(false);
   const handleWritingNotice = () => {
     /* 공고 작성하는 페이지로 이동시키기 */
-    router.push('noticeRegist');
+    router.push('/noticeRegist');
   };
 
   if (isNotice) {
@@ -21,7 +21,8 @@ const RenderNoticeDiv = () => {
             <div className="flex items-start gap-[14px]">
               {/* <Card />
               <Card />
-              <Card /> */}
+              <Card /> */
+              /* GET으로 Shop의 id로 올라온 공고들을 받아서 출력하기. */ }
             </div>
           </div>
         </div>
@@ -42,4 +43,4 @@ const RenderNoticeDiv = () => {
   }
 };
 
-export default RenderNoticeDiv;
+export default FindNotice;
