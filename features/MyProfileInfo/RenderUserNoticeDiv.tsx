@@ -8,7 +8,7 @@ import { useState } from "react"
 const RenderNoticeDiv = () => {
 
   const router = useRouter();
-  const [isNotice, setIsNotice] = useState(true);
+  const [isNotice, setIsNotice] = useState(false);
   const handleWritingNotice = () => {
     /* 공고 작성하는 페이지로 이동시키기 */
     router.push('/noticeList');
@@ -17,19 +17,22 @@ const RenderNoticeDiv = () => {
   if (isNotice) {
     return (
       <div className="flex pt-[60px] pb-[120px] px-[238px] flex-col items-start gap-2">
-        <div className="flex flex-col items-start gap-8">
+        <div className="flex flex-col items-start gap-[32px] self-stretch bg-white">
           <p className="text-black text-[28px] font-bold">
             신청 내역
           </p>
           <div className="flex flex-col items-start gap-8">
-            <Table />
+            <div className="flex flex-col items-start gap-8">
+              <Table />
+            </div>
           </div>
         </div>
+
       </div>
     );
   } else {
     return (
-      <div className="flex flex-col items-start gap-8">
+      <div className="flex flex-col px-[238px] py-[60px] items-start gap-8">
         <p className="text-black text-[28px] font-bold">
           신청 내역
         </p>

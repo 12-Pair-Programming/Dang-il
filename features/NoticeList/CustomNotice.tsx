@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from '@/shared/@common/ui/Card/Card';
+import Card from '@/shared/@common/notice/ui/Card';
 import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
 
 const CustomNotice = () => {

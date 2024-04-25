@@ -27,6 +27,14 @@ import RenderUserNoticeDiv from "./RenderUserNoticeDiv";
     const [size, setSize] = useState('large');
     const isMobile = useMediaQuery({ query: '(min-width: 768px)' });
     const [isMyProfile, setIsMyProfile] = useState(true); // 가게 상태 추가
+
+    const data = {
+      // GET으로 받아올 것
+      name: '김승우',
+      phone: '010-0000-0000',
+      address: '서울시 종로구',
+      bio: '어쩌구 저쩌구',
+    };
   
     useEffect(() => {
       if (isMobile) {
@@ -40,10 +48,10 @@ import RenderUserNoticeDiv from "./RenderUserNoticeDiv";
       return (
         <>
           <div className="flex py-[60px] px-[238px] flex-col items-start self-stretch bg-white gap-2">
-            <div className="flex flex-col items-start gap-180 self-stretch bg-white ">
-              <p className="text-black text-[28px] font-bold">내 프로필</p>
-              <div className="flex py-[60px] px-[238px] flex-col items-start gap-2 self-stretch ">
-                <div className="flex w-[665px] p-8 flex-col items-start gap-2 rounded-xl bg-purple-10">
+            <div className="flex flex-row px-[238px] py-[60px] items-start gap-[180px] self-stretch bg-white ">
+              <p className="text-black text-[28px] font-bold whitespace-nowrap">내 프로필</p>
+              <div className="flex  flex-col items-start gap-2 self-stretch ">
+                <div className="flex p-8 flex-row justify-between items-start gap-2 rounded-xl bg-purple-10">
                   <div className="flex w-[392px] flex-col items-start gap-7">
                     <div className="flex flex-col items-start gap-3">
                       <div className="flex flex-col items-start gap-2">
@@ -51,22 +59,22 @@ import RenderUserNoticeDiv from "./RenderUserNoticeDiv";
                           이름
                         </p>
                         <p className="text-black text-[28px] font-bold">
-                          김승우
+                          {data.name}
                         </p>
                       </div>
                       <div className="flex items-center gap-[6px]">
                         <Image src={`/images/phone-icon.svg`} alt="핸드폰 로고" width={10} height={14} />
-                        <p className="text-gray-50">010-0000-0000</p>
+                        <p className="text-gray-50">{data.phone}</p>
                       </div>
                       <div className="flex items-center gap-[6px]">
                         <Image src={`/images/icon-location-on.svg`} alt='위치 로고' width={20} height={20} />
-                        <p className=" text-gray-50">서울시 송파구</p>
+                        <p className=" text-gray-50">{data.address}</p>
                       </div>
                     </div>
+                    <p className="self-stretch text-black">{data.bio}</p>
                   </div>
-                  <p className="self-stretch text-black">어쩌구 저쩌구</p>
-                  <div className="flex items-start gap-2 self-stretch">
-                    <Button size='medium' color='none' onClick={handleEditingProfileInfo}>
+                  <div className="flex items-start gap-2">
+                    <Button size='mediumLarge' color='none' onClick={handleEditingProfileInfo}>
                       편집하기
                     </Button>
                   </div>

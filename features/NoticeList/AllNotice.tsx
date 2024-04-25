@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from '@/shared/@common/ui/Button/Button';
 import Pagination from '@/shared/@common/ui/Pagination/Pagination';
 import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
-import Card from '@/shared/@common/ui/Card/Card';
+import Card from '@/shared/@common/notice/ui/Card';
 import DetailFilter from './DetailFilter';
 import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
 
