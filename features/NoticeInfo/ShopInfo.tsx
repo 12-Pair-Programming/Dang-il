@@ -5,6 +5,7 @@ import Button from '@/shared/@common/ui/Button/Button';
 
 interface props {
   userType: string;
+  name: string;
   isLogin: boolean;
 
   shopId: string;
@@ -18,7 +19,7 @@ const item = {
   workhour: 5,
   description:
     '기존 알바 친구가 그만둬서 새로운 친구를 구했는데, 그 사이에 하루가 비네요. 급해서 시급도 높였고 그렇게 바쁜 날이 아니라서 괜찮을거예요.',
-  closed: true,
+  closed: false,
   shop: {
     item: {
       id: 'string',
@@ -29,7 +30,6 @@ const item = {
       description:
         '알바하기 편한 너구리네 라면집! 라면 올려두고 끓이기만 하면 되어서 쉬운 편에 속하는 가게입니다.',
       imageUrl: '/images/icon-clock-on.svg',
-      // 'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxODA4MDlfMzkg%2FMDAxNTMzNzc0NDQzMjM0.2tTaXYEZ5qoD4tSKJb1b_RReTCNCgCdYhSKO52GpxKog.0JV9pl0bPnDRZhEkAG3YAzOyu5_d3CpH4p4uQ2ciCZYg.JPEG.gyubin0804%2F1533774357467.jpg&type=sc960_832',
       originalHourlyPay: 10000,
     },
     href: 'string',
@@ -46,45 +46,53 @@ const item = {
 /**
  * 가게 정보 카드 컴포넌트
  * @param userType 사용자 타입 employer | employee;
+ * @param name 로그인 사용자 이름
  * @param isLogin 로그인 여부
  * @param shopId 가게 ID
  * @param noticeId 공고 ID
  */
 const ShopInfo = ({
   userType,
+  name,
   isLogin,
 
   shopId,
   noticeId,
 }: props) => {
-  //TODO 테스트 데이터 실제 데이터 연결 필요
+  //TODO:  16L부터 item을 테스트 데이터 실제 데이터 연결 필요
 
   //가게의 특정 공고의 지원 목록 조회
   //GET /shops/{shop_id}/notices/{notice_id}
 
-  //유저의 지원 목록에서 items.item.notice.item.id로 공고 id를 찾아서
+  //유저의 지원 목록 조회
+  //결과 값 에서 items.item.notice.item.id로 공고 id를 찾아서?
   //해당 items.item.status로 status 조회 필요
   //GET /users/{user_id}/applications
   const status = 'pending';
 
-  const handleClick = (state: string) => {
-    if (isLogin) {
-      console.log('click 로그인 중');
-      if (state === 'cancel') {
-        console.log('click 로그인 중 - 캔슬');
-        //취소 모달
-      } else if (state === 'apply') {
-        console.log('click 로그인 중 - 신청');
-        //프로필이 없는 경우 모달 넣어야 함.
-      }
+  const handleEditeNotice = () => {
+    console.log('click 로그인 중 - 공고 편집');
+    // TODO: 편집페이지 이동 - 공고 id전달 필요
+  };
+
+  const handleApplyNotice = () => {
+    console.log('click 로그인 중 - 공고 신청');
+    if (name) {
+      console.log('click 로그인 중 - 공고 신청');
+      // TODO: 신청 모달 팝업
+      // 공고 지원 등록
+      //POST /shops/{shop_id}/notices/{notice_id}/applications
     } else {
-      console.log('click 오프라인');
-      //isLogin 이 false이면 모달 오픈
+      console.log('click 로그인 중 - 프로필 등록 필요');
+      // TODO: 프로필 등록 필요 모달 팝업
     }
   };
 
-  const handleEmployerClick = () => {
-    console.log('click 로그인 중 - 공고 편집');
+  const handleCancelNotice = () => {
+    console.log('click 로그인 중 - 공고 취소');
+    // TODO: 취소 모달 팝업
+    //PUT /shops/{shop_id}/notices/{notice_id}/applications/{application_id}
+    //Request body : 지원자 취소 -"status" :  canceled
   };
 
   return (
@@ -122,7 +130,7 @@ const ShopInfo = ({
               size="large"
               color="none"
               onClick={() => {
-                handleEmployerClick();
+                handleEditeNotice();
               }}
               disabled={false}
             >
@@ -132,9 +140,7 @@ const ShopInfo = ({
             <Button
               size="large"
               color="none"
-              onClick={() => {
-                handleClick('cancel');
-              }}
+              onClick={() => {}}
               disabled={true}
             >
               신청 불가
@@ -144,7 +150,7 @@ const ShopInfo = ({
               size="large"
               color="none"
               onClick={() => {
-                handleClick('cancel');
+                handleCancelNotice();
               }}
               disabled={false}
             >
@@ -155,7 +161,7 @@ const ShopInfo = ({
               size="large"
               color="colored"
               onClick={() => {
-                handleClick('apply');
+                handleApplyNotice();
               }}
               disabled={false}
             >

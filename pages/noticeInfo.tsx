@@ -14,6 +14,7 @@ const NoticeInfo = () => {
   const isLogin = true;
   const shopId = '4490151c-5217-4157-b072-9c37b05bed47';
   const noticeId = '99996477-82db-4bda-aae1-4044f11d9a8b';
+  const name = '김코드';
 
   return (
     <>
@@ -24,6 +25,7 @@ const NoticeInfo = () => {
           userType={userType}
           shopId={shopId}
           noticeId={noticeId}
+          name={name}
         />
         {userType === 'employee' ? <RecentNotices /> : <EmployeeList />}
       </div>
