@@ -1,30 +1,9 @@
-import React, { useEffect, useState } from 'react';
 import Table from '@/shared/@common/ui/Table/Table';
-import useFetch from '@/shared/@common/api/hooks/useFetch';
-import { useGetApplicationData } from '@/shared/@common/ui/Table/test/tableTest';
-
-//테스트 용 페이지이므로 리뷰 안하셔도 됩니다.
 
 const TableComponent = () => {
-  const [disabled, setDisabled] = useState(false);
-  const handleClick = () => {
-    console.log('클릭되었습니다.');
-    setDisabled(!disabled);
-  };
-
-  const { data } = useGetApplicationData();
-
-  let users = [];
-  if (data && data.items) {
-    users = data.items.map((v: any) => v.item.user.item);
-  }
-  console.log(users);
   return (
     <>
-      {users &&
-        users.map((v: any) => (
-          <Table id={v.id} name={v.name} introduce={v.bio} phone={v.phone} />
-        ))}
+      <Table />
     </>
   );
 };
