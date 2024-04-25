@@ -26,7 +26,7 @@ export default function RegistnBody() {
     email: email.value,
     password: password.value,
     passwordRepeat: passwordRepeat.value,
-    tpye: 'boss',
+    type: 'boss',
   });
 
   return (

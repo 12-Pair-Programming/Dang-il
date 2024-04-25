@@ -6,7 +6,7 @@ import { NavButton } from './navButton/navButton';
 
 interface NavigationBarProps {}
 
-export const NavigationBar = () => {
+const NavigationBar = () => {
   const [isLogin, setIsLogin] = useState(true);
   //밑에 2개는 테스트 데이터로 내일 API작업하면서 삭제할겁니다!
   const [test, setTest] = useState(true);
@@ -100,3 +100,5 @@ export const NavigationBar = () => {
     </div>
   );
 };
+
+export default NavigationBar;

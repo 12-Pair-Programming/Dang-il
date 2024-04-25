@@ -31,6 +31,7 @@ const NoticeInfo = () => {
       </div>
       <Footer />
     </>
+
   );
 };
 

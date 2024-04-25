@@ -1,11 +1,8 @@
-
-import RenderShopDiv from "@/features/MyShopInfo/RenderShopDiv";
-import { Footer } from "@/shared/@common/ui/Footer/Footer";
-import { NavigationBar } from "@/shared/@common/ui/Nav/NavigationBar";
+import RenderShopDiv from '@/features/MyShopInfo/RenderShopDiv';
+import Footer from '@/shared/@common/ui/Footer/Footer';
+import NavigationBar from '@/shared/@common/ui/Nav/NavigationBar';
 
 const MyShopInfo = () => {
-
-
   return (
     <div className="flex flex-col justify-center items-start">
       <NavigationBar />
@@ -19,4 +16,3 @@ const MyShopInfo = () => {
 };
 
 export default MyShopInfo;
-
