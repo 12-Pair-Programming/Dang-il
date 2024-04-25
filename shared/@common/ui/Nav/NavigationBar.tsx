@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useNavModal } from './navModal/hook/navModalHook';
 import { NavButton } from './navButton/navButton';
 import { jwtDecode } from 'jwt-decode';
+import Link from 'next/link';
 
 export const NavigationBar = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -34,12 +35,14 @@ export const NavigationBar = () => {
   return (
     <div className="w-full h-[70px] flex flex-row bg-white justify-center items-center sticky gap-10 z-10">
       <div className="h-[40px] flex items-center">
-        <Image
-          width={140}
-          height={20}
-          src={'/images/navLogo.png'}
-          alt="네비 로고 이미지"
-        />
+        <Link href={'/'}>
+          <Image
+            width={140}
+            height={20}
+            src={'/images/navLogo.png'}
+            alt="네비 로고 이미지"
+          />
+        </Link>
       </div>
       <div className="relative">
         <input
@@ -58,11 +61,11 @@ export const NavigationBar = () => {
         {isLogin ? (
           <>
             {userType !== 'employee' ? (
-              <NavButton href={'/'}>내 가게</NavButton>
+              <NavButton href={'/myShopInfo'}>내 가게</NavButton>
             ) : (
-              <NavButton href={'/'}>사용자 프로필</NavButton>
+              <NavButton href={'/myProfileInfo'}>사용자 프로필</NavButton>
             )}
-            <NavButton onClick={handleLogout} href={'/login'}>
+            <NavButton onClick={handleLogout} href={'/'}>
               로그아웃
             </NavButton>
 

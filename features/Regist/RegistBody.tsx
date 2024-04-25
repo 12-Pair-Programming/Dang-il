@@ -33,12 +33,14 @@ export default function RegistnBody() {
     <div className="w-full h-full flex items-center justify-center bg-white">
       <div>
         <div className="flex items-center justify-center mb-7">
-          <Image
-            width={250}
-            height={30}
-            alt="큰 메인 로고"
-            src={'/images/logo.png'}
-          />
+          <Link href={'/'}>
+            <Image
+              width={250}
+              height={30}
+              alt="큰 메인 로고"
+              src={'/images/logo.png'}
+            />
+          </Link>
         </div>
         <div className="flex flex-col gap-7">
           <Input
