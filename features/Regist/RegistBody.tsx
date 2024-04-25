@@ -26,7 +26,7 @@ export default function RegistnBody() {
     email: email.value,
     password: password.value,
     passwordRepeat: passwordRepeat.value,
-    type: 'boss',
+    type: 'employer',
   });
 
   return (
@@ -68,8 +68,8 @@ export default function RegistnBody() {
             <p>회원 유형</p>
             <div className="flex flex-row items-center justify-center w-full gap-2">
               <RadioButton
-                id="boss"
-                checked={selectedUserType === 'boss'}
+                id="employer"
+                checked={selectedUserType === 'employer'}
                 onChange={handleRadioChange}
               />
               <RadioButton

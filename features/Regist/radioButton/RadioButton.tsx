@@ -33,7 +33,7 @@ export const RadioButton = ({ id, checked, onChange }: RadioButtonProps) => {
           checked ? 'ring-2 ring-purple-40' : ''
         }`}
       >
-        {id === 'boss' ? '사장님' : '알바님'}
+        {id === 'employer' ? '사장님' : '알바님'}
       </label>
     </div>
   );
