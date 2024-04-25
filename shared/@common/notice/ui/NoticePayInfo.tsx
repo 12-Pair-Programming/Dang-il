@@ -39,7 +39,7 @@ const NoticePayInfo = ({
         <div
           className={`${
             closed ? 'bg-gray-20 text-white' : 'bg-primary text-white'
-          } rounded-[20px] w-[168px] p-3 flex felx-row`}
+          } rounded-[20px] w-[168px] p-3 flex flex-row`}
         >
           <p className="text-[14px] font-bold mr-1">기존 시급보다 {pay}%</p>
 
