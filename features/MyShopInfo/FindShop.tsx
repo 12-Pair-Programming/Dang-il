@@ -3,14 +3,14 @@ import { useMediaQuery } from "react-responsive";
 import { useRouter } from "next/router";
 import Button from "@/shared/@common/ui/Button/Button";
 import Image from "next/image";
-import RenderNoticeDiv from "./RenderNoticeDiv";
+import FindNotice from "./FindNotice";
 
 
 
 
 
   // 가게 상태에 따라 다른 div 출력
-  const RenderShopDiv = () => {
+  const FindShop = () => {
 
     const router = useRouter();
 
@@ -82,7 +82,7 @@ import RenderNoticeDiv from "./RenderNoticeDiv";
               </div>
             </div>
           </div>
-          <RenderNoticeDiv />
+          <FindNotice />
         </>
 
       );
@@ -98,4 +98,4 @@ import RenderNoticeDiv from "./RenderNoticeDiv";
     }
   };
 
-  export default RenderShopDiv;
+  export default FindShop;
