@@ -3,17 +3,23 @@ import { NavModal } from './navModal/NavModal';
 import Image from 'next/image';
 import { useNavModal } from './navModal/hook/navModalHook';
 import { NavButton } from './navButton/navButton';
+import { jwtDecode } from 'jwt-decode';
+import Link from 'next/link';
 
-interface NavigationBarProps {}
-
-const NavigationBar = () => {
-  const [isLogin, setIsLogin] = useState(true);
-  //밑에 2개는 테스트 데이터로 내일 API작업하면서 삭제할겁니다!
-  const [test, setTest] = useState(true);
-  const userType = 'boss';
+export const NavigationBar = () => {
+  const [isLogin, setIsLogin] = useState(false);
+  const [userType, setUserType] = useState<string | null>('');
+  const [userId, setUserId] = useState<string>('');
+    
+  const { isOpen, closeModal, openModal } = useNavModal();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+    const decodedToken = token ? jwtDecode(token) : null;
+    const user = localStorage.getItem('user');
+    setUserType(user);
+    setUserId(decodedToken?.userId || '');
+
     if (token) {
       setIsLogin(true);
     } else {
@@ -23,29 +29,21 @@ const NavigationBar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setIsLogin(false);
-    setTest(!test);
   };
 
-  //밑에는 테스트 데이터로 내일 API작업하면서 삭제할겁니다!
-  const handleLogin = () => {
-    setTest(!test);
-  };
-
-  const { isOpen, setIsOpen, openModal } = useNavModal({
-    modalContent: '공지',
-  });
-
-  //현재 링크 연결을 임의로 했습니다 참고하세요!
   return (
     <div className="w-full h-[70px] flex flex-row bg-white justify-center items-center sticky gap-10 z-10">
       <div className="h-[40px] flex items-center">
-        <Image
-          width={140}
-          height={20}
-          src={'/images/navLogo.png'}
-          alt="네비 로고 이미지"
-        />
+        <Link href={'/'}>
+          <Image
+            width={140}
+            height={20}
+            src={'/images/navLogo.png'}
+            alt="네비 로고 이미지"
+          />
+        </Link>
       </div>
       <div className="relative">
         <input
@@ -61,14 +59,14 @@ const NavigationBar = () => {
         />
       </div>
       <div className="flex flex-row gap-2 top-[23.5px] right-[60px] justify-center items-center">
-        {test ? (
+        {isLogin ? (
           <>
-            {userType === 'boss' ? (
-              <NavButton href={'/'}>내 가게</NavButton>
+            {userType !== 'employee' ? (
+              <NavButton href={'/myShopInfo'}>내 가게</NavButton>
             ) : (
-              <NavButton href={'/'}>사용자 프로필</NavButton>
+              <NavButton href={'/myProfileInfo'}>사용자 프로필</NavButton>
             )}
-            <NavButton onClick={handleLogout} href={'/login'}>
+            <NavButton onClick={handleLogout} href={'/'}>
               로그아웃
             </NavButton>
 
@@ -85,14 +83,12 @@ const NavigationBar = () => {
                   alt="모달 온오프 아이콘"
                 />
               </div>
-              <NavModal isOpen={isOpen} setIsOpen={setIsOpen} />
+              <NavModal isOpen={isOpen} userId={userId} onClose={closeModal} />
             </div>
           </>
         ) : (
           <>
-            <NavButton onClick={handleLogin} href={'/login'}>
-              로그인
-            </NavButton>
+            <NavButton href={'/login'}>로그인</NavButton>
             <NavButton href={'/regist'}>회원가입</NavButton>
           </>
         )}

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { authenticationAPI, userAPI } from '../../api/Api';
+import useFetch from '../../api/hooks/useFetch';
 
 interface useCheckUserDataProps {
   email?: string;
@@ -13,7 +15,7 @@ export function useCheckUserData({
   email = '',
   password = '',
   passwordRepeat = password,
-  type = 'boss',
+  type = 'employee',
 }: useCheckUserDataProps) {
   const [emailError, setEmailError] = useState<string | undefined>('');
   const [passwordError, setPasswordError] = useState<string | undefined>('');
@@ -94,18 +96,16 @@ export function useCheckUserData({
   const handleLoginSystem = async () => {
     if (isEmailCheck && isPasswordCheck && isPasswordRepeatCheck) {
       try {
-        const response = await axios.post(
-          'https://bootcamp-api.codeit.kr/api/0-1/the-julge/token',
-          {
-            email: emailValue,
-            password: passwordValue,
-          },
-        );
-        const token = response.data.token;
-        localStorage.setItem('token', token);
+        const data = await authenticationAPI.post({
+          email: emailValue,
+          password: passwordValue,
+        });
+        console.log(data.item.token);
+        console.log(data.item.user.item.type);
+        localStorage.setItem('token', data.item.token);
+        localStorage.setItem('user', data.item.user.item.type);
         router.push('/regist'); //페이지 아직 안 봐서 임시방편
       } catch (error) {
-        // Handle error
         console.error('Login failed:', error);
       }
     }
@@ -114,15 +114,14 @@ export function useCheckUserData({
   const handleRegistSystem = async () => {
     if (isEmailCheck && isPasswordCheck && isPasswordRepeatCheck) {
       try {
-        const response = await axios.post(
-          'https://bootcamp-api.codeit.kr/api/0-1/the-julge/users',
-          {
-            email: emailValue,
-            password: passwordValue,
-            type: selectedUserType,
-          },
-        );
-        router.push('/login'); //페이지 아직 안 봐서 임시방편
+        const data = await userAPI.post({
+          email: emailValue,
+          password: passwordValue,
+          type: selectedUserType,
+        });
+        if (data.item.id) {
+          router.push('/login');
+        }
       } catch (error) {
         console.error('Regist failed:', error);
       }

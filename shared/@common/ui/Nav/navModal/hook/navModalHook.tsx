@@ -1,21 +1,17 @@
-import { useState } from 'react';
+import react, { useState } from 'react';
 
-interface ModalProps {
-  modalContent: string;
-}
-
-export const useNavModal = ({ modalContent }: ModalProps) => {
+export const useNavModal = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [content, setContent] = useState(modalContent);
 
   const openModal = () => {
-    setIsOpen(true);
-    setContent(modalContent);
+    if (!isOpen) {
+      setIsOpen(true);
+    }
   };
 
   const closeModal = () => {
     setIsOpen(false);
   };
 
-  return { isOpen, setIsOpen, openModal, closeModal, content };
+  return { isOpen, openModal, closeModal };
 };

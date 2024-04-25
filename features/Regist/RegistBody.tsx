@@ -26,19 +26,21 @@ export default function RegistnBody() {
     email: email.value,
     password: password.value,
     passwordRepeat: passwordRepeat.value,
-    type: 'boss',
+    type: 'employer',
   });
 
   return (
     <div className="w-full h-full flex items-center justify-center bg-white">
       <div>
         <div className="flex items-center justify-center mb-7">
-          <Image
-            width={250}
-            height={30}
-            alt="큰 메인 로고"
-            src={'/images/logo.png'}
-          />
+          <Link href={'/'}>
+            <Image
+              width={250}
+              height={30}
+              alt="큰 메인 로고"
+              src={'/images/logo.png'}
+            />
+          </Link>
         </div>
         <div className="flex flex-col gap-7">
           <Input
@@ -68,8 +70,8 @@ export default function RegistnBody() {
             <p>회원 유형</p>
             <div className="flex flex-row items-center justify-center w-full gap-2">
               <RadioButton
-                id="boss"
-                checked={selectedUserType === 'boss'}
+                id="employer"
+                checked={selectedUserType === 'employer'}
                 onChange={handleRadioChange}
               />
               <RadioButton
