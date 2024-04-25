@@ -72,7 +72,7 @@ const NoticeInfo = () => {
         noticeDescription={noticeDescription}
         shopImageUrl={shopImageUrl}
       />
-      {userType === 'employer' ? <EmployeeList /> : <RecentNotices />}
+      {userType === 'employee' ? <RecentNotices /> : <EmployeeList />}
     </div>
   );
 };

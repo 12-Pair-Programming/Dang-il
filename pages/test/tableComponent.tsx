@@ -1,26 +1,28 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Table from '@/shared/@common/ui/Table/Table';
-import Button from '@/shared/@common/ui/Button/Button';
 
 const TableComponent = () => {
-
-  const [disabled, setDisabled] = useState(false);
-  const handleClick = () => {
-    console.log('클릭되었습니다.');
-    setDisabled(!disabled);
-  }
+  const [isEmployee, setIsEmployee] = useState(false);
   return (
     <>
-      <Table />
-      <Button size='large' color='none' onClick={handleClick} content='빈배경큰버튼' disabled={disabled}/>
-      <Button size='large' color='colored' onClick={handleClick} content='꽉찬배경큰버튼' disabled={disabled} />
-      <Button size='medium' color='none' onClick={handleClick} content='빈배경중간버튼' />
-      <Button size='medium' color='colored' onClick={handleClick} content='꽉찬배경중간버튼' />
-      <Button size='small' color='none' onClick={handleClick} content='빈배경작은버튼' />
-      <Button size='small' color='colored' onClick={handleClick} content='꽉찬배경작은버튼' />
+      <Table isEmployee={isEmployee} />
+      <Table isEmployee />
     </>
   );
 };
+
+{
+  /* 
+  사장님 확인 용
+  <Table
+  id={users.id}
+  userName={users.name}
+  date={data.items.item.startsAt.slice(0, 10)}
+  hour={data.items.item.startsAt.slice(12)}
+  hourlypay={data.items.item.notice.item.hourlyPay}
+  statuses={data.items.item.status}
+/>; */
+}
 
 /*
   Button Component 사용법

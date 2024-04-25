@@ -79,11 +79,11 @@ export const Dropdown = ({
         <div
           className={`absolute ${
             isOpen ? 'inline-flex' : 'hidden'
-          } flex-col items-start rounded-md border-[2px] border-gray-20 bg-white shadow-md z-4 mt-2 overflow-y-auto overflow-x-hidden max-h-[200px] z-dropdown right-[7px]`}
+          } flex-col items-start rounded-md border-[2px] items-center border-gray-20 bg-white shadow-md z-4 mt-2 overflow-y-auto overflow-x-hidden max-h-[200px] z-dropdown right-[7px]`}
         >
           {options.map((option, index) => (
             <div
-              className={`w-[336px] flex px-4 py-3 items-center gap-4 cursor-pointer text-base font-normal leading-26 tracking--0.16 hover:bg-gray-100 ${
+              className={`w-[{width}] flex px-6 py-3 items-center gap-4 cursor-pointer text-base font-normal leading-26 tracking--0.16 hover:bg-gray-100 ${
                 index === options.length - 1
                   ? 'border-b-0'
                   : 'border-b border-gray-20'
