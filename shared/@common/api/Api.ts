@@ -25,6 +25,7 @@ export const axiosInstance = axios.create({
   baseURL: 'https://bootcamp-api.codeit.kr/api/0-1/the-julge',
 });
 
+//서인님의 api가 올 끼지 임시입니다.!
 //noticeAPI.getNoticeList(offset,limit,address,keyword,startsAtGte,hourlyPayGte,sort);
 // 변수는 최소화 // interface와 noticeAPI 함께 파일로 분리
 export const noticeAPI = {
