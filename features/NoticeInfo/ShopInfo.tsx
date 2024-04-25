@@ -73,7 +73,7 @@ const ShopInfo = ({
   };
 
   return (
-    <div className="my-[60px] mx-[238px]">
+    <div className="py-[60px] mx-[238px]">
       <div>
         <p className="text-base font-bold text-primary">식당</p>
         <p className="text-[28px] font-bold">도토리 식당</p>

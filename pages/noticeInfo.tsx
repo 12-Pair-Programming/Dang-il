@@ -1,6 +1,10 @@
 import ShopInfo from '@/features/NoticeInfo/ShopInfo';
 import RecentNotices from '@/features/NoticeInfo/RecentNotices';
 import EmployeeList from '@/features/NoticeInfo/EmployeeList';
+import { NavigationBar } from '@/shared/@common/ui/Nav/NavigationBar';
+import { Footer } from '@/shared/@common/ui/Footer/Footer';
+
+// Dang-il/shared/@common/ui/Nav/NavigationBar.tsx
 
 /**
  * 공고 상세 페이지 컴포넌트
@@ -57,23 +61,27 @@ const NoticeInfo = () => {
   const shopImageUrl = item.shop.item.imageUrl;
 
   return (
-    <div className="bg-white text-black">
-      <ShopInfo
-        userType={userType}
-        isLogin={isLogin}
-        closed={closed}
-        status={status}
-        hourlyPay={hourlyPay}
-        address1={address1}
-        originalHourlyPay={originalHourlyPay}
-        startsAt={startsAt}
-        workhour={workhour}
-        shopDescription={shopDescription}
-        noticeDescription={noticeDescription}
-        shopImageUrl={shopImageUrl}
-      />
-      {userType === 'employer' ? <EmployeeList /> : <RecentNotices />}
-    </div>
+    <>
+      <NavigationBar />
+      <div className="bg-white text-black items-center flex flex-col pb-20">
+        <ShopInfo
+          userType={userType}
+          isLogin={isLogin}
+          closed={closed}
+          status={status}
+          hourlyPay={hourlyPay}
+          address1={address1}
+          originalHourlyPay={originalHourlyPay}
+          startsAt={startsAt}
+          workhour={workhour}
+          shopDescription={shopDescription}
+          noticeDescription={noticeDescription}
+          shopImageUrl={shopImageUrl}
+        />
+        {userType === 'employee' ? <RecentNotices /> : <EmployeeList />}
+      </div>
+      <Footer />
+    </>
   );
 };
 
