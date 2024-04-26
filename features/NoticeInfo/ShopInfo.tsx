@@ -160,7 +160,7 @@ const ShopInfo = ({
             <p className="text-[28px] font-bold">도토리 식당</p>
           </div>
           <div className="flex w-[963px] h-[365px] border-[1px] rounded-2xl p-6 mt-4">
-            <div className="w-[596px] h-[320px] overflow-hidden">
+            <div className="w-[596px] h-[320px] overflow-hidden rounded-2xl">
               <CardImage
                 imageUrl={getdata.shop.item.imageUrl}
                 closed={getdata.closed}
