@@ -1,8 +1,8 @@
 import ShopInfo from '@/features/NoticeInfo/ShopInfo';
 import RecentNotices from '@/features/NoticeInfo/RecentNotices';
 import EmployeeList from '@/features/NoticeInfo/EmployeeList';
-import { NavigationBar } from '@/shared/@common/ui/Nav/NavigationBar';
-import { Footer } from '@/shared/@common/ui/Footer/Footer';
+// import { NavigationBar } from '@/shared/@common/ui/Nav/NavigationBar';
+import Footer from '@/shared/@common/ui/Footer/Footer';
 
 /**
  * 공고 상세 페이지 컴포넌트
@@ -18,7 +18,7 @@ const NoticeInfo = () => {
 
   return (
     <>
-      <NavigationBar />
+      {/* <NavigationBar /> */}
       <div className="bg-white text-black items-center flex flex-col pb-20">
         <ShopInfo
           isLogin={isLogin}
@@ -31,7 +31,6 @@ const NoticeInfo = () => {
       </div>
       <Footer />
     </>
-
   );
 };
 
