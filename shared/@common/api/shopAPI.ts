@@ -1,17 +1,14 @@
 import { axiosInstance } from '@/shared/utils/axiosInstance';
 
 const shopAPI = {
-  get: async (shop_id: string) => {
-    const data = await axiosInstance.get(`/shops/${shop_id}`);
-    return data.data;
+  get: (shop_id: string) => {
+    return axiosInstance.get(`/shops/${shop_id}`);
   },
-  post: async <T>(body: T) => {
-    const data = await axiosInstance.post(`/shops`, body);
-    return data.data;
+  post: <T>(body: T) => {
+    return axiosInstance.post(`/shops`, body);
   },
-  put: async <T>(shop_id: T, body: T) => {
-    const data = await axiosInstance.put(`/shops/${shop_id}`, body);
-    return data.data;
+  put: <T>(shop_id: string, body: T) => {
+    return axiosInstance.put(`/shops/${shop_id}`, body);
   },
 };
 

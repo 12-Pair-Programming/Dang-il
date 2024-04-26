@@ -22,7 +22,7 @@ interface GetShopNoticeData {
 }
 
 const noticeAPI = {
-  getNoticeList: async ({
+  getNoticeList: ({
     offset,
     limit,
     address,
@@ -40,40 +40,26 @@ const noticeAPI = {
       hourlyPayGte,
       sort,
     };
-    const data = await axiosInstance.get(`/notices`, { params });
-    return data.data;
+    return axiosInstance.get(`/notices`, { params });
   },
-  getShopNoticeList: async ({
-    shops_id,
-    offset,
-    limit,
-  }: GetShopNoticeListData) => {
+  getShopNoticeList: ({ shops_id, offset, limit }: GetShopNoticeListData) => {
     const params = {
       offset,
       limit,
     };
-    const data = await axiosInstance.get(`/shops/${shops_id}/notices`, {
+    return axiosInstance.get(`/shops/${shops_id}/notices`, {
       params,
     });
-    return data.data;
   },
 
-  getShopNotice: async ({ shops_id, notice_id }: GetShopNoticeData) => {
-    const data = await axiosInstance.get(
-      `/shops/${shops_id}/notices/${notice_id}`,
-    );
-    return data.data;
+  getShopNotice: ({ shops_id, notice_id }: GetShopNoticeData) => {
+    return axiosInstance.get(`/shops/${shops_id}/notices/${notice_id}`);
   },
-  post: async <T>(shop_id: T, body: T) => {
-    const data = await axiosInstance.post<T>(`/shops/${shop_id}/notices`, body);
-    return data.data;
+  post: <T>(shop_id: string, body: T) => {
+    return axiosInstance.post<T>(`/shops/${shop_id}/notices`, body);
   },
-  put: async <T>(shop_id: T, notice_id: T, body: T) => {
-    const data = await axiosInstance.put(
-      `/shops/${shop_id}/notices/${notice_id}`,
-      body,
-    );
-    return data.data;
+  put: <T>(shop_id: string, notice_id: T, body: T) => {
+    return axiosInstance.put(`/shops/${shop_id}/notices/${notice_id}`, body);
   },
 };
 

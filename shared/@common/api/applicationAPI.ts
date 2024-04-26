@@ -14,39 +14,35 @@ interface ApplicationData {
 }
 
 const applicationAPI = {
-  getApplicationListData: async ({
+  getApplicationListData: ({
     shop_id,
     notice_id,
     offset,
     limit,
   }: ApplicationListData) => {
     const params = { offset, limit };
-    const data = await axiosInstance.get(
+    return axiosInstance.get(
       `/shops/${shop_id}/notices/${notice_id}/applications`,
       { params },
     );
-    return data.data;
   },
-  getApplicationData: async ({ user_id, offset, limit }: ApplicationData) => {
+  getApplicationData: ({ user_id, offset, limit }: ApplicationData) => {
     const params = { offset, limit };
-    const data = await axiosInstance.get(`/users/${user_id}/applications`, {
+    return axiosInstance.get(`/users/${user_id}/applications`, {
       params,
     });
-    return data.data;
   },
-  post: async <T>(shop_id: T, notice_id: T, body: T) => {
-    const data = await axiosInstance.post(
+  post: <T>(shop_id: string, notice_id: string, body: T) => {
+    return axiosInstance.post(
       `/shops/${shop_id}/notices/${notice_id}/applications`,
       body,
     );
-    return data.data;
   },
-  put: async <T>(shop_id: T, notice_id: T, application_id: T, body: T) => {
-    const data = await axiosInstance.put(
+  put: <T>(shop_id: string, notice_id: string, application_id: T, body: T) => {
+    return axiosInstance.put(
       `/shops/${shop_id}/notices/${notice_id}/applications/${application_id}`,
       body,
     );
-    return data.data;
   },
 };
 
