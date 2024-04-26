@@ -129,6 +129,6 @@ const dropdownRelationOptions = [
           title={'드롭다운'}
           options={options}
           onSelect={handleSelectOption}
-          defult={selectedOption}
+          default={selectedOption}
         /> 
         */
