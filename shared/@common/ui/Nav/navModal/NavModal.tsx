@@ -11,6 +11,20 @@ interface NavModalProps {
   onClose: () => void;
 }
 
+interface Item {
+  item: {
+    id: string;
+    result: string;
+    notice: {
+      item: {
+        startsAt: string;
+        description: string;
+      };
+    };
+    createdAt: Date;
+  };
+}
+
 export const NavModal = ({ isOpen, userId, onClose }: NavModalProps) => {
   const modalClick = useRef<HTMLDivElement>(null);
 
@@ -39,11 +53,11 @@ export const NavModal = ({ isOpen, userId, onClose }: NavModalProps) => {
     <>
       {isOpen && (
         <div
-          className="absolute flex flex-col align-top px-5 py-6 bg-purple-10 rounded-[10px] gap-2 right-0 ml-[-336px] min-h-[250px] top-10"
+          className="absolute flex flex-col align-top px-5 py-6 bg-purple-10 rounded-[10px] gap-2 right-0 ml-[-336px]  h-[500px] top-10"
           ref={modalClick}
           onMouseDown={(e) => e.stopPropagation()}
         >
-          <div className="inline-flex flex-col gap-4 w-full">
+          <div className="inline-flex flex-col gap-4 w-full h-full">
             <div className="flex justify-between items-center self-stretch">
               <p className="font-spoqa font-semibold text-lg">
                 알림 {data.count}개
@@ -58,28 +72,23 @@ export const NavModal = ({ isOpen, userId, onClose }: NavModalProps) => {
               />
             </div>
             {data.count !== 0 ? (
-              <div className="flex flex-col gap-2">
-                {data.items?.map((item: any) => {
-                  // 각 항목에서 필요한 데이터 추출 ()
-                  const result = item.item.result;
-                  const startsAt = new Date(
-                    item.item.notice.item.startsAt,
-                  ).toLocaleString();
-
-                  // NavModalMessage 컴포넌트에 필요한 데이터 전달
+              <div className="flex flex-col gap-2 h-full">
+                {data.items?.map((item: Item) => {
                   return (
                     <NavModalMessage
                       key={item.item.id}
-                      isResult={result}
+                      isResult={item.item.result}
                       noticeName={item.item.notice.item.description}
-                      noticePeriod={startsAt}
+                      noticePeriod={new Date(
+                        item.item.notice.item.startsAt,
+                      ).toLocaleString()}
                       createdAt={item.item.createdAt}
                     />
                   );
                 })}
               </div>
             ) : (
-              <div className="flex flex-col gap-2 w-[350px] h-[500px] items-center justify-center">
+              <div className="flex flex-col gap-2 w-[350px] h-full items-center justify-center">
                 알림이 없습니다!
               </div>
             )}
