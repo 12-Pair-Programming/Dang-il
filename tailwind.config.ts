@@ -10,8 +10,8 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
-        md: '768px',
-        lg: '1280px',
+        mobile: { max: '767px' },
+        tablet: { max: '1023px' },
       },
       zIndex: {
         dropdown: '10',
