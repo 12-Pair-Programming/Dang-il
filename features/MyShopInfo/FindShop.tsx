@@ -4,20 +4,37 @@ import { useRouter } from 'next/router';
 import Button from '@/shared/@common/ui/Button/Button';
 import Image from 'next/image';
 import FindNotice from './FindNotice';
+import useFetch from '@/shared/@common/api/hooks/useFetch';
+import shopAPI from '@/shared/@common/api/shopAPI';
+
+interface ShopData {
+  id: string;
+  name: string;
+  category: string;
+  address1: string;
+  address2: string;
+  description: string;
+  imageUrl: string;
+}
+
+interface FindShopData {
+  item: {
+    item: ShopData;
+  };
+}
 
 // 가게 상태에 따라 다른 div 출력
 const FindShop = () => {
   const router = useRouter();
 
-  const userData = {
-    // GET으로 받아올 DATA
-    name: '진주회관',
-    category: '한식',
-    address1: '중구',
-    address2: '세종대로11길 26',
-    description: '콩국수 맛집 인정따리',
-    imageUrl: `/images/icon-location-on.svg`,
-  };
+  const { data } = useFetch(() =>
+    shopAPI.get('4490151c-5217-4157-b072-9c37b05bed47'),
+  );
+
+  let shop = [];
+  if (data && data.item) {
+    shop = data.item;
+  }
 
   const handleWritingShopInfo = () => {
     /* 가게 등록하는 페이지로 이동시키기 */
@@ -49,35 +66,33 @@ const FindShop = () => {
   if (isMyShop) {
     return (
       <>
-        <div className="inline-flex p-6 justify-between items-start rounded-xl bg-purple-10">
+        <div className="inline-flex w-full p-6 justify-between items-start rounded-xl bg-purple-10">
           <Image
-            src={`/images/facebookIcon.png`}
+            src={shop.imageUrl}
             alt="내 가게 사진"
             width={200}
             height={200}
           />
           <div className="flex w-[346px] pt-4 flex-col justify-between items-start self-stretch">
-            <div className="flex w-[346px] flex-col items-start gap-3">
+            <div className="flex w-[346px] p-2 flex-col items-start gap-3">
               <div className="flex flex-col items-start gap-2">
                 <p className=" text-primary font-bold text-base">
-                  {userData.category}
+                  {shop.category}
                 </p>
-                <p className="text-black text-[28px] font-bold">
-                  {userData.name}
-                </p>
+                <p className="text-black text-[28px] font-bold">{shop.name}</p>
               </div>
               <div className="flex items-center gap-[6px]">
                 <Image
-                  src={userData.imageUrl}
+                  src={`/images/icon-location-on.svg`}
                   alt="위치 로고"
                   width={20}
                   height={20}
                 />
                 <p className=" text-gray-50">
-                  {userData.address1} {userData.address2}
+                  {shop.address1} {shop.address2}
                 </p>
               </div>
-              <p className="self-stretch text-black">{userData.description}</p>
+              <p className="self-stretch text-black">{shop.description}</p>
             </div>
             <div className="flex items-start gap-2 self-stretch">
               <Button

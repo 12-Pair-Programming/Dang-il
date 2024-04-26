@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import Button from '@/shared/@common/ui/Button/Button';
 import Image from 'next/image';
 import FindNotice from './FindNotice';
+import useFetch from '@/shared/@common/api/hooks/useFetch';
+import userAPI from '@/shared/@common/api/userAPI';
 
 // 가게 상태에 따라 다른 div 출력
 const FindProfile = () => {
@@ -30,6 +32,15 @@ const FindProfile = () => {
     address: '서울시 종로구',
     bio: '어쩌구 저쩌구',
   };
+
+  //   const { data } = useFetch(() =>
+  //     userAPI.getUserData('abc');
+  //   );
+
+  // let user = [];
+  // if (data && data.item) {
+  //   user = data.item;
+  // }
 
   useEffect(() => {
     if (isMobile) {

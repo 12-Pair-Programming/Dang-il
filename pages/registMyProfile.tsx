@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
 import { useTextarea } from '@/shared/@common/ui/Textarea/hook/textareaHook';
 import { Textarea } from '@/shared/@common/ui/Textarea/Textarea';
+import userAPI from '@/shared/@common/api/userAPI';
 
 const registMyProfile = () => {
   const router = useRouter();
@@ -35,9 +36,22 @@ const registMyProfile = () => {
     console.log(data);
   };
 
-  const handleTotalSubmit = () => {
+  const handleTotalSubmit = async () => {
     alert('등록이 완료되었습니다.');
-    router.push('/myProfileInfo');
+    try {
+      const data = await userAPI.post('id', {
+        name: name.value,
+        phone: phone.value,
+        address: location,
+        bio: description.value,
+      });
+      if (data) {
+        alert('등록이 완료되었습니다.');
+        router.push('/myProfileInfo');
+      }
+    } catch (error) {
+      console.error('Regist Failed', error);
+    }
   };
 
   const locations = [

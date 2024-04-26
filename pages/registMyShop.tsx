@@ -9,6 +9,8 @@ import Footer from '@/shared/@common/ui/Footer/Footer';
 import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
 import { useTextarea } from '@/shared/@common/ui/Textarea/hook/textareaHook';
 import { Textarea } from '@/shared/@common/ui/Textarea/Textarea';
+import useFetch from '@/shared/@common/api/hooks/useFetch';
+import shopAPI from '@/shared/@common/api/shopAPI';
 
 const registMyShop = () => {
   const router = useRouter();
@@ -39,25 +41,30 @@ const registMyShop = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const data = {
-      name: name.value,
-      category: foodKinds,
-      address1: location,
-      address2: subLocation.value,
-      description: description.value,
-      imageUrl: shopImage,
-      originalHourlyPay: originalHourlyPay.value,
-    };
-    console.log(data);
   };
 
-  const handleTotalSubmit = () => {
+  const handleTotalSubmit = async () => {
     console.log('제출 완료');
     console.log(foodKinds);
     console.log(location);
     console.log(shopImage);
-    alert('등록이 완료되었습니다');
-    router.push('/myShopInfo');
+    try {
+      const data = await shopAPI.post('id', {
+        name: name.value,
+        category: foodKinds,
+        address1: location,
+        address2: subLocation.value,
+        description: description.value,
+        imageUrl: shopImage,
+        originalHourlyPay: originalHourlyPay.value,
+      });
+      if (data) {
+        alert('등록이 완료되었습니다');
+        router.push('myShopInfo');
+      }
+    } catch (error) {
+      console.error('Regist Failed:', error);
+    }
   };
 
   const kinds = [
