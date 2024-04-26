@@ -5,8 +5,7 @@ const userAPI = {
     return axiosInstance.get(`/users/${user_id}`);
   },
   post: <T>(body: T) => {
-    const data = axiosInstance.post(`/users}`, body);
-    return data.data;
+    return axiosInstance.post(`/users`, body);
   },
   put: <T>(user_id: string, body: T) => {
     return axiosInstance.put(`/users/${user_id}`, body);

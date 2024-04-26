@@ -106,8 +106,8 @@ export function useCheckUserData({
           email: emailValue,
           password: passwordValue,
         });
-        localStorage.setItem('token', data.item.token);
-        localStorage.setItem('user', data.item.user.item.type);
+        localStorage.setItem('token', data.data.item.token);
+        localStorage.setItem('user', data.data.item.user.item.type);
         router.push('/noticeList');
       } catch (error) {
         console.error('로그인 실패:', (error as ErrorType).response?.status);
@@ -123,7 +123,7 @@ export function useCheckUserData({
           password: passwordValue,
           type: selectedUserType,
         });
-        if (data.item.id) {
+        if (data.data.item.id) {
           router.push('/login');
         }
       } catch (error) {
