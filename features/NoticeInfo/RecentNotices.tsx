@@ -7,22 +7,28 @@ import { useEffect, useState } from 'react';
  * @returns
  */
 const RecentNotices = () => {
-  console.log('Recent Notices');
-  interface notices {
-    name: string;
-    address1: string;
-    imageUrl: string;
+  interface ItemData {
+    shop: {
+      item: {
+        id: string;
+        name: string;
+        imageUrl: string;
+        address1: string;
+        address2: string;
+        originalHourlyPay: number;
+      };
+    };
     startsAt: string;
     workhour: number;
     hourlyPay: number;
-    originalHourlyPay: number;
     closed: boolean;
   }
 
-  const [recentNotices, setRecentNotices] = useState<notices[]>([]);
+  const [recentNotices, setRecentNotices] = useState<ItemData[]>([]);
 
   useEffect(() => {
     const storedData = localStorage.getItem('recentNotices');
+
     if (storedData) {
       setRecentNotices(JSON.parse(storedData));
     }
@@ -34,21 +40,22 @@ const RecentNotices = () => {
         <p className="text-[28px] font-bold">최근에 본 공고</p>
       </div>
       <div className="mt-8 flex gap-[14px] flex-wrap">
-        {recentNotices
-          ?.slice(0, 6)
-          .map((notice) => (
-            <Card
-              key={notice.name}
-              name={notice.name}
-              imageUrl={notice.imageUrl}
-              address1={notice.address1}
-              startsAt={notice.startsAt}
-              workhour={notice.workhour}
-              hourlyPay={notice.hourlyPay}
-              originalHourlyPay={notice.originalHourlyPay}
-              closed={notice.closed}
-            />
-          ))}
+        {recentNotices &&
+          recentNotices
+            ?.slice(0, 6)
+            .map((notice) => (
+              <Card
+                key={notice.shop.item.id}
+                name={notice.shop.item.name}
+                imageUrl={notice.shop.item.imageUrl}
+                address1={notice.shop.item.address1}
+                startsAt={notice.startsAt}
+                workhour={notice.workhour}
+                hourlyPay={notice.hourlyPay}
+                originalHourlyPay={notice.shop.item.originalHourlyPay}
+                closed={notice.closed}
+              />
+            ))}
       </div>
     </div>
   );

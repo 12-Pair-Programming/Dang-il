@@ -9,7 +9,7 @@ import { useModal } from '@/shared/@common/ui/Modal/hook/modalHook';
 import noticeAPI from '@/shared/@common/api/noticeAPI';
 import shopAPI from '@/shared/@common/api/shopAPI';
 import useFetch from '@/shared/@common/api/hooks/useFetch';
-import { useState } from 'react';
+import { useEffect } from 'react';
 
 interface props {
   userType: string;
@@ -33,7 +33,7 @@ interface Shop {
   };
 }
 
-interface item {
+interface Item {
   id: string;
   closed: boolean;
   currentUserApplication: number;
@@ -43,37 +43,6 @@ interface item {
   workhour: number;
   shop: Shop;
 }
-
-// const item = {
-//   id: 'string',
-//   hourlyPay: 30000,
-//   startsAt: '2023-07-07T18:00:00.000Z',
-//   workhour: 5,
-//   description:
-//     '기존 알바 친구가 그만둬서 새로운 친구를 구했는데, 그 사이에 하루가 비네요. 급해서 시급도 높였고 그렇게 바쁜 날이 아니라서 괜찮을거예요.',
-//   closed: false,
-//   shop: {
-//     item: {
-//       id: 'string',
-//       name: 'string',
-//       category: 'string',
-//       address1: '서울시 영등포구',
-//       address2: 'string',
-//       description:
-//         '알바하기 편한 너구리네 라면집! 라면 올려두고 끓이기만 하면 되어서 쉬운 편에 속하는 가게입니다.',
-//       imageUrl: '/images/icon-clock-on.svg',
-//       originalHourlyPay: 10000,
-//     },
-//     href: 'string',
-//   },
-//   currentUserApplication: {
-//     item: {
-//       id: 'string', // application.id,
-//       status: 'pending | accepted | rejected | canceled', // application.status
-//       createdAt: 'string', // application.createdAt
-//     },
-//   },
-// };
 
 /**
  * 가게 정보 카드 컴포넌트
@@ -97,11 +66,28 @@ const ShopInfo = ({
     noticeAPI.getShopNotice({ shops_id: shopId, notice_id: noticeId }),
   );
 
-  let getdata: item = data;
-
+  let getdata: Item = data;
   if (data && !loading) {
     getdata = data.item;
   }
+
+  useEffect(() => {
+    //TODO: 데이터가 새로고침할 때 반영 안될때 있음. 확인 후 UseState로 데이터 관리?
+    if (data && !loading) {
+      let localData: string[] = JSON.parse(
+        localStorage.getItem('recentNotices') || '[]',
+      );
+      localData.push(data.item);
+
+      // 배열의 길이가 6 이상인 경우, 첫 번째 요소를 제거
+      if (localData.length > 6) {
+        localData.shift();
+      }
+
+      // 로컬 스토리지에 새로운 데이터를 저장
+      localStorage.setItem('recentNotices', JSON.stringify(localData));
+    }
+  }, []);
 
   //TODO: 유저의 지원 목록 조회
   //결과 값 에서 items.item.notice.item.id로 공고 id를 찾아서?
@@ -183,6 +169,7 @@ const ShopInfo = ({
                 closed={false}
               />
               <p className="my-3">{getdata.shop.item.description}</p>
+              {/* TODO: 로직 변경 필요 */}
               {userType === 'employer' ? (
                 <Button
                   size="large"
