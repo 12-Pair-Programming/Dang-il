@@ -32,13 +32,13 @@ const applicationAPI = {
       params,
     });
   },
-  post: <T>(shop_id: T, notice_id: T, body: T) => {
+  post: <T>(shop_id: string, notice_id: string, body: T) => {
     return axiosInstance.post(
       `/shops/${shop_id}/notices/${notice_id}/applications`,
       body,
     );
   },
-  put: <T>(shop_id: T, notice_id: T, application_id: T, body: T) => {
+  put: <T>(shop_id: string, notice_id: string, application_id: T, body: T) => {
     return axiosInstance.put(
       `/shops/${shop_id}/notices/${notice_id}/applications/${application_id}`,
       body,

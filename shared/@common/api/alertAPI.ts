@@ -14,7 +14,7 @@ const alertAPI = {
     };
     return axiosInstance.get(`/users/${user_id}`, { params });
   },
-  put: <T>(user_id: T, alert_id: T, body: T) => {
+  put: <T>(user_id: string, alert_id: string, body: T) => {
     return axiosInstance.put(`/users/${user_id}/alerts/${alert_id}`, body);
   },
 };

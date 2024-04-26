@@ -55,10 +55,10 @@ const noticeAPI = {
   getShopNotice: ({ shops_id, notice_id }: GetShopNoticeData) => {
     return axiosInstance.get(`/shops/${shops_id}/notices/${notice_id}`);
   },
-  post: <T>(shop_id: T, body: T) => {
+  post: <T>(shop_id: string, body: T) => {
     return axiosInstance.post<T>(`/shops/${shop_id}/notices`, body);
   },
-  put: <T>(shop_id: T, notice_id: T, body: T) => {
+  put: <T>(shop_id: string, notice_id: T, body: T) => {
     return axiosInstance.put(`/shops/${shop_id}/notices/${notice_id}`, body);
   },
 };
