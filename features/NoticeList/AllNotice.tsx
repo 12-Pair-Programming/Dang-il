@@ -25,9 +25,16 @@ export interface ItemData {
   };
 }
 
-interface Data {
+export interface Data {
   count: number;
   items: [item: ItemData];
+}
+
+export interface FilterValues {
+  clickedAddress?: string;
+  hashtag?: string[] | undefined;
+  startDate?: Date;
+  money?: number;
 }
 
 const AllNotice = () => {
@@ -35,21 +42,36 @@ const AllNotice = () => {
   const [showCard, setShowCard] = useState(6);
   const [currentPage, setCurrentPage] = useState(1);
   const cardOffset = (currentPage - 1) * showCard;
-  const [noticeData, setNoticeData] = useState();
   const [data, setData] = useState<Data>();
+  const [keyword, setKeyword] = useState('');
+  const [sortedData, setSortedData] = useState<string>();
+  const [filterValues, setFilterValues] = useState<FilterValues>({
+    clickedAddress: '',
+    hashtag: [],
+    startDate: undefined,
+    money: undefined,
+  });
 
-  const API = async () => {
-    const data = await noticeAPI.getNoticeList({ sort: noticeData });
+  const showNoticeData = async () => {
+    const data = await noticeAPI.getNoticeList({
+      address: filterValues.clickedAddress,
+      keyword: keyword,
+      startsAtGte: filterValues.startDate?.toISOString(),
+      hourlyPayGte: filterValues.money,
+      sort: sortedData,
+    });
     setData(data.data);
   };
 
   useEffect(() => {
-    API();
-  }, [noticeData]);
-
-  const handleClick = () => {
-    setShowDetailFilter(true);
-  };
+    showNoticeData();
+  }, [
+    sortedData,
+    filterValues.clickedAddress,
+    keyword,
+    filterValues.startDate,
+    filterValues.money,
+  ]);
 
   const options = [
     { value: 'time', label: '마감임박순' },
@@ -58,10 +80,19 @@ const AllNotice = () => {
     { value: 'shop', label: '가나다순' },
   ];
 
-  const handleSelectOption = (value: any) => {
-    setNoticeData(value);
+  const handleSelectOption = (value: string) => {
+    setSortedData(value);
   };
 
+  const handleClickFilter = (filterValues: FilterValues) => {
+    setFilterValues(filterValues);
+  };
+
+  const handleFilterButtonClick = () => {
+    setShowDetailFilter(true);
+  };
+
+  console.log(sortedData);
   return (
     <div className="flex w-[1440px] py-[60px] px-[238px] flex-col items-start bg-white tracking-wide">
       <div className="flex flex-col gap-10">
@@ -76,12 +107,18 @@ const AllNotice = () => {
               defaultValue="마감임박순"
             />
             <div className="relative">
-              <Button size="mediumSmall" color="colored" onClick={handleClick}>
+              <Button
+                size="mediumSmall"
+                color="colored"
+                onClick={handleFilterButtonClick}
+              >
                 상세 필터
               </Button>
               <FilterModal
                 isOpen={showDetailFilter}
                 setIsOpen={setShowDetailFilter}
+                noticeData={data}
+                onClickFilter={handleClickFilter}
               />
             </div>
           </div>
@@ -107,7 +144,7 @@ const AllNotice = () => {
         </div>
         {data && (
           <Pagination
-            totalPage={data.count}
+            totalPage={6}
             limit={10}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
