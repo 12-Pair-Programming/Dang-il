@@ -2,18 +2,30 @@ import { axiosInstance } from '@/shared/utils/axiosInstance';
 
 interface GetAlertData {
   user_id: string;
-  offset: number;
-  limit: number;
+  token: string | null;
+  offset?: number;
+  limit?: number;
 }
 
 const alertAPI = {
-  get: async ({ user_id, offset, limit }: GetAlertData) => {
+  get: async ({
+    user_id,
+    token = localStorage.getItem('token'),
+    offset,
+    limit,
+  }: GetAlertData) => {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
     const params = {
       offset,
       limit,
     };
-    const data = await axiosInstance.get(`/users/${user_id}`, { params });
-    return data.data;
+    const data = await axiosInstance.get(`/users/${user_id}/alerts`, {
+      params,
+      headers,
+    });
+    return data;
   },
   put: async <T>(user_id: T, alert_id: T, body: T) => {
     const data = await axiosInstance.put(
