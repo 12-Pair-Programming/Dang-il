@@ -1,9 +1,8 @@
 import { axiosInstance } from '@/shared/utils/axiosInstance';
 
 const authenticationAPI = {
-  post: async <T>(body: T) => {
-    const data = await axiosInstance.post(`/token`, body);
-    return data.data;
+  post: <T>(body: T) => {
+    return axiosInstance.post(`/token`, body);
   },
 };
 

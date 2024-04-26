@@ -1,17 +1,14 @@
 import { axiosInstance } from '@/shared/utils/axiosInstance';
 
 const userAPI = {
-  getUserData: async (user_id: string) => {
-    const data = await axiosInstance.get(`/users/${user_id}`);
-    return data.data;
+  getUserData: (user_id: string) => {
+    return axiosInstance.get(`/users/${user_id}`);
   },
-  post: async <T>(user_id: T, body: T) => {
-    const data = await axiosInstance.post(`/users/${user_id}`, body);
-    return data.data;
+  post: <T>(user_id: T, body: T) => {
+    return axiosInstance.post(`/users/${user_id}`, body);
   },
-  put: async <T>(user_id: T, body: T) => {
-    const data = await axiosInstance.put(`/users/${user_id}`, body);
-    return data.data;
+  put: <T>(user_id: T, body: T) => {
+    return axiosInstance.put(`/users/${user_id}`, body);
   },
 };
 

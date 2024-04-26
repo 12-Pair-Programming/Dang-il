@@ -7,20 +7,15 @@ interface GetAlertData {
 }
 
 const alertAPI = {
-  get: async ({ user_id, offset, limit }: GetAlertData) => {
+  get: ({ user_id, offset, limit }: GetAlertData) => {
     const params = {
       offset,
       limit,
     };
-    const data = await axiosInstance.get(`/users/${user_id}`, { params });
-    return data.data;
+    return axiosInstance.get(`/users/${user_id}`, { params });
   },
-  put: async <T>(user_id: T, alert_id: T, body: T) => {
-    const data = await axiosInstance.put(
-      `/users/${user_id}/alerts/${alert_id}`,
-      body,
-    );
-    return data.data;
+  put: <T>(user_id: T, alert_id: T, body: T) => {
+    return axiosInstance.put(`/users/${user_id}/alerts/${alert_id}`, body);
   },
 };
 
