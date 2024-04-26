@@ -17,7 +17,7 @@ export const NavButton = ({ children, href, onClick }: NavButtonProps) => {
 
   return (
     <button
-      className="hover:bg-purple-30 hover:text-white p-2 rounded-2xl"
+      className="hover:bg-purple-30 hover:text-white p-1 rounded-2xl font-bold"
       onClick={handleClick}
     >
       {children}

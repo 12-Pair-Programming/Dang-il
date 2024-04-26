@@ -27,7 +27,7 @@ const FilterModal = ({ isOpen, setIsOpen }: FilterModalProps) => {
     <>
       {isOpen && (
         <div
-          className="border-[1px] border-purple-30 flex w-[390px] px-6 py-5 flex-col items-start gap-6 bg-white absolute right-[0px] top-[70px] rounded-[10px] z-modalbody"
+          className="border-[1px] border-purple-30 flex w-[390px] px-6 py-5 flex-col items-start gap-6 bg-white absolute right-[0px] top-[70px] rounded-[10px] z-modalbody mobile:fixed mobile:top-0 mobile:right-0 mobile:bottom-0 mobile:left-0 mobile:h-screen mobile:rounded-none mobile:ml-0 mobile:w-full mobile:items-center"
           ref={modalClick}
           onMouseDown={(e) => e.stopPropagation()}
         >
