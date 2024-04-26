@@ -49,7 +49,7 @@ const DetailFilter = ({ setIsOpen }: DetailFilterProps) => {
 
   return (
     <>
-      <div className="flex justify-between items-center self-stretch">
+      <div className="flex justify-between items-center self-stretch mobile:w-[350px] mobile:self-auto">
         <p className="text-5 font-bold">상세 필터</p>
         <Image
           src="/images/close.svg"
@@ -61,7 +61,7 @@ const DetailFilter = ({ setIsOpen }: DetailFilterProps) => {
         />
       </div>
       <div>
-        <div className="flex flex-col items-start gap-3">
+        <div className="flex flex-col items-start gap-3 mobile:w-[350px]">
           <p>위치</p>
           <>
             <div className="flex flex-col gap-5 items-start flex-wrap p-6 flex-start w-[350px] h-[258px] rounded-[6px] border border-gray-300">
