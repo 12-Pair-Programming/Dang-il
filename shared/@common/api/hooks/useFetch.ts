@@ -22,12 +22,14 @@ const useFetch = <T>(
 
   const execute = async () => {
     setLoading(true);
-    setError(false);
-    setData(null);
 
     try {
       const response = await fetchFunction();
+
+      if (!response.data) return;
+
       setData(response.data);
+
       return response;
     } catch (error) {
       setError(true);

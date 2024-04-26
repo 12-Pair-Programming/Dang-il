@@ -8,7 +8,7 @@ interface GetAlertData {
 }
 
 const alertAPI = {
-  get: async ({
+  get: ({
     user_id,
     token = localStorage.getItem('token'),
     offset,
@@ -21,18 +21,10 @@ const alertAPI = {
       offset,
       limit,
     };
-    const data = await axiosInstance.get(`/users/${user_id}/alerts`, {
-      params,
-      headers,
-    });
-    return data;
+    return axiosInstance.get(`/users/${user_id}/alerts`, { params,headers,});
   },
-  put: async <T>(user_id: T, alert_id: T, body: T) => {
-    const data = await axiosInstance.put(
-      `/users/${user_id}/alerts/${alert_id}`,
-      body,
-    );
-    return data.data;
+  put: <T>(user_id: string, alert_id: string, body: T) => {
+    return axiosInstance.put(`/users/${user_id}/alerts/${alert_id}`, body);
   },
 };
 
