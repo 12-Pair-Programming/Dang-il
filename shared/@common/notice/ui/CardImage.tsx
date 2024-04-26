@@ -18,7 +18,7 @@ interface props {
 const CardImage = ({ imageUrl, closed, width, height }: props) => {
   return (
     <div
-      className={`flex justify-center items-center relative rounded-2xl object-cover h-full`}
+      className={`flex justify-center items-center relative rounded-2xl object-cover h-[180px]`}
     >
       <Image
         className="object-cover"
