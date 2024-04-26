@@ -7,7 +7,7 @@ interface FilterModalProps {
   setIsOpen: SetState<boolean>;
 }
 
-export const FilterModal = ({ isOpen, setIsOpen }: FilterModalProps) => {
+const FilterModal = ({ isOpen, setIsOpen }: FilterModalProps) => {
   const modalClick = useRef<HTMLDivElement>(null);
 
   const handleClick = (e: MouseEvent) => {
@@ -37,3 +37,5 @@ export const FilterModal = ({ isOpen, setIsOpen }: FilterModalProps) => {
     </>
   );
 };
+
+export default FilterModal;

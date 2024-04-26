@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import axios from 'axios';
-import { authenticationAPI, userAPI } from '../../api/Api';
-import useFetch from '../../api/hooks/useFetch';
+import userAPI from '@/shared/@common/api/userAPI';
+import authenticationAPI from '@/shared/@common/api/authenticationAPI';
 
 interface useCheckUserDataProps {
   email?: string;
   password?: string;
   passwordRepeat?: string;
   type?: string;
+}
+
+interface ErrorType {
+  message?: string;
+  response?: {
+    status: number;
+  };
 }
 
 export function useCheckUserData({
@@ -100,13 +106,11 @@ export function useCheckUserData({
           email: emailValue,
           password: passwordValue,
         });
-        console.log(data.item.token);
-        console.log(data.item.user.item.type);
-        localStorage.setItem('token', data.item.token);
-        localStorage.setItem('user', data.item.user.item.type);
-        router.push('/regist'); //페이지 아직 안 봐서 임시방편
+        localStorage.setItem('token', data.data.item.token);
+        localStorage.setItem('user', data.data.item.user.item.type);
+        router.push('/noticeList');
       } catch (error) {
-        console.error('Login failed:', error);
+        console.error('로그인 실패:', (error as ErrorType).response?.status);
       }
     }
   };
@@ -119,11 +123,11 @@ export function useCheckUserData({
           password: passwordValue,
           type: selectedUserType,
         });
-        if (data.item.id) {
+        if (data.data.item.id) {
           router.push('/login');
         }
       } catch (error) {
-        console.error('Regist failed:', error);
+        console.error('회원 가입:', (error as ErrorType).response?.status);
       }
     }
   };

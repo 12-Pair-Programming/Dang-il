@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@/shared/@common/ui/Button/Button';
 import Pagination from '@/shared/@common/ui/Pagination/Pagination';
 import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
 import Card from '@/shared/@common/notice/ui/Card';
-import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
-import { FilterModal } from './FilterModal';
+import FilterModal from './FilterModal';
+import noticeAPI from '@/shared/@common/api/noticeAPI';
 
 export interface ItemData {
   item: {
     shop: {
       item: {
+        id: string;
         name: string;
         imageUrl: string;
         address1: string;
@@ -24,26 +25,42 @@ export interface ItemData {
   };
 }
 
+interface Data {
+  count: number;
+  items: [item: ItemData];
+}
+
 const AllNotice = () => {
   const [showDetailFilter, setShowDetailFilter] = useState(false);
   const [showCard, setShowCard] = useState(6);
   const [currentPage, setCurrentPage] = useState(1);
   const cardOffset = (currentPage - 1) * showCard;
+  const [noticeData, setNoticeData] = useState();
+  const [data, setData] = useState<Data>();
+
+  const API = async () => {
+    const data = await noticeAPI.getNoticeList({ sort: noticeData });
+    setData(data.data);
+  };
+
+  useEffect(() => {
+    API();
+  }, [noticeData]);
 
   const handleClick = () => {
     setShowDetailFilter(true);
   };
 
   const options = [
-    { value: '마감임박순', label: '마감임박순' },
-    { value: '시급많은순', label: '시급많은순' },
-    { value: '시간적은순', label: '시간적은순' },
-    { value: '가나다순', label: '가나다순' },
+    { value: 'time', label: '마감임박순' },
+    { value: 'pay', label: '시급많은순' },
+    { value: 'hour', label: '시간적은순' },
+    { value: 'shop', label: '가나다순' },
   ];
 
-  const handleSelectOption = () => {};
-
-  const { data } = useGetNoticeData();
+  const handleSelectOption = (value: any) => {
+    setNoticeData(value);
+  };
 
   return (
     <div className="flex w-[1440px] py-[60px] px-[238px] flex-col items-start bg-white tracking-wide">
@@ -76,6 +93,7 @@ const AllNotice = () => {
               .slice(cardOffset, cardOffset + showCard)
               .map((item: ItemData) => (
                 <Card
+                  key={item.item.shop.item.id}
                   name={item.item.shop.item.name}
                   imageUrl={item.item.shop.item.imageUrl}
                   address1={`${item.item.shop.item.address1} ${item.item.shop.item.address2}`}
@@ -87,10 +105,10 @@ const AllNotice = () => {
                 />
               ))}
         </div>
-        {data && data.count && (
+        {data && (
           <Pagination
-            totalPage={Math.ceil(data.count / 2)}
-            limit={2}
+            totalPage={data.count}
+            limit={10}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
           />
