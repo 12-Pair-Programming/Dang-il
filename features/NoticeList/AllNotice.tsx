@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import Button from '@/shared/@common/ui/Button/Button';
 import Pagination from '@/shared/@common/ui/Pagination/Pagination';
 import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
@@ -52,6 +53,16 @@ const AllNotice = () => {
     money: undefined,
   });
 
+  let filterOptions = 0;
+
+  if (filterValues.hashtag?.length || filterValues.startDate) {
+    filterOptions++;
+  }
+
+  if (filterValues.money) {
+    filterOptions++;
+  }
+
   const showNoticeData = async () => {
     const data = await noticeAPI.getNoticeList({
       address: filterValues.clickedAddress,
@@ -92,7 +103,6 @@ const AllNotice = () => {
     setShowDetailFilter(true);
   };
 
-  console.log(sortedData);
   return (
     <div className="flex w-[1440px] py-[60px] px-[238px] flex-col items-start bg-white tracking-wide">
       <div className="flex flex-col gap-10">
@@ -112,7 +122,7 @@ const AllNotice = () => {
                 color="colored"
                 onClick={handleFilterButtonClick}
               >
-                상세 필터
+                상세 필터 ({filterOptions.toString()})
               </Button>
               <FilterModal
                 isOpen={showDetailFilter}
@@ -129,17 +139,19 @@ const AllNotice = () => {
             data.items
               .slice(cardOffset, cardOffset + showCard)
               .map((item: ItemData) => (
-                <Card
-                  key={item.item.shop.item.id}
-                  name={item.item.shop.item.name}
-                  imageUrl={item.item.shop.item.imageUrl}
-                  address1={`${item.item.shop.item.address1} ${item.item.shop.item.address2}`}
-                  startsAt={item.item.startsAt}
-                  workhour={item.item.workhour}
-                  hourlyPay={item.item.hourlyPay}
-                  originalHourlyPay={item.item.shop.item.originalHourlyPay}
-                  closed={item.item.closed}
-                />
+                <Link href={`/noticeInfo/${item.item.shop.item.id}`}>
+                  <Card
+                    key={item.item.shop.item.id}
+                    name={item.item.shop.item.name}
+                    imageUrl={item.item.shop.item.imageUrl}
+                    address1={`${item.item.shop.item.address1} ${item.item.shop.item.address2}`}
+                    startsAt={item.item.startsAt}
+                    workhour={item.item.workhour}
+                    hourlyPay={item.item.hourlyPay}
+                    originalHourlyPay={item.item.shop.item.originalHourlyPay}
+                    closed={item.item.closed}
+                  />
+                </Link>
               ))}
         </div>
         {data && (
