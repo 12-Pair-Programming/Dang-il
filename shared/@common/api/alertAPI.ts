@@ -2,7 +2,7 @@ import { axiosInstance } from '@/shared/utils/axiosInstance';
 
 interface GetAlertData {
   user_id: string;
-  token: string | null;
+  token?: string | null;
   offset?: number;
   limit?: number;
 }
