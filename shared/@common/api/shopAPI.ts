@@ -11,7 +11,11 @@ const shopAPI = {
     return axiosInstance.post(`/shops/${shop_id}`, body, { headers });
   },
   put: <T>(shop_id: string, body: T) => {
-    return axiosInstance.put(`/shops/${shop_id}`, body);
+    const headers = {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    };
+    console.log(localStorage.getItem('token'));
+    return axiosInstance.put(`/shops/${shop_id}`, body, { headers });
   },
 };
 

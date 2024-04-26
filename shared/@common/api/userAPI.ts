@@ -7,8 +7,12 @@ const userAPI = {
   post: <T>(body: T) => {
     return axiosInstance.post(`/users`, body);
   },
-  put: <T>(user_id: string, body: T) => {
-    return axiosInstance.put(`/users/${user_id}`, body);
+  put: <T>(user_id: string, token = localStorage.getItem('token'), body: T) => {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    console.log(headers);
+    return axiosInstance.put(`/users/${user_id}`, body, { headers });
   },
 };
 

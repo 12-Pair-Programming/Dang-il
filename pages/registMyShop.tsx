@@ -12,6 +12,16 @@ import { Textarea } from '@/shared/@common/ui/Textarea/Textarea';
 import useFetch from '@/shared/@common/api/hooks/useFetch';
 import shopAPI from '@/shared/@common/api/shopAPI';
 
+interface ShopData {
+  name: string;
+  category: string[];
+  address1: string;
+  address2: string;
+  description: string;
+  imageUrl: string;
+  originalHourlyPay: number;
+}
+
 const registMyShop = () => {
   const router = useRouter();
   const [foodKinds, setFoodKinds] = useState('');
@@ -48,6 +58,8 @@ const registMyShop = () => {
     console.log(foodKinds);
     console.log(location);
     console.log(shopImage);
+    console.log(typeof originalHourlyPay.value);
+    const hourlyPayNumber = Number(originalHourlyPay.value);
     try {
       const data = await shopAPI.post('id', {
         name: name.value,
@@ -56,7 +68,7 @@ const registMyShop = () => {
         address2: subLocation.value,
         description: description.value,
         imageUrl: shopImage,
-        originalHourlyPay: originalHourlyPay.value,
+        originalHourlyPay: hourlyPayNumber,
       });
       if (data) {
         alert('등록이 완료되었습니다');
@@ -165,6 +177,7 @@ const registMyShop = () => {
                   title="기본 시급*"
                   placeholder="입력"
                   countText="원"
+                  type="number"
                   onChange={originalHourlyPay.handleInput}
                 />
               </div>
