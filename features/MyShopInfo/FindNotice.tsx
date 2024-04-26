@@ -22,7 +22,7 @@ const FindNotice = () => {
               {/* <Card />
               <Card />
               <Card /> */
-              /* GET으로 Shop의 id로 올라온 공고들을 받아서 출력하기. */ }
+              /* GET으로 Shop의 id로 올라온 공고들을 받아서 출력하기. */}
             </div>
           </div>
         </div>

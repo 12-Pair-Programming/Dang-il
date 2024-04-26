@@ -67,83 +67,81 @@ const TableBody = ({ isEmployee }: TableProps) => {
   };
 
   return (
-    <>
-      <tbody className="flex flex-col w-full h-full items-start bg-white">
-        {isEmployee
-          ? employee &&
-            employee.map((v: EmployeeItemData) => (
-              <tr className="flex w-full">
-                <td
+    <tbody className="flex flex-col w-full h-full items-start bg-white">
+      {isEmployee
+        ? employee &&
+          employee.map((v: EmployeeItemData) => (
+            <tr className="flex w-full">
+              <td
+                key={v.id}
+                className="flex w-1/4 py-8 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20"
+              >
+                {v.name}
+              </td>
+              <td
+                key={v.id}
+                className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-x-scroll whitespace-pre scrollbar-hide"
+              >
+                {v.bio}
+              </td>
+              <td
+                key={v.id}
+                className="flex w-1/4 py-5 px-4 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-auto whitespace-pre"
+              >
+                {v.phone}
+              </td>
+              <td className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 ">
+                <TableButton
                   key={v.id}
-                  className="flex w-1/4 py-8 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20"
-                >
-                  {v.name}
-                </td>
-                <td
-                  key={v.id}
-                  className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-x-scroll whitespace-pre scrollbar-hide"
-                >
-                  {v.bio}
-                </td>
-                <td
-                  key={v.id}
-                  className="flex w-1/4 py-5 px-4 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-auto whitespace-pre"
-                >
-                  {v.phone}
-                </td>
-                <td className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 ">
+                  handleClick={handleChangingStatus}
+                  buttonVisible={buttonVisible}
+                  status={status}
+                />
+              </td>
+            </tr>
+          ))
+        : employer &&
+          employer.map((v: EmployerItemData) => (
+            <tr className="flex w-full">
+              <td
+                key={v.id}
+                className="flex w-1/4 py-8 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20"
+              >
+                {v.description}
+              </td>
+              <td
+                key={v.id}
+                className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-x-scroll whitespace-pre scrollbar-hide"
+              >
+                {v.startsAt.slice(0, 10)} {v.startsAt.slice(12, 13)}~
+                {Number(v.startsAt.slice(12, 13)) + Number(v.workhour)}시
+              </td>
+              <td
+                key={v.id}
+                className="flex w-1/4 py-5 px-4 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-auto whitespace-pre"
+              >
+                {v.hourlyPay}
+              </td>
+              <td className="flex w-1/5 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 overflow-auto whitespace-pre">
+                {!isEmployee ? (
                   <TableButton
                     key={v.id}
                     handleClick={handleChangingStatus}
-                    buttonVisible={buttonVisible}
+                    buttonVisible={false}
                     status={status}
                   />
-                </td>
-              </tr>
-            ))
-          : employer &&
-            employer.map((v: EmployerItemData) => (
-              <tr className="flex w-full">
-                <td
-                  key={v.id}
-                  className="flex w-1/4 py-8 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20"
-                >
-                  {v.description}
-                </td>
-                <td
-                  key={v.id}
-                  className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-x-scroll whitespace-pre scrollbar-hide"
-                >
-                  {v.startsAt.slice(0, 10)} {v.startsAt.slice(12, 13)}~
-                  {Number(v.startsAt.slice(12, 13)) + Number(v.workhour)}시
-                </td>
-                <td
-                  key={v.id}
-                  className="flex w-1/4 py-5 px-4 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-auto whitespace-pre"
-                >
-                  {v.hourlyPay}
-                </td>
-                <td className="flex w-1/5 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 overflow-auto whitespace-pre">
-                  {!isEmployee ? (
-                    <TableButton
-                      key={v.id}
-                      handleClick={handleChangingStatus}
-                      buttonVisible={false}
-                      status={status}
-                    />
-                  ) : (
-                    <TableButton
-                      key={v.id}
-                      handleClick={handleChangingStatus}
-                      buttonVisible={true}
-                      status={status}
-                    />
-                  )}
-                </td>
-              </tr>
-            ))}
-      </tbody>
-    </>
+                ) : (
+                  <TableButton
+                    key={v.id}
+                    handleClick={handleChangingStatus}
+                    buttonVisible={true}
+                    status={status}
+                  />
+                )}
+              </td>
+            </tr>
+          ))}
+    </tbody>
   );
 };
 

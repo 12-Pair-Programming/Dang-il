@@ -1,11 +1,8 @@
-
-import FindProfile from "@/features/MyProfileInfo/FindProfile";
-import Footer from "@/shared/@common/ui/Footer/Footer";
-import NavigationBar from "@/shared/@common/ui/Nav/NavigationBar";
+import FindProfile from '@/features/MyProfileInfo/FindProfile';
+import Footer from '@/shared/@common/ui/Footer/Footer';
+import NavigationBar from '@/shared/@common/ui/Nav/NavigationBar';
 
 const MyProfileInfo = () => {
-
-
   return (
     <>
       <NavigationBar />
