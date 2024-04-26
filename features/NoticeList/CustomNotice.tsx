@@ -1,10 +1,13 @@
 import React from 'react';
 import Card from '@/shared/@common/notice/ui/Card';
-import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
 import { ItemData } from './AllNotice';
+import useFetch from '@/shared/@common/api/hooks/useFetch';
+import noticeAPI from '@/shared/@common/api/noticeAPI';
 
 const CustomNotice = () => {
-  const { data } = useGetNoticeData();
+  const { data, loading, error, execute } = useFetch(() => {
+    return noticeAPI.getNoticeList({});
+  });
 
   return (
     <div className="flex w-[1440px] py-[60px] px-[238px] flex-col items-start bg-purple-10 tracking-wide">

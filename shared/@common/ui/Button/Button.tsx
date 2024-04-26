@@ -28,7 +28,7 @@ const Button = ({
           'font-bold text-base leading-5 align-center whitespace-nowrap';
         break;
       case 'mediumLarge':
-        sizeStyle = 'py-3 px-[57px]';
+        sizeStyle = 'py-3 px-[56px]';
         fontStyle = 'font-bold text-base leading-5 text-center';
 
         break;
