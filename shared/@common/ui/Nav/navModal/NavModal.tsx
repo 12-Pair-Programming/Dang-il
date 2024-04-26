@@ -1,13 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { NavModalMessage } from './navModalMessage/NavModalMessage';
-import { SetState } from '@/shared/@common/types/helper';
 import useFetch from '@/shared/@common/api/hooks/useFetch';
 import Image from 'next/image';
-import { alertAPI } from '@/shared/@common/api/Api';
+import alertAPI from '@/shared/@common/api/alertAPI';
 
 interface NavModalProps {
   isOpen: boolean;
-  userId: string;
+  user_id: string;
   onClose: () => void;
 }
 
@@ -25,7 +24,7 @@ interface Item {
   };
 }
 
-export const NavModal = ({ isOpen, userId, onClose }: NavModalProps) => {
+export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
   const modalClick = useRef<HTMLDivElement>(null);
 
   const handleClick = (e: MouseEvent) => {
@@ -38,9 +37,7 @@ export const NavModal = ({ isOpen, userId, onClose }: NavModalProps) => {
     onClose();
   };
 
-  const { data, loading, error, execute } = useFetch(() =>
-    alertAPI.get(userId),
-  );
+  const { data } = useFetch(() => alertAPI.get({ user_id }));
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClick);

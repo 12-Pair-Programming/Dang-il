@@ -3,14 +3,18 @@ import { NavModal } from './navModal/NavModal';
 import Image from 'next/image';
 import { useNavModal } from './navModal/hook/navModalHook';
 import { NavButton } from './navButton/navButton';
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 import Link from 'next/link';
+
+interface CustomDecodedToken extends JwtPayload {
+  userId?: string;
+}
 
 export const NavigationBar = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [userType, setUserType] = useState<string | null>('');
   const [userId, setUserId] = useState<string>('');
-    
+
   const { isOpen, closeModal, openModal } = useNavModal();
 
   useEffect(() => {
@@ -18,7 +22,7 @@ export const NavigationBar = () => {
     const decodedToken = token ? jwtDecode(token) : null;
     const user = localStorage.getItem('user');
     setUserType(user);
-    setUserId(decodedToken?.userId || '');
+    setUserId((decodedToken as CustomDecodedToken)?.userId || '');
 
     if (token) {
       setIsLogin(true);
@@ -83,7 +87,7 @@ export const NavigationBar = () => {
                   alt="모달 온오프 아이콘"
                 />
               </div>
-              <NavModal isOpen={isOpen} userId={userId} onClose={closeModal} />
+              <NavModal isOpen={isOpen} user_id={userId} onClose={closeModal} />
             </div>
           </>
         ) : (
