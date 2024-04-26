@@ -2,7 +2,7 @@ import ShopInfo from '@/features/NoticeInfo/ShopInfo';
 import RecentNotices from '@/features/NoticeInfo/RecentNotices';
 import EmployeeList from '@/features/NoticeInfo/EmployeeList';
 import { NavigationBar } from '@/shared/@common/ui/Nav/NavigationBar';
-import { Footer } from '@/shared/@common/ui/Footer/Footer';
+import Footer from '@/shared/@common/ui/Footer/Footer';
 
 /**
  * 공고 상세 페이지 컴포넌트
@@ -31,7 +31,6 @@ const NoticeInfo = () => {
       </div>
       <Footer />
     </>
-
   );
 };
 
