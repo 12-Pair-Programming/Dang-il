@@ -55,7 +55,10 @@ const AllNotice = () => {
 
   let filterOptions = 0;
 
-  if (filterValues.hashtag?.length || filterValues.startDate) {
+  if (filterValues.hashtag) {
+    filterOptions += filterValues.hashtag.length;
+  }
+  if (filterValues.startDate) {
     filterOptions++;
   }
 
