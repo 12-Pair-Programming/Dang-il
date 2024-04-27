@@ -15,24 +15,19 @@ const FindNotice = () => {
     return (
       <div className="flex pt-[60px] pb-[120px] px-[238px] flex-col items-start gap-2">
         <div className="flex flex-col items-start gap-[32px] self-stretch bg-white">
-          <p className="text-black text-[28px] font-bold">
-            신청 내역
-          </p>
+          <p className="text-black text-[28px] font-bold">신청 내역</p>
           <div className="flex flex-col items-start gap-8">
             <div className="flex flex-col items-start gap-8">
-              <Table />
+              <Table isEmployee={true} />
             </div>
           </div>
         </div>
-
       </div>
     );
   } else {
     return (
       <div className="flex flex-col px-[238px] py-[60px] items-start gap-8">
-        <p className="text-black text-[28px] font-bold">
-          신청 내역
-        </p>
+        <p className="text-black text-[28px] font-bold">신청 내역</p>
         <div className="flex w-[964px] py-[60px] px-6 flex-col justify-center items-center gap-6 rounded-xl border border-solid border-gray-20">
           <p className="text-black align-center">아직 신청 내역이 없어요.</p>
           <Button size="large" color="colored" onClick={handleWritingNotice}>

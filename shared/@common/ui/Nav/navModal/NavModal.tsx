@@ -50,7 +50,7 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
     <>
       {isOpen && (
         <div
-          className="absolute flex flex-col align-top px-5 py-6 bg-purple-10 rounded-[10px] gap-2 right-0 ml-[-336px]  h-[500px] top-10"
+          className="absolute flex flex-col align-top px-5 py-6 bg-purple-10 rounded-[10px] gap-2 right-0 ml-[-336px]  h-[500px] top-10 mobile:fixed mobile:top-0 mobile:right-0 mobile:bottom-0 mobile:left-0 mobile:h-screen mobile:rounded-none mobile:ml-0"
           ref={modalClick}
           onMouseDown={(e) => e.stopPropagation()}
         >
@@ -85,7 +85,7 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
                 })}
               </div>
             ) : (
-              <div className="flex flex-col gap-2 w-[350px] h-full items-center justify-center">
+              <div className="flex flex-col gap-2 w-[350px] h-full items-center justify-center text-base font-bold mobile:w-full">
                 알림이 없습니다!
               </div>
             )}

@@ -27,7 +27,7 @@ const NoticePayInfo = ({
   let pay: number | null = payPercentage(hourlyPay, originalHourlyPay);
 
   return (
-    <div className="flex felx-row items-center mt-4">
+    <div className="flex flex-row items-center mt-4">
       <p
         className={`${
           closed ? 'text-gray-20' : 'text-black'
@@ -39,9 +39,11 @@ const NoticePayInfo = ({
         <div
           className={`${
             closed ? 'bg-gray-20 text-white' : 'bg-primary text-white'
-          } rounded-[20px] w-[168px] p-3 flex flex-row`}
+          } rounded-[20px] w-[168px] p-3 flex justify-center items-center`}
         >
-          <p className="text-[14px] font-bold mr-1">기존 시급보다 {pay}%</p>
+          <p className="text-[12px] mr-1 overflow-hidden whitespace-nowrap">
+            기존 시급보다 {pay}%
+          </p>
 
           <Image
             src="/images/icon-upArrow.svg"
