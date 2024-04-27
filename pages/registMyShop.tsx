@@ -11,6 +11,7 @@ import { useTextarea } from '@/shared/@common/ui/Textarea/hook/textareaHook';
 import { Textarea } from '@/shared/@common/ui/Textarea/Textarea';
 import useFetch from '@/shared/@common/api/hooks/useFetch';
 import shopAPI from '@/shared/@common/api/shopAPI';
+import imageAPI from '@/shared/@common/api/imageAPI';
 
 interface ShopData {
   name: string;
@@ -45,8 +46,11 @@ const registMyShop = () => {
     setFoodKinds(option);
   };
 
-  const handleShopImage = (image: string | null) => {
-    setShopImage(image);
+  const handleShopImage = async (image: string | null) => {
+    if (image) {
+      const presignedUrl = await imageAPI(image);
+      setShopImage(presignedUrl);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -54,11 +58,26 @@ const registMyShop = () => {
   };
 
   const handleTotalSubmit = async () => {
-    console.log('제출 완료');
-    console.log(foodKinds);
-    console.log(location);
+    // try {
+    //   const imageData = await imageAPI({
+    //     name: shopImage,
+    //   });
+    //   if (imageData) {
+    //     const url = new URL(imageData.data.item.url);
+    //     url.search = '';
+    //     setShopImage(url.toString());
+    //   }
+    // } catch (error) {
+    //   console.error('Image Upload Error: ', error);
+    // }
     console.log(shopImage);
-    console.log(typeof originalHourlyPay.value);
+    console.log('스킵');
+
+    // console.log('제출 완료');
+    // console.log(foodKinds);
+    // console.log(location);
+    // console.log(shopImage);
+    // console.log(typeof originalHourlyPay.value);
     const hourlyPayNumber = Number(originalHourlyPay.value);
     try {
       const data = await shopAPI.post('id', {

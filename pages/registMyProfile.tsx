@@ -109,7 +109,6 @@ const registMyProfile = () => {
               title="이름*"
               placeholder="입력"
               type="text"
-              countText="원"
               onChange={name.handleInput}
             />
             <Input
