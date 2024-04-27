@@ -35,7 +35,7 @@ const NoticeTimeAndLocation = ({
         <p
           className={`${
             closed ? 'text-gray-20' : 'text-gray-50'
-          } text-sm ml-[6px]`}
+          } text-sm ml-[6px] break-words`}
         >
           {businessHours}
         </p>
