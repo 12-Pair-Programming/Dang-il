@@ -14,6 +14,10 @@ interface Item {
   item: {
     id: string;
     result: string;
+    read: boolean;
+    application: {
+      href: string;
+    };
     notice: {
       item: {
         startsAt: string;
@@ -80,6 +84,9 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
                         item.item.notice.item.startsAt,
                       ).toLocaleString()}
                       createdAt={item.item.createdAt}
+                      url={item.item.application.href}
+                      checked={item.item.read}
+                      user_id={user_id}
                     />
                   );
                 })}

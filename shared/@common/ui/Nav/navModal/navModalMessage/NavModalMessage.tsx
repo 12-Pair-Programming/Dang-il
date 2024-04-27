@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import alertAPI from '@/shared/@common/api/alertAPI';
 
 interface NavModalMessageProps {
+  key: string;
+  url: string;
+  user_id: string;
+  checked: boolean;
   isResult: string;
   noticeName: string;
   noticePeriod: string;
@@ -9,6 +15,10 @@ interface NavModalMessageProps {
 }
 
 export const NavModalMessage = ({
+  key,
+  url,
+  user_id,
+  checked,
   isResult,
   noticeName,
   noticePeriod,
@@ -18,13 +28,20 @@ export const NavModalMessage = ({
   useState(() => {
     isResult === 'accepted' ? setResult('승인') : setResult('거절');
   });
-
+  const router = useRouter();
   const currentTime = new Date().getTime();
   const noticeTime = new Date(createdAt).getTime();
   const minutesAgo = Math.round((currentTime - noticeTime) / (1000 * 60));
 
   return (
-    <div className="flex w-[328px] gap-1 px-3 py-4 flex-col bg-white">
+    <div
+      className="flex w-[328px] gap-1 px-3 py-4 flex-col bg-white"
+      style={{ opacity: checked ? 0.8 : 1 }}
+      onClick={() => {
+        alertAPI.put(user_id, key);
+        router.push(url);
+      }}
+    >
       <Image
         width={5}
         height={5}
