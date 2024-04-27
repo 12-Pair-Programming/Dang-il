@@ -107,10 +107,12 @@ const AllNotice = () => {
   };
 
   return (
-    <div className="flex w-[1440px] py-[60px] px-[238px] flex-col items-start bg-white tracking-wide">
-      <div className="flex flex-col gap-10">
-        <div className="flex justify-between">
-          <p className="text-[28px] font-bold">전체 공고</p>
+    <div className="flex flex-col w-full py-[60px] px-auto items-center bg-white tracking-wide mobile:px-4">
+      <div className="flex flex-col gap-10 px-4 w-auto tablet:w-[678px] mobile:max-w-[375px]">
+        <div className="flex justify-between mobile:flex-col mobile: gap-4">
+          <div className="w-[291px]">
+            <p className="text-[28px] font-bold">전체 공고</p>
+          </div>
           <div className="flex gap-3">
             <Dropdown
               title={''}
@@ -136,24 +138,26 @@ const AllNotice = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-3 grid-rows-2 gap-4">
+        <div className="w-full grid grid-cols-3 grid-rows-2 gap-4 tablet:grid-cols-2 tablet:grid-rows-2 mobile: g-3 mobile: 1fr 1fr">
           {data &&
             data.items.length > 0 &&
             data.items
               .slice(cardOffset, cardOffset + showCard)
               .map((item: ItemData) => (
                 <Link href={`/noticeInfo/${item.item.shop.item.id}`}>
-                  <Card
-                    key={item.item.shop.item.id}
-                    name={item.item.shop.item.name}
-                    imageUrl={item.item.shop.item.imageUrl}
-                    address1={`${item.item.shop.item.address1} ${item.item.shop.item.address2}`}
-                    startsAt={item.item.startsAt}
-                    workhour={item.item.workhour}
-                    hourlyPay={item.item.hourlyPay}
-                    originalHourlyPay={item.item.shop.item.originalHourlyPay}
-                    closed={item.item.closed}
-                  />
+                  <div>
+                    <Card
+                      key={item.item.shop.item.id}
+                      name={item.item.shop.item.name}
+                      imageUrl={item.item.shop.item.imageUrl}
+                      address1={`${item.item.shop.item.address1} ${item.item.shop.item.address2}`}
+                      startsAt={item.item.startsAt}
+                      workhour={item.item.workhour}
+                      hourlyPay={item.item.hourlyPay}
+                      originalHourlyPay={item.item.shop.item.originalHourlyPay}
+                      closed={item.item.closed}
+                    />
+                  </div>
                 </Link>
               ))}
         </div>

@@ -10,29 +10,31 @@ const CustomNotice = () => {
   });
 
   return (
-    <div className="flex w-[1440px] py-[60px] px-[238px] flex-col items-start bg-purple-10 tracking-wide">
-      <div className="flex flex-col gap-[31px]">
-        <p className="text-[28px] font-bold">맞춤 공고</p>
-        <div className="flex gap-4">
-          {data &&
-            data.items.length > 0 &&
-            data.items
-              .slice(0, 3)
-              .map((item: ItemData) => (
-                <Card
-                  name={item.item.shop.item.name}
-                  imageUrl={item.item.shop.item.imageUrl}
-                  address1={`${item.item.shop.item.address1} ${item.item.shop.item.address2}`}
-                  startsAt={item.item.startsAt}
-                  workhour={item.item.workhour}
-                  hourlyPay={item.item.hourlyPay}
-                  originalHourlyPay={item.item.shop.item.originalHourlyPay}
-                  closed={item.item.closed}
-                />
-              ))}
+    <>
+      <div className="flex w-full py-[60px] pc: px-auto flex-col items-center bg-purple-10 tracking-wide tablet:pl-8 tablet:items-start tablet:overflow-x-scroll tablet:whitespace-pre tablet:scrollbar-hide mobile:pl-3 mobile:overflow-x-scroll mobile:whitespace-pre mobile:scrollbar-hide">
+        <div className="flex flex-col gap-[31px]">
+          <p className="text-[28px] font-bold">맞춤 공고</p>
+          <div className="flex gap-4">
+            {data &&
+              data.items.length > 0 &&
+              data.items
+                .slice(0, 3)
+                .map((item: ItemData) => (
+                  <Card
+                    name={item.item.shop.item.name}
+                    imageUrl={item.item.shop.item.imageUrl}
+                    address1={`${item.item.shop.item.address1} ${item.item.shop.item.address2}`}
+                    startsAt={item.item.startsAt}
+                    workhour={item.item.workhour}
+                    hourlyPay={item.item.hourlyPay}
+                    originalHourlyPay={item.item.shop.item.originalHourlyPay}
+                    closed={item.item.closed}
+                  />
+                ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
