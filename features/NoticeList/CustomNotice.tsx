@@ -13,7 +13,7 @@ const CustomNotice = () => {
   return (
     <>
       <div className="flex w-full py-[60px] pc: px-auto flex-col items-center bg-purple-10 tracking-wide tablet:pl-8 tablet:items-start tablet:overflow-x-scroll tablet:whitespace-pre tablet:scrollbar-hide mobile:pl-3 mobile:overflow-x-scroll mobile:whitespace-pre mobile:scrollbar-hide mobile:items-start">
-        <div className="flex flex-col gap-[31px]">
+        <div className="flex flex-col gap-[31px] px-4">
           <p className="text-[28px] font-bold">맞춤 공고</p>
           <div className="flex gap-4">
             {data &&

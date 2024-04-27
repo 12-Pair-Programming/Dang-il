@@ -115,7 +115,7 @@ const AllNotice = () => {
 
   return (
     <div className="flex flex-col w-full py-[60px] px-auto items-center bg-white tracking-wide mobile:px-4">
-      <div className="flex flex-col gap-10 px-4 w-auto tablet:w-[678px] mobile:max-w-[550px]">
+      <div className="flex flex-col gap-10 px-4 w-auto tablet:w-[678px] mobile:max-w-[520px]">
         <div className="flex justify-between mobile:flex-col mobile: gap-4">
           <div className="w-[291px]">
             <p className="text-[28px] font-bold">전체 공고</p>

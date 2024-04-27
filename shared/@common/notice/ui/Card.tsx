@@ -44,7 +44,7 @@ const Card = ({
           height={150}
         />
       </div>
-      <div className="w-[288px] mt-[15px]">
+      <div className="w-full mt-[15px]">
         <p
           className={`${
             closed ? 'text-gray-20' : 'text-black'
