@@ -6,6 +6,8 @@ import Button from '@/shared/@common/ui/Button/Button';
 import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
 import { useCheckUserData } from '@/shared/@common/auth/hooks/useCheckUserData';
 import { RadioButton } from './radioButton/RadioButton';
+import { Modal } from '@/shared/@common/ui/Modal/ModalBase';
+import { useModal } from '@/shared/@common/ui/Modal/hook/modalHook';
 
 export default function RegistnBody() {
   const email = useInput('');
@@ -13,6 +15,11 @@ export default function RegistnBody() {
   const passwordRepeat = useInput('');
 
   const {
+    isOpen,
+    modalType,
+    modalContent,
+    setIsOpen,
+    closeModal,
     emailError,
     isEmailError,
     passwordError,
@@ -92,6 +99,15 @@ export default function RegistnBody() {
           </Link>
         </div>
       </div>
+      <Modal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        onClose={() => {
+          closeModal();
+        }}
+        content={modalContent}
+        type={modalType}
+      />
     </div>
   );
 }
