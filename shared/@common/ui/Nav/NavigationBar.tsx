@@ -52,7 +52,7 @@ export const NavigationBar = () => {
       </div>
       <div className="relative mobile:w-auto w-[450px] tablet:w-[344px] mobile:col-span-3 mobile:order-3">
         <input
-          className="flex gap-[10px] py-[10px] px-[40px] w-full items-center rounded-[10px] bg-gray-10"
+          className="flex gap-[10px] py-[10px] px-[40px] w-full items-center rounded-[10px] bg-gray-10 focus:outline-purple-500"
           placeholder="가게 이름으로 찾아보세요"
         />
         <Image
