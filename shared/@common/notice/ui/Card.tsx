@@ -37,7 +37,12 @@ const Card = ({
   return (
     <div className="bg-white border-[1px] rounded-2xl w-auto h-auto p-4">
       <div className="flex justify-center items-center relative rounded-2xl object-cover overflow-hidden w-auto h-[160px]">
-        <CardImage imageUrl={imageUrl} closed={closed} />
+        <CardImage
+          imageUrl={imageUrl}
+          closed={closed}
+          width={280}
+          height={150}
+        />
       </div>
       <div className="w-[288px] mt-[15px]">
         <p

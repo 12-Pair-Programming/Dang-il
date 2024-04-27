@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Card from '@/shared/@common/notice/ui/Card';
 import { useEffect, useState } from 'react';
 
@@ -39,11 +40,10 @@ const RecentNotices = () => {
       <div>
         <p className="text-[28px] font-bold">최근에 본 공고</p>
       </div>
-      <div className="mt-8 flex gap-[14px] flex-wrap">
+      <div className="mt-8 gap-[14px] grid grid-cols-3">
         {recentNotices &&
-          recentNotices
-            ?.slice(0, 6)
-            .map((notice) => (
+          recentNotices?.slice(0, 6).map((notice) => (
+            <Link href={`/noticeInfo/${notice.shop.item.id}`}>
               <Card
                 key={notice.shop.item.id}
                 name={notice.shop.item.name}
@@ -55,7 +55,8 @@ const RecentNotices = () => {
                 originalHourlyPay={notice.shop.item.originalHourlyPay}
                 closed={notice.closed}
               />
-            ))}
+            </Link>
+          ))}
       </div>
     </div>
   );

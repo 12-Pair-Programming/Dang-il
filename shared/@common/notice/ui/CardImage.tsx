@@ -3,6 +3,8 @@ import Image from 'next/image';
 interface props {
   imageUrl: string;
   closed: boolean;
+  width: number;
+  height: number;
 }
 /**
  * 카드 내 이미지를 보여주는 컴포넌트
@@ -13,12 +15,16 @@ interface props {
  * @param height 이미지 div의 세로 - ex : 312px , auto, full
  * @returns
  */
-const CardImage = ({ imageUrl, closed }: props) => {
+const CardImage = ({ imageUrl, closed, width, height }: props) => {
   return (
-    <div
-      className={`flex justify-center items-center rounded-2xl object-cover `}
-    >
-      <Image className="object-cover" src={imageUrl} alt="가게 이미지" fill />
+    <div className="flex justify-center items-center rounded-2xl object-cover">
+      <Image
+        className="object-cover"
+        src={imageUrl}
+        alt="가게 이미지"
+        width={width}
+        height={height}
+      />
 
       {closed && (
         <>
