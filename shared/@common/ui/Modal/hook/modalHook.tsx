@@ -1,14 +1,18 @@
 import { useState } from 'react';
 
 interface ModalProps {
-  modalContent: string;
-  modalType: string;
+  modalContent?: string;
+  modalType?: string;
 }
 
-export const useModal = ({ modalContent, modalType }: ModalProps) => {
+export const useModal = ({
+  modalContent = '내용 입력',
+  modalType = 'notice',
+}: ModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [type, setType] = useState(modalType);
   const [content, setContent] = useState(modalContent);
+  const [isOk, setIsOk] = useState(false);
 
   const openModal = () => {
     setIsOpen(true);
@@ -17,9 +21,23 @@ export const useModal = ({ modalContent, modalType }: ModalProps) => {
   };
 
   const closeModal = () => {
-    setIsOpen(false);
     setType('');
+    setIsOpen(false);
   };
 
-  return { isOpen, setIsOpen, openModal, closeModal, type, content };
+  const CallbackCloseMadal = () => {
+    setIsOk(true);
+    setIsOpen(false);
+  };
+
+  return {
+    isOk,
+    isOpen,
+    setIsOpen,
+    openModal,
+    closeModal,
+    CallbackCloseMadal,
+    type,
+    content,
+  };
 };

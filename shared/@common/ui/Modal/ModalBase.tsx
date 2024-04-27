@@ -5,6 +5,7 @@ interface ModalProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onClose: () => void;
+  onCloseCallBack?: () => void;
   content: string;
   type?: string;
 }
@@ -13,6 +14,7 @@ export const Modal = ({
   isOpen,
   setIsOpen,
   onClose,
+  onCloseCallBack = () => {},
   content,
   type,
 }: ModalProps) => {
@@ -41,13 +43,14 @@ export const Modal = ({
       {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-50 bg-opacity-50 z-modalbackground">
           <div
-            className="flex flex-col justify-center items-center bg-white rounded-[12px] relative z-modalbase"
+            className="flex flex-col justify-center items-center bg-white rounded-[12px] relative z-modalbody"
             ref={modalClick}
             onMouseDown={(e) => e.stopPropagation()}
           >
             <ModalContent
               content={content}
               closeModal={closeModal}
+              onCloseCallBack={onCloseCallBack}
               type={type}
             />
           </div>
