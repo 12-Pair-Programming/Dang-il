@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Button from '@/shared/@common/ui/Button/Button';
 import Pagination from '@/shared/@common/ui/Pagination/Pagination';
@@ -39,12 +40,14 @@ export interface FilterValues {
 }
 
 const AllNotice = () => {
+  const router = useRouter();
+  const value: string = router.query.value as string;
   const [showDetailFilter, setShowDetailFilter] = useState(false);
   const [showCard, setShowCard] = useState(6);
   const [currentPage, setCurrentPage] = useState(1);
   const cardOffset = (currentPage - 1) * showCard;
   const [data, setData] = useState<Data>();
-  const [keyword, setKeyword] = useState('');
+  const [keyword, setKeyword] = useState(value);
   const [sortedData, setSortedData] = useState<string>();
   const [filterValues, setFilterValues] = useState<FilterValues>({
     clickedAddress: '',
@@ -52,6 +55,10 @@ const AllNotice = () => {
     startDate: undefined,
     money: undefined,
   });
+
+  useEffect(() => {
+    setKeyword(value);
+  }, [value]);
 
   let filterOptions = 0;
 
@@ -108,7 +115,7 @@ const AllNotice = () => {
 
   return (
     <div className="flex flex-col w-full py-[60px] px-auto items-center bg-white tracking-wide mobile:px-4">
-      <div className="flex flex-col gap-10 px-4 w-auto tablet:w-[678px] mobile:max-w-[550px]">
+      <div className="flex flex-col gap-10 px-4 w-auto tablet:w-[678px] mobile:max-w-[520px]">
         <div className="flex justify-between mobile:flex-col mobile: gap-4">
           <div className="w-[291px]">
             <p className="text-[28px] font-bold">전체 공고</p>
@@ -116,7 +123,7 @@ const AllNotice = () => {
           <div className="flex gap-3">
             <Dropdown
               title={''}
-              width="130px"
+              width="138px"
               options={options}
               onSelect={handleSelectOption}
               defaultValue="마감임박순"
@@ -138,26 +145,24 @@ const AllNotice = () => {
             </div>
           </div>
         </div>
-        <div className="w-full grid grid-cols-3 grid-rows-2 gap-4 tablet:grid-cols-2 tablet:grid-rows-2 mobile: g-3 mobile: 1fr 1fr">
+        <div className="w-full grid grid-cols-3 grid-rows-2 gap-4 tablet:grid-cols-2 mobile:grid-cols-2 mobile: g-3">
           {data &&
             data.items.length > 0 &&
             data.items
               .slice(cardOffset, cardOffset + showCard)
               .map((item: ItemData) => (
                 <Link href={`/noticeInfo/${item.item.shop.item.id}`}>
-                  <div>
-                    <Card
-                      key={item.item.shop.item.id}
-                      name={item.item.shop.item.name}
-                      imageUrl={item.item.shop.item.imageUrl}
-                      address1={`${item.item.shop.item.address1} ${item.item.shop.item.address2}`}
-                      startsAt={item.item.startsAt}
-                      workhour={item.item.workhour}
-                      hourlyPay={item.item.hourlyPay}
-                      originalHourlyPay={item.item.shop.item.originalHourlyPay}
-                      closed={item.item.closed}
-                    />
-                  </div>
+                  <Card
+                    key={item.item.shop.item.id}
+                    name={item.item.shop.item.name}
+                    imageUrl={item.item.shop.item.imageUrl}
+                    address1={`${item.item.shop.item.address1} ${item.item.shop.item.address2}`}
+                    startsAt={item.item.startsAt}
+                    workhour={item.item.workhour}
+                    hourlyPay={item.item.hourlyPay}
+                    originalHourlyPay={item.item.shop.item.originalHourlyPay}
+                    closed={item.item.closed}
+                  />
                 </Link>
               ))}
         </div>

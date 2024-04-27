@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, SetStateAction } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 
 interface Option {
@@ -53,7 +53,7 @@ export const Dropdown = ({
   }, []);
 
   return (
-    <div className={`flex flex-col items-start gap-2 text-black`}>
+    <div className="flex flex-col items-start gap-2 text-black">
       {title && (
         <p className="font-sans font-normal text-base leading-6">{title}</p>
       )}
@@ -79,7 +79,7 @@ export const Dropdown = ({
         <div
           className={`absolute ${
             isOpen ? 'inline-flex' : 'hidden'
-          } flex-col items-start rounded-md border-[2px] items-center border-gray-20 bg-white shadow-md z-4 mt-2 overflow-y-auto overflow-x-hidden max-h-[200px] z-dropdown right-[7px]`}
+          } flex-col rounded-md border-[2px] items-center border-gray-20 bg-white shadow-md z-4 mt-2 overflow-y-auto overflow-x-hidden max-h-[200px] z-dropdown right-[7px]`}
         >
           {options.map((option, index) => (
             <div

@@ -62,15 +62,15 @@ const ShopInfo = ({
 }: props) => {
   const router = useRouter();
 
-  const { data, loading } = useFetch(() =>
-    noticeAPI.getShopNotice({ shops_id: shopId, notice_id: noticeId }),
-  );
+  const { data, loading } = useFetch(() => {
+    return noticeAPI.getShopNotice({ shops_id: shopId, notice_id: noticeId });
+  });
 
   let getdata: Item = data;
   if (data && !loading) {
     getdata = data.item;
   }
-
+  console.log(data);
   useEffect(() => {
     //TODO: 데이터가 새로고침할 때 반영 안될때 있음. 확인 후 UseState로 데이터 관리?
     if (data && !loading) {
@@ -128,7 +128,7 @@ const ShopInfo = ({
     modalContent: '안녕',
     modalType: 'confirm',
   });
-
+  console.log(data);
   return (
     <>
       {getdata && (
@@ -146,12 +146,12 @@ const ShopInfo = ({
             <p className="text-[28px] font-bold">도토리 식당</p>
           </div>
           <div className="flex w-[963px] h-[365px] border-[1px] rounded-2xl p-6 mt-4">
-            <div className="w-[596px] h-[320px] overflow-hidden rounded-2xl">
+            <div className="w-[640px] overflow-hidden rounded-2xl">
               <CardImage
                 imageUrl={getdata.shop.item.imageUrl}
                 closed={getdata.closed}
-                width={596}
-                height={365}
+                width={550}
+                height={350}
               />
             </div>
             <div className="w-[346px] ml-6 flex flex-col justify-between">

@@ -25,32 +25,32 @@ const NoticeTimeAndLocation = ({
   const businessHours = businessHoursString(startsAt, workhour);
   return (
     <>
-      <div className="flex flex-row my-2">
+      <div className="flex flex-row my-2 pr-2">
         <Image
           src={`/images/icon-clock-${closed ? 'off' : 'on'}.svg`}
           alt="clock icon"
-          width={20}
-          height={20}
+          width={15}
+          height={15}
         />
         <p
           className={`${
             closed ? 'text-gray-20' : 'text-gray-50'
-          } text-sm ml-[6px] break-words`}
+          } text-sm ml-1 whitespace-nowrap overflow-hidden text-ellipsis`}
         >
           {businessHours}
         </p>
       </div>
-      <div className="flex flex-row">
+      <div className="flex flex-row w-full">
         <Image
           src={`/images/icon-location-${closed ? 'off' : 'on'}.svg`}
           alt="location icon"
-          width={20}
-          height={20}
+          width={15}
+          height={15}
         />
         <p
           className={`${
             closed ? 'text-gray-20' : 'text-gray-50'
-          } text-sm ml-[6px]`}
+          } text-sm ml-1  whitespace-nowrap overflow-hidden text-ellipsis`}
         >
           {address1}
         </p>
