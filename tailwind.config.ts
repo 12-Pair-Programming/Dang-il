@@ -11,7 +11,7 @@ const config: Config = {
     extend: {
       screens: {
         mobile: { max: '767px' },
-        tablet: { max: '1023px' },
+        tablet: { min: '768px', max: '1023px' },
       },
       zIndex: {
         dropdown: '10',

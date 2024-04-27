@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { NavModal } from './navModal/NavModal';
 import Image from 'next/image';
 import { useNavModal } from './navModal/hook/navModalHook';
@@ -14,6 +15,8 @@ export const NavigationBar = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [userType, setUserType] = useState<string | null>('');
   const [userId, setUserId] = useState<string>('');
+  const [searchValue, setSearchValue] = useState('');
+  const router = useRouter();
 
   const { isOpen, closeModal, openModal } = useNavModal();
 
@@ -38,10 +41,11 @@ export const NavigationBar = () => {
   };
 
   return (
-    <div className="w-full h-[70px] flex flex-row bg-white justify-center items-center sticky gap-10 z-10">
-      <div className="h-[40px] flex items-center">
+    <div className="w-full p-[15px] flex flex-row bg-white justify-center items-center sticky gap-10 z-10 tablet:gap-2 mobile:grid mobile:grid-cols-3 mobile:gap-[1px] ">
+      <div className="h-[40px] flex items-center mobile:w-[120px]">
         <Link href={'/'}>
           <Image
+            className="mobile:w-[120px]"
             width={140}
             height={20}
             src={'/images/navLogo.png'}
@@ -49,11 +53,23 @@ export const NavigationBar = () => {
           />
         </Link>
       </div>
-      <div className="relative">
+      <div className="relative mobile:w-auto w-[450px] tablet:w-[344px] mobile:col-span-3 mobile:order-3">
         <input
-          className="flex gap-[10px] py-[10px] px-[40px] w-[450px] items-center rounded-[10px] bg-gray-10 "
+          className="flex gap-[10px] py-[10px] px-[40px] w-full items-center rounded-[10px] bg-gray-10 focus:outline-purple-500"
           placeholder="가게 이름으로 찾아보세요"
-        ></input>
+          onChange={(event) => {
+            setSearchValue(event.target.value);
+          }}
+          value={searchValue}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              const query = searchValue;
+              router.push(`/noticeList?value=${query}`);
+              setSearchValue('');
+            }
+          }}
+        />
+
         <Image
           className="absolute top-1/2 left-[10px] transform -translate-y-1/2 flex-shrink-0 z-10"
           width={20}
@@ -62,7 +78,7 @@ export const NavigationBar = () => {
           alt="검색창 보조 이미지"
         />
       </div>
-      <div className="flex flex-row gap-2 top-[23.5px] right-[60px] justify-center items-center">
+      <div className="w-auto flex flex-row items-center gap-2 z-20 top-[23.5px] right-[60px] justify-end mobile:text-[12px] mobile:px-1 mobile:col-start-2 col-span-3">
         {isLogin ? (
           <>
             {userType !== 'employee' ? (

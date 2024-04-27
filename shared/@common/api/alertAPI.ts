@@ -21,10 +21,10 @@ const alertAPI = {
       offset,
       limit,
     };
-    return axiosInstance.get(`/users/${user_id}/alerts`, { params,headers,});
+    return axiosInstance.get(`/users/${user_id}/alerts`, { params, headers });
   },
-  put: <T>(user_id: string, alert_id: string, body: T) => {
-    return axiosInstance.put(`/users/${user_id}/alerts/${alert_id}`, body);
+  put: <T>(user_id: string, alert_id: string) => {
+    return axiosInstance.put(`/users/${user_id}/alerts/${alert_id}`);
   },
 };
 

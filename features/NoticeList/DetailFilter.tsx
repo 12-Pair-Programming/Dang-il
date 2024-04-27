@@ -2,17 +2,23 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
 import { Input } from '@/shared/@common/ui/Input/Input';
-import { InputChangeEvent, SetState } from '@/shared/@common/types/helper';
+import { SetState } from '@/shared/@common/types/helper';
 import Button from '@/shared/@common/ui/Button/Button';
 import FilterCalendar from './FilterCalendar';
-import useGetNoticeData from '@/shared/@common/notice/api/useGetNoticeData';
-import { ItemData } from './AllNotice';
+import { FilterValues, ItemData } from './AllNotice';
+import { Data } from './AllNotice';
 
-type DetailFilterProps = {
+interface DetailFilterProps {
   setIsOpen: SetState<boolean>;
-};
+  noticeData: Data | undefined;
+  onClickFilter: (filterValues: FilterValues) => void;
+}
 
-const DetailFilter = ({ setIsOpen }: DetailFilterProps) => {
+const DetailFilter = ({
+  setIsOpen,
+  noticeData,
+  onClickFilter,
+}: DetailFilterProps) => {
   const [clickedAddress, setClickedAddress] = useState('');
   const [hashtag, setHashtag] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<Date>();
@@ -39,20 +45,12 @@ const DetailFilter = ({ setIsOpen }: DetailFilterProps) => {
     money.handleReset();
   };
 
-  const handleApplyValues = () => {
-    setHashtag(hashtag);
-    money.handleInput({ target: { value: money.value } } as InputChangeEvent);
-    setStartDate(startDate);
-  };
-
-  const { data } = useGetNoticeData();
-
   return (
     <>
-      <div className="flex justify-between items-center self-stretch">
+      <div className="flex justify-between items-center self-stretch mobile:w-[350px] mobile:self-auto">
         <p className="text-5 font-bold">상세 필터</p>
         <Image
-          src="/images/close.svg"
+          src={`/images/close.svg`}
           alt="필터창 닫힘 아이콘"
           onClick={() => setIsOpen(false)}
           className="cursor-pointer"
@@ -61,21 +59,15 @@ const DetailFilter = ({ setIsOpen }: DetailFilterProps) => {
         />
       </div>
       <div>
-        <div className="flex flex-col items-start gap-3">
+        <div className="flex flex-col items-start gap-3 mobile:w-[350px]">
           <p>위치</p>
           <>
             <div className="flex flex-col gap-5 items-start flex-wrap p-6 flex-start w-[350px] h-[258px] rounded-[6px] border border-gray-300">
-              {data &&
-                data.items.length > 0 &&
-                data.items
+              {noticeData &&
+                noticeData.items.length > 0 &&
+                noticeData.items
                   .map((item: ItemData) => item.item.shop.item.address1)
-                  .reduce(
-                    (items: ItemData[], value: ItemData) =>
-                      items.some((item) => item === value)
-                        ? items
-                        : [...items, value],
-                    [],
-                  )
+                  .filter((value, index, self) => self.indexOf(value) === index)
                   .map((address: string) => (
                     <button onClick={() => handleClickAddress(address)}>
                       {address}
@@ -146,7 +138,12 @@ const DetailFilter = ({ setIsOpen }: DetailFilterProps) => {
           size="mediumLarge"
           color="colored"
           onClick={() => {
-            handleApplyValues();
+            onClickFilter({
+              clickedAddress,
+              hashtag,
+              startDate,
+              money: Number(money.value),
+            });
           }}
           disabled={false}
         >

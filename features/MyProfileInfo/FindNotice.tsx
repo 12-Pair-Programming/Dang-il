@@ -17,7 +17,9 @@ const FindNotice = () => {
         <div className="flex flex-col items-start gap-[32px] self-stretch bg-white">
           <p className="text-black text-[28px] font-bold">신청 내역</p>
           <div className="flex flex-col items-start gap-8">
-            <Table isEmployee={true} />
+            <div className="flex flex-col items-start gap-8">
+              <Table isEmployee={true} />
+            </div>
           </div>
         </div>
       </div>

@@ -1,83 +1,62 @@
+import Link from 'next/link';
 import Card from '@/shared/@common/notice/ui/Card';
+import { useEffect, useState } from 'react';
 
 /**
  * 최근에 본 공고 리스트 컴포넌트
+ * recentNotices에 저장된 데이터 6개를 불러옴
  * @returns
  */
 const RecentNotices = () => {
-  console.log('Recent Notices');
-  //TODO:
-  //6개만 보여줘야 함
-  //데이터 직접 연결 필요
+  interface ItemData {
+    shop: {
+      item: {
+        id: string;
+        name: string;
+        imageUrl: string;
+        address1: string;
+        address2: string;
+        originalHourlyPay: number;
+      };
+    };
+    startsAt: string;
+    workhour: number;
+    hourlyPay: number;
+    closed: boolean;
+  }
+
+  const [recentNotices, setRecentNotices] = useState<ItemData[]>([]);
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('recentNotices');
+
+    if (storedData) {
+      setRecentNotices(JSON.parse(storedData));
+    }
+  }, []);
 
   return (
-    <div className="w-[963px] mt-[60px] mb-3 mx-[238px]">
+    <div className="w-[983px] mt-[60px] mb-3 mx-[238px]">
       <div>
         <p className="text-[28px] font-bold">최근에 본 공고</p>
       </div>
-      <div className="mt-8 flex gap-[14px]">
-        <Card
-          name="시급 비싼 가게"
-          imageUrl="https://bootcamp-project-api.s3.ap-northeast-2.amazonaws.com/0-1/the-julge/afebf6d2-a410-4dba-84bc-c123468d7905-dump%20image.png"
-          address1="서울시 강남구"
-          startsAt="2023-07-07T18:00:00.000Z"
-          workhour={12}
-          hourlyPay={100000}
-          originalHourlyPay={10000}
-          closed={false}
-        />
-        <Card
-          name=" 시급 동일 가게"
-          imageUrl="https://bootcamp-project-api.s3.ap-northeast-2.amazonaws.com/0-1/the-julge/afebf6d2-a410-4dba-84bc-c123468d7905-dump%20image.png"
-          address1="서울시 강남구"
-          startsAt="2023-07-07T18:00:00.000Z"
-          workhour={12}
-          hourlyPay={1000}
-          originalHourlyPay={1000}
-          closed={false}
-        />
-        <Card
-          name="시급 낮은 가게"
-          imageUrl="https://bootcamp-project-api.s3.ap-northeast-2.amazonaws.com/0-1/the-julge/afebf6d2-a410-4dba-84bc-c123468d7905-dump%20image.png"
-          address1="서울시 강남구"
-          startsAt="2023-07-07T18:00:00.000Z"
-          workhour={12}
-          hourlyPay={100}
-          originalHourlyPay={1000}
-          closed={false}
-        />
-      </div>
-      <div className="mt-8 flex gap-[14px]">
-        <Card
-          name="시급 비싼 가게"
-          imageUrl="https://bootcamp-project-api.s3.ap-northeast-2.amazonaws.com/0-1/the-julge/afebf6d2-a410-4dba-84bc-c123468d7905-dump%20image.png"
-          address1="서울시 강남구"
-          startsAt="2023-07-07T18:00:00.000Z"
-          workhour={12}
-          hourlyPay={100000}
-          originalHourlyPay={10000}
-          closed={true}
-        />
-        <Card
-          name=" 시급 동일 가게"
-          imageUrl="https://bootcamp-project-api.s3.ap-northeast-2.amazonaws.com/0-1/the-julge/afebf6d2-a410-4dba-84bc-c123468d7905-dump%20image.png"
-          address1="서울시 강남구"
-          startsAt="2023-07-07T18:00:00.000Z"
-          workhour={12}
-          hourlyPay={1000}
-          originalHourlyPay={1000}
-          closed={true}
-        />
-        <Card
-          name="시급 낮은 가게"
-          imageUrl="https://bootcamp-project-api.s3.ap-northeast-2.amazonaws.com/0-1/the-julge/afebf6d2-a410-4dba-84bc-c123468d7905-dump%20image.png"
-          address1="서울시 강남구"
-          startsAt="2023-07-07T18:00:00.000Z"
-          workhour={12}
-          hourlyPay={100}
-          originalHourlyPay={1000}
-          closed={true}
-        />
+      <div className="mt-8 gap-[14px] grid grid-cols-3">
+        {recentNotices &&
+          recentNotices?.slice(0, 6).map((notice) => (
+            <Link href={`/noticeInfo/${notice.shop.item.id}`}>
+              <Card
+                key={notice.shop.item.id}
+                name={notice.shop.item.name}
+                imageUrl={notice.shop.item.imageUrl}
+                address1={notice.shop.item.address1}
+                startsAt={notice.startsAt}
+                workhour={notice.workhour}
+                hourlyPay={notice.hourlyPay}
+                originalHourlyPay={notice.shop.item.originalHourlyPay}
+                closed={notice.closed}
+              />
+            </Link>
+          ))}
       </div>
     </div>
   );

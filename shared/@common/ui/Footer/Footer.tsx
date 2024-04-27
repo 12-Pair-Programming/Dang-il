@@ -4,16 +4,16 @@ import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <footer className="w-full px-[238px] py-8 flex flex-col bg-gray-10 gap-2">
-      <div className="flex self-stretch justify-between flex-row">
-        <div className="flex flex-row">
+    <footer className="w-full px-[238px] py-8 flex flex-col bg-gray-10 gap-2 tablet:px-8 tablet:py-[37px] mobile:px-5 pt-8 pb-4">
+      <div className="flex self-stretch justify-between flex-row mobile:grid mobile:grid-cols-2 mobile:gap-y-10">
+        <div className="flex flex-row mobile:order-3 mobile:justify-start">
           <p className=" text-gray-50">©codeit - 2023</p>
         </div>
-        <div className="flex flex-row items-start gap-[10px]">
+        <div className="flex flex-row items-start gap-[10px] mobile:justify-start mobile:gap-[30px]">
           <p className=" text-gray-50">Privacy Policy</p>
           <p className=" text-gray-50">FAQ</p>
         </div>
-        <div className="flex flex-row items-start gap-[10px]">
+        <div className="flex flex-row items-start gap-[10px] mobile:justify-end">
           <Link href={'/'}>
             <Image
               width={25}

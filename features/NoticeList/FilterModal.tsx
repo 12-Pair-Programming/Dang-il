@@ -1,13 +1,21 @@
 import React, { useEffect, useRef } from 'react';
 import DetailFilter from './DetailFilter';
 import { SetState } from '@/shared/@common/types/helper';
+import { Data, FilterValues } from './AllNotice';
 
 interface FilterModalProps {
   isOpen: boolean;
+  noticeData: Data | undefined;
   setIsOpen: SetState<boolean>;
+  onClickFilter: (filterValues: FilterValues) => void;
 }
 
-const FilterModal = ({ isOpen, setIsOpen }: FilterModalProps) => {
+const FilterModal = ({
+  isOpen,
+  noticeData,
+  setIsOpen,
+  onClickFilter,
+}: FilterModalProps) => {
   const modalClick = useRef<HTMLDivElement>(null);
 
   const handleClick = (e: MouseEvent) => {
@@ -27,11 +35,15 @@ const FilterModal = ({ isOpen, setIsOpen }: FilterModalProps) => {
     <>
       {isOpen && (
         <div
-          className="border-[1px] border-purple-30 flex w-[390px] px-6 py-5 flex-col items-start gap-6 bg-white absolute right-[0px] top-[70px] rounded-[10px] z-modalbody"
+          className="border-[1px] border-purple-30 flex w-[390px] px-6 py-5 flex-col items-start gap-6 bg-white absolute right-[0px] top-[70px] rounded-[10px] z-modalbody mobile:fixed mobile:top-0 mobile:right-0 mobile:bottom-0 mobile:left-0 mobile:h-screen mobile:rounded-none mobile:ml-0 mobile:w-full mobile:items-center"
           ref={modalClick}
           onMouseDown={(e) => e.stopPropagation()}
         >
-          <DetailFilter setIsOpen={setIsOpen} />
+          <DetailFilter
+            setIsOpen={setIsOpen}
+            noticeData={noticeData}
+            onClickFilter={onClickFilter}
+          />
         </div>
       )}
     </>

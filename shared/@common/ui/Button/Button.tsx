@@ -1,10 +1,10 @@
-import React, { Children } from 'react';
+import React from 'react';
+import { PropsWithChildren } from 'react';
 
 interface ButtonProps {
   size: string; // 크기 종류
   color: 'colored' | 'none' /* | 'disabled'; */; // 색상 종류
   onClick: () => void; // 클릭 이벤트 핸들러
-  children: string; // 버튼 내용
   disabled?: boolean; // 비활성화 여부
 }
 
@@ -12,9 +12,9 @@ const Button = ({
   size,
   color,
   onClick,
-  children,
   disabled = false,
-}: ButtonProps) => {
+  children,
+}: PropsWithChildren<ButtonProps>) => {
   const styleInformation = (
     size: string,
     color: 'colored' | 'none' /*| 'disabled' */,
@@ -28,7 +28,7 @@ const Button = ({
           'font-bold text-base leading-5 align-center whitespace-nowrap';
         break;
       case 'mediumLarge':
-        sizeStyle = 'py-3 px-[57px]';
+        sizeStyle = 'py-3 px-[56px]';
         fontStyle = 'font-bold text-base leading-5 text-center';
 
         break;
