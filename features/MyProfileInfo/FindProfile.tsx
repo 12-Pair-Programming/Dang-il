@@ -18,7 +18,7 @@ const FindProfile = () => {
 
   const handleEditingProfileInfo = () => {
     /* 가게 정보 편집하는 페이지로 이동시키기 */
-    router.push('/editMyProfile');
+    router.push('/registMyProfile');
   };
 
   const [size, setSize] = useState('large');

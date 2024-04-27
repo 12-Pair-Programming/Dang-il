@@ -10,6 +10,7 @@ import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
 import { useTextarea } from '@/shared/@common/ui/Textarea/hook/textareaHook';
 import { Textarea } from '@/shared/@common/ui/Textarea/Textarea';
 import NavigationBar from '@/shared/@common/ui/Nav/NavigationBar';
+import shopAPI from '@/shared/@common/api/shopAPI';
 
 const editMyShop = () => {
   const router = useRouter();
@@ -40,25 +41,31 @@ const editMyShop = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const data = {
-      name: name.value,
-      category: foodKinds,
-      address1: location,
-      address2: subLocation.value,
-      description: description.value,
-      imageUrl: shopImage,
-      originalHourlyPay: originalHourlyPay.value,
-    };
-    console.log(data);
   };
 
-  const handleTotalSubmit = () => {
+  const handleTotalSubmit = async () => {
     console.log('제출 완료');
     console.log(foodKinds);
     console.log(location);
     console.log(shopImage);
-    alert('수정이 완료되었습니다');
-    router.push('/myShopInfo');
+    const hourlyPayNumber = Number(originalHourlyPay.value);
+    try {
+      const data = await shopAPI.post('id', {
+        name: name.value,
+        category: foodKinds,
+        address1: location,
+        address2: subLocation.value,
+        description: description.value,
+        imageUrl: shopImage,
+        originalHourlyPay: hourlyPayNumber,
+      });
+      if (data) {
+        alert('등록이 완료되었습니다');
+        router.push('myShopInfo');
+      }
+    } catch (error) {
+      console.error('Regist Failed:', error);
+    }
   };
 
   const kinds = [
