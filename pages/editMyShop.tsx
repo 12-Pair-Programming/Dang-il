@@ -11,12 +11,17 @@ import { Textarea } from '@/shared/@common/ui/Textarea/Textarea';
 import NavigationBar from '@/shared/@common/ui/Nav/NavigationBar';
 import shopAPI from '@/shared/@common/api/shopAPI';
 import imageAPI from '@/shared/@common/api/imageAPI';
+import { jwtDecode } from 'jwt-decode';
 
 const editMyShop = () => {
   const router = useRouter();
   const [foodKinds, setFoodKinds] = useState('');
   const [location, setLocation] = useState('');
   const [shopImage, setShopImage] = useState<string | null>(null);
+  const token = localStorage.getItem('token');
+  const decodedToken = token ? jwtDecode(token) : null;
+  const user = localStorage.getItem('user');
+  const userId = (decodedToken as any)?.userId || '';
 
   let name = useInput('');
   let subLocation = useInput('');
@@ -40,16 +45,14 @@ const editMyShop = () => {
   useEffect(() => {
     const fetchShopInfo = async () => {
       try {
-        const shopInfo = await shopAPI.get(
-          '4490151c-5217-4157-b072-9c37b05bed47',
-        );
-        name = shopInfo.item.name;
-        setFoodKinds(shopInfo.item.category);
-        setLocation(shopInfo.item.address1);
-        subLocation = shopInfo.item.address2;
-        description = shopInfo.item.description;
-        setShopImage(shopInfo.item.imageUrl);
-        originalHourlyPay = shopInfo.item.originalHourlyPay;
+        const shopInfo = await shopAPI.get(userId);
+        name.value = shopInfo.data.item.name;
+        setFoodKinds(shopInfo.data.item.category);
+        setLocation(shopInfo.data.item.address1);
+        subLocation.value = shopInfo.data.item.address2;
+        description.value = shopInfo.data.item.description;
+        setShopImage(shopInfo.data.item.imageUrl);
+        originalHourlyPay.value = shopInfo.data.item.originalHourlyPay;
       } catch (error) {
         console.error('Failed to fetch shop info:', error);
       }
@@ -79,7 +82,7 @@ const editMyShop = () => {
   const handleTotalSubmit = async () => {
     const hourlyPayNumber = Number(originalHourlyPay.value);
     try {
-      const data = await shopAPI.post({
+      const data = await shopAPI.put(userId, {
         name: name.value,
         category: foodKinds,
         address1: location,
@@ -109,31 +112,31 @@ const editMyShop = () => {
   ];
 
   const locations = [
-    { value: '종로구', label: '서울시 종로구' },
-    { value: '중구', label: '서울시 중구' },
-    { value: '용산구', label: '서울시 용산구' },
-    { value: '성동구', label: '서울시 성동구' },
-    { value: '광진구', label: '서울시 광진구' },
-    { value: '동대문구', label: '서울시 동대문구' },
-    { value: '중랑구', label: '서울시 중랑구' },
-    { value: '성북구', label: '서울시 성북구' },
-    { value: '강북구', label: '서울시 강북구' },
-    { value: '도봉구', label: '서울시 도봉구' },
-    { value: '노원구', label: '서울시 노원구' },
-    { value: '은평구', label: '서울시 은평구' },
-    { value: '서대문구', label: '서울시 서대문구' },
-    { value: '마포구', label: '서울시 마포구' },
-    { value: '양천구', label: '서울시 양천구' },
-    { value: '강서구', label: '서울시 강서구' },
-    { value: '구로구', label: '서울시 구로구' },
-    { value: '금천구', label: '서울시 금천구' },
-    { value: '영등포구', label: '서울시 영등포구' },
-    { value: '동작구', label: '서울시 동작구' },
-    { value: '관악구', label: '서울시 관악구' },
-    { value: '서초구', label: '서울시 서초구' },
-    { value: '강남구', label: '서울시 강남구' },
-    { value: '송파구', label: '서울시 송파구' },
-    { value: '강동구', label: '서울시 강동구' },
+    { value: '서울시 종로구', label: '서울시 종로구' },
+    { value: '서울시 중구', label: '서울시 중구' },
+    { value: '서울시 용산구', label: '서울시 용산구' },
+    { value: '서울시 성동구', label: '서울시 성동구' },
+    { value: '서울시 광진구', label: '서울시 광진구' },
+    { value: '서울시 동대문구', label: '서울시 동대문구' },
+    { value: '서울시 중랑구', label: '서울시 중랑구' },
+    { value: '서울시 성북구', label: '서울시 성북구' },
+    { value: '서울시 강북구', label: '서울시 강북구' },
+    { value: '서울시 도봉구', label: '서울시 도봉구' },
+    { value: '서울시 노원구', label: '서울시 노원구' },
+    { value: '서울시 은평구', label: '서울시 은평구' },
+    { value: '서울시 서대문구', label: '서울시 서대문구' },
+    { value: '서울시 마포구', label: '서울시 마포구' },
+    { value: '서울시 양천구', label: '서울시 양천구' },
+    { value: '서울시 강서구', label: '서울시 강서구' },
+    { value: '서울시 구로구', label: '서울시 구로구' },
+    { value: '서울시 금천구', label: '서울시 금천구' },
+    { value: '서울시 영등포구', label: '서울시 영등포구' },
+    { value: '서울시 동작구', label: '서울시 동작구' },
+    { value: '서울시 관악구', label: '서울시 관악구' },
+    { value: '서울시 서초구', label: '서울시 서초구' },
+    { value: '서울시 강남구', label: '서울시 강남구' },
+    { value: '서울시 송파구', label: '서울시 송파구' },
+    { value: '서울시 강동구', label: '서울시 강동구' },
   ];
 
   return (
