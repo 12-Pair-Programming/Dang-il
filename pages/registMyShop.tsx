@@ -65,29 +65,9 @@ const registMyShop = () => {
   };
 
   const handleTotalSubmit = async () => {
-    // try {
-    //   const imageData = await imageAPI({
-    //     name: shopImage,
-    //   });
-    //   if (imageData) {
-    //     const url = new URL(imageData.data.item.url);
-    //     url.search = '';
-    //     setShopImage(url.toString());
-    //   }
-    // } catch (error) {
-    //   console.error('Image Upload Error: ', error);
-    // }
-    console.log(shopImage);
-    console.log('스킵');
-
-    // console.log('제출 완료');
-    // console.log(foodKinds);
-    // console.log(location);
-    // console.log(shopImage);
-    // console.log(typeof originalHourlyPay.value);
     const hourlyPayNumber = Number(originalHourlyPay.value);
     try {
-      const data = await shopAPI.post('id', {
+      const data = await shopAPI.post({
         name: name.value,
         category: foodKinds,
         address1: location,
@@ -208,7 +188,6 @@ const registMyShop = () => {
                 />
               </div>
             </div>
-
             <div className="flex flex-col items-start gap-5 mb-6">
               <p className="text-base">가게 이미지</p>
               <div className="inline-block relative">
