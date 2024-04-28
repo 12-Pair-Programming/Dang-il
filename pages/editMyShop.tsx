@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
 import { Input } from '@/shared/@common/ui/Input/Input';
-import UploadImage from '@/features/RegistMyShop/UploadImage';
 import Button from '@/shared/@common/ui/Button/Button';
 import Footer from '@/shared/@common/ui/Footer/Footer';
 import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
@@ -11,6 +10,7 @@ import { useTextarea } from '@/shared/@common/ui/Textarea/hook/textareaHook';
 import { Textarea } from '@/shared/@common/ui/Textarea/Textarea';
 import NavigationBar from '@/shared/@common/ui/Nav/NavigationBar';
 import shopAPI from '@/shared/@common/api/shopAPI';
+import imageAPI from '@/shared/@common/api/imageAPI';
 
 const editMyShop = () => {
   const router = useRouter();
@@ -18,10 +18,10 @@ const editMyShop = () => {
   const [location, setLocation] = useState('');
   const [shopImage, setShopImage] = useState<string | null>(null);
 
-  const name = useInput('');
-  const subLocation = useInput('');
-  const originalHourlyPay = useInput('');
-  const description = useTextarea('');
+  let name = useInput('');
+  let subLocation = useInput('');
+  let originalHourlyPay = useInput('');
+  let description = useTextarea('');
 
   const handleClose = () => {
     router.push('/myShopInfo');
@@ -35,8 +35,41 @@ const editMyShop = () => {
     setFoodKinds(option);
   };
 
-  const handleShopImage = (image: string | null) => {
-    setShopImage(image);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const fetchShopInfo = async () => {
+      try {
+        const shopInfo = await shopAPI.get(
+          '4490151c-5217-4157-b072-9c37b05bed47',
+        );
+        name = shopInfo.item.name;
+        setFoodKinds(shopInfo.item.category);
+        setLocation(shopInfo.item.address1);
+        subLocation = shopInfo.item.address2;
+        description = shopInfo.item.description;
+        setShopImage(shopInfo.item.imageUrl);
+        originalHourlyPay = shopInfo.item.originalHourlyPay;
+      } catch (error) {
+        console.error('Failed to fetch shop info:', error);
+      }
+    };
+
+    fetchShopInfo();
+  }, []);
+
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = event.target.files?.[0];
+    const imageUrl = await imageAPI(file);
+    setShopImage(imageUrl);
+  };
+
+  const handleClick = () => {
+    if (inputRef.current) {
+      inputRef.current.click();
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -44,13 +77,9 @@ const editMyShop = () => {
   };
 
   const handleTotalSubmit = async () => {
-    console.log('제출 완료');
-    console.log(foodKinds);
-    console.log(location);
-    console.log(shopImage);
     const hourlyPayNumber = Number(originalHourlyPay.value);
     try {
-      const data = await shopAPI.post('id', {
+      const data = await shopAPI.post({
         name: name.value,
         category: foodKinds,
         address1: location,
@@ -173,7 +202,35 @@ const editMyShop = () => {
             </div>
             <div className="flex flex-col items-start gap-5 mb-6">
               <p className="text-base">가게 이미지</p>
-              <UploadImage onImageChange={handleShopImage} />
+              <div className="inline-block relative">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  ref={inputRef}
+                  style={{ display: 'none' }}
+                />
+                <div onClick={handleClick} className="cursor-pointer">
+                  {shopImage ? (
+                    <Image
+                      src={shopImage}
+                      alt="Uploaded Image"
+                      width={200}
+                      height={300}
+                      className="w-1/2 max-h-[300px]"
+                    />
+                  ) : (
+                    <div className="flex justify-center items-center flex-shrink-0 rounded-[5px] border border-solid border-gray-30 bg-gray-10 h-[300px] w-[400px]">
+                      <Image
+                        src={`images/add-img.svg`}
+                        alt="Placeholder Image"
+                        width={111}
+                        height={64}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
             <div className="w-full flex flex-col items-start gap-2">
               <Textarea
