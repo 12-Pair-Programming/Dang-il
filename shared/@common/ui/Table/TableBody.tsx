@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useGetApplicationData } from '@/shared/@common/ui/Table/test/tableTest';
 import TableButton from './TableButton';
 import { TableProps } from './Table';
@@ -12,6 +12,7 @@ interface EmployeeItemData {
 
 interface EmployeeData {
   item: {
+    status: string;
     user: {
       item: {
         item: EmployeeItemData;
@@ -47,23 +48,23 @@ const TableBody = ({ isEmployee }: TableProps) => {
     employee = data.items.map((v: EmployeeData) => v.item.user.item);
   }
 
+  let employeeStatus = [];
+  if (data && data.items) {
+    employeeStatus = data.items.map((v: EmployeeData) => v.item.status);
+  }
+
   let employer = [];
   if (data && data.items) {
     employer = data.items.map((v: EmployerData) => v.item.notice.item);
   }
 
-  const [buttonVisible, setButtonVisible] = useState(true);
-  const [status, setStatus] = useState('');
-
   const handleChangingStatus = (buttons: string) => {
-    if (buttons === 'approve') {
-      setStatus('승인 완료');
-    } else if (buttons === 'reject') {
-      setStatus('거절');
-    } else {
-      setStatus('대기중');
-    }
-    setButtonVisible(false);
+    const status =
+      buttons === 'approve'
+        ? '승인 완료'
+        : buttons === 'reject'
+          ? '거절'
+          : '대기중';
   };
 
   return (
@@ -91,12 +92,7 @@ const TableBody = ({ isEmployee }: TableProps) => {
                 {v.phone}
               </td>
               <td className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 ">
-                <TableButton
-                  key={v.id}
-                  handleClick={handleChangingStatus}
-                  buttonVisible={buttonVisible}
-                  status={status}
-                />
+                <TableButton key={v.id} onClick={handleChangingStatus} />
               </td>
             </tr>
           ))
@@ -123,21 +119,27 @@ const TableBody = ({ isEmployee }: TableProps) => {
                 {v.hourlyPay}
               </td>
               <td className="flex w-1/5 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 overflow-auto whitespace-pre">
-                {!isEmployee ? (
-                  <TableButton
-                    key={v.id}
-                    handleClick={handleChangingStatus}
-                    buttonVisible={false}
-                    status={status}
-                  />
+                {status ? (
+                  <p
+                    className={`p-4 ${
+                      status === '거절'
+                        ? 'bg-purple-20 text-purple-40'
+                        : 'bg-blue-10 text-blue-20'
+                    } flex py-1 px-2 content-center items-center rounded-2xl font-bold text-sm`}
+                  >
+                    {status}
+                  </p>
                 ) : (
-                  <TableButton
-                    key={v.id}
-                    handleClick={handleChangingStatus}
-                    buttonVisible={true}
-                    status={status}
-                  />
+                  <p className="p-4 flex py-1 px-2 content-center items-center rounded-2xl font-bold text-sm bg-green-10 text-green-20">
+                    대기중
+                  </p>
                 )}
+                {/* <TableButton
+                  key={v.id}
+                  handleClick={() => handleChangingStatus('approve', false)}
+                  buttonVisible={true}
+                  status={employerStatus}
+                /> */}
               </td>
             </tr>
           ))}
@@ -146,34 +148,3 @@ const TableBody = ({ isEmployee }: TableProps) => {
 };
 
 export default TableBody;
-
-/* Table 사용 방식
-import React from 'react';
-import Table from './Table'; // 테이블 컴포넌트를 가져옵니다.
-
-interface TableRow {
-  store: string;
-  date: string;
-  hourlyPay: number;
-  status: string;
-}
-
-const ParentComponent = () => {
-  // 데이터를 정의합니다.
-  const data: TableRow[] = [
-    { store: '가게1', date: '2024-04-17', hourlyPay: 15, status: 'Open' },
-    { store: '가게2', date: '2024-04-18', hourlyPay: 20, status: 'Closed' },
-    // 데이터 추가
-  ];
-
-  return (
-    <div>
-      { 데이터를 테이블 컴포넌트로 전달합니다. }
-      <Table data={data} />
-    </div>
-  );
-};
-
-export default ParentComponent;
-
-*/
