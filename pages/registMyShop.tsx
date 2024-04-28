@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
 import { Input } from '@/shared/@common/ui/Input/Input';
-import UploadImage from '@/features/RegistMyShop/UploadImage';
 import Button from '@/shared/@common/ui/Button/Button';
 import Footer from '@/shared/@common/ui/Footer/Footer';
 import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
 import { useTextarea } from '@/shared/@common/ui/Textarea/hook/textareaHook';
 import { Textarea } from '@/shared/@common/ui/Textarea/Textarea';
-import useFetch from '@/shared/@common/api/hooks/useFetch';
 import shopAPI from '@/shared/@common/api/shopAPI';
 import imageAPI from '@/shared/@common/api/imageAPI';
 
@@ -46,10 +44,19 @@ const registMyShop = () => {
     setFoodKinds(option);
   };
 
-  const handleShopImage = async (image: string | null) => {
-    if (image) {
-      const presignedUrl = await imageAPI(image);
-      setShopImage(presignedUrl);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = event.target.files?.[0];
+    const imageUrl = await imageAPI(file);
+    setShopImage(imageUrl);
+  };
+
+  const handleClick = () => {
+    if (inputRef.current) {
+      inputRef.current.click();
     }
   };
 
@@ -110,31 +117,31 @@ const registMyShop = () => {
   ];
 
   const locations = [
-    { value: '종로구', label: '서울시 종로구' },
-    { value: '중구', label: '서울시 중구' },
-    { value: '용산구', label: '서울시 용산구' },
-    { value: '성동구', label: '서울시 성동구' },
-    { value: '광진구', label: '서울시 광진구' },
-    { value: '동대문구', label: '서울시 동대문구' },
-    { value: '중랑구', label: '서울시 중랑구' },
-    { value: '성북구', label: '서울시 성북구' },
-    { value: '강북구', label: '서울시 강북구' },
-    { value: '도봉구', label: '서울시 도봉구' },
-    { value: '노원구', label: '서울시 노원구' },
-    { value: '은평구', label: '서울시 은평구' },
-    { value: '서대문구', label: '서울시 서대문구' },
-    { value: '마포구', label: '서울시 마포구' },
-    { value: '양천구', label: '서울시 양천구' },
-    { value: '강서구', label: '서울시 강서구' },
-    { value: '구로구', label: '서울시 구로구' },
-    { value: '금천구', label: '서울시 금천구' },
-    { value: '영등포구', label: '서울시 영등포구' },
-    { value: '동작구', label: '서울시 동작구' },
-    { value: '관악구', label: '서울시 관악구' },
-    { value: '서초구', label: '서울시 서초구' },
-    { value: '강남구', label: '서울시 강남구' },
-    { value: '송파구', label: '서울시 송파구' },
-    { value: '강동구', label: '서울시 강동구' },
+    { value: '서울시 종로구', label: '서울시 종로구' },
+    { value: '서울시 중구', label: '서울시 중구' },
+    { value: '서울시 용산구', label: '서울시 용산구' },
+    { value: '서울시 성동구', label: '서울시 성동구' },
+    { value: '서울시 광진구', label: '서울시 광진구' },
+    { value: '서울시 동대문구', label: '서울시 동대문구' },
+    { value: '서울시 중랑구', label: '서울시 중랑구' },
+    { value: '서울시 성북구', label: '서울시 성북구' },
+    { value: '서울시 강북구', label: '서울시 강북구' },
+    { value: '서울시 도봉구', label: '서울시 도봉구' },
+    { value: '서울시 노원구', label: '서울시 노원구' },
+    { value: '서울시 은평구', label: '서울시 은평구' },
+    { value: '서울시 서대문구', label: '서울시 서대문구' },
+    { value: '서울시 마포구', label: '서울시 마포구' },
+    { value: '서울시 양천구', label: '서울시 양천구' },
+    { value: '서울시 강서구', label: '서울시 강서구' },
+    { value: '서울시 구로구', label: '서울시 구로구' },
+    { value: '서울시 금천구', label: '서울시 금천구' },
+    { value: '서울시 영등포구', label: '서울시 영등포구' },
+    { value: '서울시 동작구', label: '서울시 동작구' },
+    { value: '서울시 관악구', label: '서울시 관악구' },
+    { value: '서울시 서초구', label: '서울시 서초구' },
+    { value: '서울시 강남구', label: '서울시 강남구' },
+    { value: '서울시 송파구', label: '서울시 송파구' },
+    { value: '서울시 강동구', label: '서울시 강동구' },
   ];
 
   return (
@@ -204,7 +211,35 @@ const registMyShop = () => {
 
             <div className="flex flex-col items-start gap-5 mb-6">
               <p className="text-base">가게 이미지</p>
-              <UploadImage onImageChange={handleShopImage} />
+              <div className="inline-block relative">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  ref={inputRef}
+                  style={{ display: 'none' }}
+                />
+                <div onClick={handleClick} className="cursor-pointer">
+                  {shopImage ? (
+                    <Image
+                      src={shopImage}
+                      alt="Uploaded Image"
+                      width={200}
+                      height={300}
+                      className="w-1/2 max-h-[300px]"
+                    />
+                  ) : (
+                    <div className="flex justify-center items-center flex-shrink-0 rounded-[5px] border border-solid border-gray-30 bg-gray-10 h-[300px] w-[400px]">
+                      <Image
+                        src={`images/add-img.svg`}
+                        alt="Placeholder Image"
+                        width={111}
+                        height={64}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
             <div className="w-full flex flex-col items-start gap-2">
               <Textarea
