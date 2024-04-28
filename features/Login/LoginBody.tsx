@@ -23,59 +23,70 @@ export default function LoginBody() {
     isPasswordError,
     handleLoginSystem,
   } = useCheckUserData({
-    email: email.value,
-    password: password.value,
+    email: email.value as string,
+    password: password.value as string,
   });
+
+  const handleLogin = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    handleLoginSystem();
+  };
 
   return (
     <div className="w-full flex items-center justify-center bg-white z-modal">
-      <div>
-        <div className="flex items-center justify-center mb-7">
-          <Link href={'/'}>
-            <Image
-              width={250}
-              height={30}
-              alt="큰 메인 로고"
-              src={'/images/logo.png'}
+      <form onSubmit={handleLogin}>
+        <div>
+          <div className="flex items-center justify-center mb-7">
+            <Link href={'/'}>
+              <Image
+                width={250}
+                height={30}
+                alt="큰 메인 로고"
+                src={'/images/logo.png'}
+              />
+            </Link>
+          </div>
+          <div className="flex flex-col gap-7">
+            <Input
+              title={'이메일'}
+              placeholder={'이메일을 입력해주세요.'}
+              onBlur={email.handleInput}
+              isError={isEmailError}
+              errorText={emailError}
             />
-          </Link>
+            <Input
+              title={'비밀번호'}
+              placeholder={'비밀번호를 입력해주세요.'}
+              type={'password'}
+              onBlur={password.handleInput}
+              isError={isPasswordError}
+              errorText={passwordError}
+            />
+            <Button
+              size={'large'}
+              color={'colored'}
+              onClick={handleLoginSystem}
+            >
+              로그인 하기
+            </Button>
+          </div>
+          <div className="flex items-center justify-center mt-5 gap-1">
+            회원이 아니신가요?
+            <Link href={'/regist'}>
+              <p className="underline text-violet-500">회원가입하기</p>
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-7">
-          <Input
-            title={'이메일'}
-            placeholder={'이메일을 입력해주세요.'}
-            onBlur={email.handleInput}
-            isError={isEmailError}
-            errorText={emailError}
-          />
-          <Input
-            title={'비밀번호'}
-            placeholder={'비밀번호를 입력해주세요.'}
-            type={'password'}
-            onBlur={password.handleInput}
-            isError={isPasswordError}
-            errorText={passwordError}
-          />
-          <Button size={'large'} color={'colored'} onClick={handleLoginSystem}>
-            로그인 하기
-          </Button>
-        </div>
-        <div className="flex items-center justify-center mt-5 gap-1">
-          회원이 아니신가요?
-          <Link href={'/regist'}>
-            <p className="underline text-violet-500">회원가입하기</p>
-          </Link>
-        </div>
-      </div>
-      <Modal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        onClose={() => {
-          closeModal();
-        }}
-        content={modalContent}
-        type={modalType}
-      />
+        <Modal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          onClose={() => {
+            closeModal();
+          }}
+          content={modalContent}
+          type={modalType}
+        />
+      </form>
     </div>
   );
 }
