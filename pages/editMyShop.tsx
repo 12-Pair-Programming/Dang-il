@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
@@ -18,10 +18,10 @@ const editMyShop = () => {
   const [location, setLocation] = useState('');
   const [shopImage, setShopImage] = useState<string | null>(null);
 
-  const name = useInput('');
-  const subLocation = useInput('');
-  const originalHourlyPay = useInput('');
-  const description = useTextarea('');
+  let name = useInput('');
+  let subLocation = useInput('');
+  let originalHourlyPay = useInput('');
+  let description = useTextarea('');
 
   const handleClose = () => {
     router.push('/myShopInfo');
@@ -36,6 +36,27 @@ const editMyShop = () => {
   };
 
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const fetchShopInfo = async () => {
+      try {
+        const shopInfo = await shopAPI.get(
+          '4490151c-5217-4157-b072-9c37b05bed47',
+        );
+        name = shopInfo.item.name;
+        setFoodKinds(shopInfo.item.category);
+        setLocation(shopInfo.item.address1);
+        subLocation = shopInfo.item.address2;
+        description = shopInfo.item.description;
+        setShopImage(shopInfo.item.imageUrl);
+        originalHourlyPay = shopInfo.item.originalHourlyPay;
+      } catch (error) {
+        console.error('Failed to fetch shop info:', error);
+      }
+    };
+
+    fetchShopInfo();
+  }, []);
 
   const handleImageChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
