@@ -1,7 +1,8 @@
+import { useRouter } from 'next/router';
 import ShopInfo from '@/features/NoticeInfo/ShopInfo';
 import RecentNotices from '@/features/NoticeInfo/RecentNotices';
 import EmployeeList from '@/features/NoticeInfo/EmployeeList';
-// import { NavigationBar } from '@/shared/@common/ui/Nav/NavigationBar';
+import { NavigationBar } from '@/shared/@common/ui/Nav/NavigationBar';
 import Footer from '@/shared/@common/ui/Footer/Footer';
 
 /**
@@ -12,13 +13,14 @@ const NoticeInfo = () => {
   // TODO: 로그인 정보 연결 필요
   const userType = 'employee'; //user.item.type : employer | employee;
   const isLogin = true;
-  const shopId = '4490151c-5217-4157-b072-9c37b05bed47';
-  const noticeId = '99996477-82db-4bda-aae1-4044f11d9a8b';
+
   const name = '김코드';
+  const router = useRouter();
+  const { shopId, noticeId } = router.query;
 
   return (
     <>
-      {/* <NavigationBar /> */}
+      <NavigationBar />
       <div className="bg-white text-black items-center flex flex-col pb-20">
         <ShopInfo
           isLogin={isLogin}

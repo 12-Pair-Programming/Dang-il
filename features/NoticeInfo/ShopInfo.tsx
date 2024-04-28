@@ -87,7 +87,7 @@ const ShopInfo = ({
       // 로컬 스토리지에 새로운 데이터를 저장
       localStorage.setItem('recentNotices', JSON.stringify(localData));
     }
-  }, []);
+  }, [loading]);
 
   //TODO: 유저의 지원 목록 조회
   //결과 값 에서 items.item.notice.item.id로 공고 id를 찾아서?
@@ -133,7 +133,6 @@ const ShopInfo = ({
     <>
       {getdata && (
         <div className="py-[60px] mx-[238px]">
-          {/* TODO: 모달 컴포넌트에 반영 */}
           <Modal
             content={content}
             isOpen={isOpen}
@@ -147,12 +146,14 @@ const ShopInfo = ({
           </div>
           <div className="flex w-[963px] h-[365px] border-[1px] rounded-2xl p-6 mt-4">
             <div className="w-[640px] overflow-hidden rounded-2xl">
+              {/* {getdata.shop.item.imageUrl && ( */}
               <CardImage
                 imageUrl={getdata.shop.item.imageUrl}
                 closed={getdata.closed}
                 width={550}
                 height={350}
               />
+              {/* )} */}
             </div>
             <div className="w-[346px] ml-6 flex flex-col justify-between">
               <p className="text-base font-bold text-primary">시급</p>
