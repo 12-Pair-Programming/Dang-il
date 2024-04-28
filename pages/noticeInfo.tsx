@@ -17,7 +17,7 @@ const NoticeInfo = () => {
   const name = '김코드';
   const router = useRouter();
   const { shopId, noticeId } = router.query;
-
+  console.log(shopId);
   return (
     <>
       <NavigationBar />

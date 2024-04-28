@@ -7,7 +7,6 @@ import { Modal } from '@/shared/@common/ui/Modal/ModalBase';
 import { useModal } from '@/shared/@common/ui/Modal/hook/modalHook';
 
 import noticeAPI from '@/shared/@common/api/noticeAPI';
-import shopAPI from '@/shared/@common/api/shopAPI';
 import useFetch from '@/shared/@common/api/hooks/useFetch';
 import { useEffect } from 'react';
 
@@ -128,7 +127,7 @@ const ShopInfo = ({
     modalContent: '안녕',
     modalType: 'confirm',
   });
-  console.log(data);
+  console.log(shopId);
   return (
     <>
       {getdata && (

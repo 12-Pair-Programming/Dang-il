@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import TableBody from '@/shared/@common/ui/Table/TableBody';
 import TableHead from '@/shared/@common/ui/Table/TableHead';
+import TableBody2 from './2';
 
 export interface TableProps {
   isEmployee: boolean;
@@ -11,7 +12,7 @@ const Table = ({ isEmployee }: TableProps) => {
     <>
       <table className="inline-flex flex-col items-start rounded-2xl border-gray-20 border border-solid w-full">
         <TableHead isEmployee={isEmployee} />
-        <TableBody isEmployee={isEmployee} />
+        <TableBody2 isEmployee={isEmployee} />
       </table>
     </>
   );
