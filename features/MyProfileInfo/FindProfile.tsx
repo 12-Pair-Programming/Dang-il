@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import Button from '@/shared/@common/ui/Button/Button';
 import Image from 'next/image';
 import FindNotice from './FindNotice';
+import useFetch from '@/shared/@common/api/hooks/useFetch';
+import userAPI from '@/shared/@common/api/userAPI';
 
 // 가게 상태에 따라 다른 div 출력
 const FindProfile = () => {
@@ -16,84 +18,92 @@ const FindProfile = () => {
 
   const handleEditingProfileInfo = () => {
     /* 가게 정보 편집하는 페이지로 이동시키기 */
-    router.push('/editMyProfile');
+    router.push('/registMyProfile');
   };
 
-    const [size, setSize] = useState('large');
-    const isMobile = useMediaQuery({ query: '(min-width: 768px)' });
-    const [isMyProfile, setIsMyProfile] = useState(true); // 가게 상태 추가
+  const [size, setSize] = useState('large');
+  const isMobile = useMediaQuery({ query: '(min-width: 768px)' });
+  const [isMyProfile, setIsMyProfile] = useState(true); // 가게 상태 추가
 
-    const data = {
-      // GET으로 받아올 것
-      name: '김승우',
-      phone: '010-0000-0000',
-      address: '서울시 종로구',
-      bio: '어쩌구 저쩌구',
-    };
-  
-    useEffect(() => {
-      if (isMobile) {
-        setSize('large');
-      } else {
-        setSize('small');
-      }
-    }, [isMobile]);
+  const data = {
+    // GET으로 받아올 것
+    name: '김승우',
+    phone: '010-0000-0000',
+    address: '서울시 종로구',
+    bio: '어쩌구 저쩌구',
+  };
 
-    if (isMyProfile) {
-      return (
-        <>
-          <div className="flex py-[60px] px-[238px] flex-col items-start self-stretch bg-white gap-2">
-            <div className="flex flex-row px-[238px] py-[60px] items-start gap-[180px] self-stretch bg-white ">
-              <p className="text-black text-[28px] font-bold whitespace-nowrap">내 프로필</p>
-              <div className="flex  flex-col items-start gap-2 self-stretch ">
-                <div className="flex p-8 flex-row justify-between items-start gap-2 rounded-xl bg-purple-10">
-                  <div className="flex w-[392px] flex-col items-start gap-7">
-                    <div className="flex flex-col items-start gap-3">
-                      <div className="flex flex-col items-start gap-2">
-                        <p className=" text-primary font-bold text-base">
-                          이름
-                        </p>
-                        <p className="text-black text-[28px] font-bold">
-                          {data.name}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-[6px]">
-                        <Image
-                          src={`/images/phone-icon.svg`} 
-                          alt="핸드폰 로고" 
-                          width={20} 
-                          height={20} 
-                        />
-                        <p className="text-gray-50">{data.phone}</p>
-                      </div>
-                      <div className="flex items-center gap-[6px]">
-                        <Image 
-                          src={`/images/icon-location-on.svg`} 
-                          alt='위치 로고' 
-                          width={20} 
-                          height={20} 
-                        />
-                        <p className=" text-gray-50">{data.address}</p>
-                      </div>
+  //   const { data } = useFetch(() =>
+  //     userAPI.getUserData('abc');
+  //   );
 
+  // let user = [];
+  // if (data && data.item) {
+  //   user = data.item;
+  // }
+
+  useEffect(() => {
+    if (isMobile) {
+      setSize('large');
+    } else {
+      setSize('small');
+    }
+  }, [isMobile]);
+
+  if (isMyProfile) {
+    return (
+      <>
+        <div className="flex py-[60px] px-[238px] flex-col items-start self-stretch bg-white gap-2">
+          <div className="flex flex-row px-[238px] py-[60px] items-start gap-[180px] self-stretch bg-white ">
+            <p className="text-black text-[28px] font-bold whitespace-nowrap">
+              내 프로필
+            </p>
+            <div className="flex  flex-col items-start gap-2 self-stretch ">
+              <div className="flex p-8 flex-row justify-between items-start gap-2 rounded-xl bg-purple-10">
+                <div className="flex w-[392px] flex-col items-start gap-7">
+                  <div className="flex flex-col items-start gap-3">
+                    <div className="flex flex-col items-start gap-2">
+                      <p className=" text-primary font-bold text-base">이름</p>
+                      <p className="text-black text-[28px] font-bold">
+                        {data.name}
+                      </p>
                     </div>
-                    <p className="self-stretch text-black">{data.bio}</p>
+                    <div className="flex items-center gap-[6px]">
+                      <Image
+                        src={`/images/phone-icon.svg`}
+                        alt="핸드폰 로고"
+                        width={20}
+                        height={20}
+                      />
+                      <p className="text-gray-50">{data.phone}</p>
+                    </div>
+                    <div className="flex items-center gap-[6px]">
+                      <Image
+                        src={`/images/icon-location-on.svg`}
+                        alt="위치 로고"
+                        width={20}
+                        height={20}
+                      />
+                      <p className=" text-gray-50">{data.address}</p>
+                    </div>
                   </div>
-                  <div className="flex items-start gap-2">
-                    <Button 
-                      size='mediumLarge' 
-                      color='none' 
-                      onClick={handleEditingProfileInfo}
-                    >
-                      편집하기
-                    </Button>
-                  </div>
+                  <p className="self-stretch text-black">{data.bio}</p>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Button
+                    size="mediumLarge"
+                    color="none"
+                    onClick={handleEditingProfileInfo}
+                  >
+                    편집하기
+                  </Button>
                 </div>
               </div>
             </div>
           </div>
-          <FindNotice />
-        </>
+        </div>
+        <FindNotice />
+      </>
     );
   } else {
     return (

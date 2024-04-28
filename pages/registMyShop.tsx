@@ -9,6 +9,19 @@ import Footer from '@/shared/@common/ui/Footer/Footer';
 import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
 import { useTextarea } from '@/shared/@common/ui/Textarea/hook/textareaHook';
 import { Textarea } from '@/shared/@common/ui/Textarea/Textarea';
+import useFetch from '@/shared/@common/api/hooks/useFetch';
+import shopAPI from '@/shared/@common/api/shopAPI';
+import imageAPI from '@/shared/@common/api/imageAPI';
+
+interface ShopData {
+  name: string;
+  category: string[];
+  address1: string;
+  address2: string;
+  description: string;
+  imageUrl: string;
+  originalHourlyPay: number;
+}
 
 const registMyShop = () => {
   const router = useRouter();
@@ -33,31 +46,56 @@ const registMyShop = () => {
     setFoodKinds(option);
   };
 
-  const handleShopImage = (image: string | null) => {
-    setShopImage(image);
+  const handleShopImage = async (image: string | null) => {
+    if (image) {
+      const presignedUrl = await imageAPI(image);
+      setShopImage(presignedUrl);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const data = {
-      name: name.value,
-      category: foodKinds,
-      address1: location,
-      address2: subLocation.value,
-      description: description.value,
-      imageUrl: shopImage,
-      originalHourlyPay: originalHourlyPay.value,
-    };
-    console.log(data);
   };
 
-  const handleTotalSubmit = () => {
-    console.log('제출 완료');
-    console.log(foodKinds);
-    console.log(location);
+  const handleTotalSubmit = async () => {
+    // try {
+    //   const imageData = await imageAPI({
+    //     name: shopImage,
+    //   });
+    //   if (imageData) {
+    //     const url = new URL(imageData.data.item.url);
+    //     url.search = '';
+    //     setShopImage(url.toString());
+    //   }
+    // } catch (error) {
+    //   console.error('Image Upload Error: ', error);
+    // }
     console.log(shopImage);
-    alert('등록이 완료되었습니다');
-    router.push('/myShopInfo');
+    console.log('스킵');
+
+    // console.log('제출 완료');
+    // console.log(foodKinds);
+    // console.log(location);
+    // console.log(shopImage);
+    // console.log(typeof originalHourlyPay.value);
+    const hourlyPayNumber = Number(originalHourlyPay.value);
+    try {
+      const data = await shopAPI.post('id', {
+        name: name.value,
+        category: foodKinds,
+        address1: location,
+        address2: subLocation.value,
+        description: description.value,
+        imageUrl: shopImage,
+        originalHourlyPay: hourlyPayNumber,
+      });
+      if (data) {
+        alert('등록이 완료되었습니다');
+        router.push('myShopInfo');
+      }
+    } catch (error) {
+      console.error('Regist Failed:', error);
+    }
   };
 
   const kinds = [
@@ -158,6 +196,7 @@ const registMyShop = () => {
                   title="기본 시급*"
                   placeholder="입력"
                   countText="원"
+                  type="number"
                   onChange={originalHourlyPay.handleInput}
                 />
               </div>

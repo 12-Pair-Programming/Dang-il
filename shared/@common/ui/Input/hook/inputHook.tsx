@@ -1,7 +1,7 @@
 import { InputChangeEvent } from '@/shared/@common/types/helper';
 import { useState } from 'react';
 
-export const useInput = (defaultValue?: string) => {
+export const useInput = (defaultValue?: string | number) => {
   const [value, setValue] = useState(defaultValue || '');
 
   const handleInput = (e: InputChangeEvent) => {

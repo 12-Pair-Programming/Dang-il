@@ -1,11 +1,11 @@
 import Button from '@/shared/@common/ui/Button/Button';
-import Table from '@/shared/@common/ui/Table/TableBody';
+import Table from '@/shared/@common/ui/Table/Table';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 const FindNotice = () => {
   const router = useRouter();
-  const [isNotice, setIsNotice] = useState(false);
+  const [isNotice, setIsNotice] = useState(true);
   const handleWritingNotice = () => {
     /* 공고 작성하는 페이지로 이동시키기 */
     router.push('/noticeList');
