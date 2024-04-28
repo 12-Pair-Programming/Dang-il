@@ -46,7 +46,7 @@ export default function RegistnBody() {
       <form onSubmit={handleRegist}>
         <div>
           <div className="flex items-center justify-center mb-7">
-            <Link href={'/'}>
+            <Link href={'/noticeList'}>
               <Image
                 width={250}
                 height={30}

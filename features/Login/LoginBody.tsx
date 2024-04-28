@@ -37,7 +37,7 @@ export default function LoginBody() {
       <form onSubmit={handleLogin}>
         <div>
           <div className="flex items-center justify-center mb-7">
-            <Link href={'/'}>
+            <Link href={'/noticeList'}>
               <Image
                 width={250}
                 height={30}
