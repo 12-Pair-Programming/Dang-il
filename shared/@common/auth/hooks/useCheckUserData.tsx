@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import userAPI from '@/shared/@common/api/userAPI';
 import authenticationAPI from '@/shared/@common/api/authenticationAPI';
+import { useModal } from '@/shared/@common/ui/Modal/hook/modalHook';
 
 interface useCheckUserDataProps {
   email?: string;
@@ -37,6 +38,11 @@ export function useCheckUserData({
   const [isPasswordRepeatCheck, setIsPasswordRepeatCheck] = useState(false);
 
   const [selectedUserType, setSelectedUserType] = useState(type);
+
+  const [modalContent, setModalContent] = useState('');
+  const [modalType, setModalType] = useState('notice');
+
+  const { isOpen, setIsOpen, closeModal } = useModal({});
 
   const EMAIL_CHECK = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
   const PASSWORD_CHECK = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,30}$/;
@@ -108,9 +114,29 @@ export function useCheckUserData({
         });
         localStorage.setItem('token', data.data.item.token);
         localStorage.setItem('user', data.data.item.user.item.type);
-        router.push('/noticeList');
+        setModalContent('회원가입 성공!');
+        setTimeout(() => {
+          router.push('/noticeList');
+        }, 1000);
       } catch (error) {
         console.error('로그인 실패:', (error as ErrorType).response?.status);
+        setIsOpen(true);
+        setModalContent('로그인 정보가 잘못되었습니다!');
+        setEmailError('이메일이 맞는지 확인해주세요!');
+        setIsEmailError(true);
+        setPasswordError('비밀번호가 맞는지 확인해주세요!');
+        setIsPasswordError(true);
+      }
+    } else {
+      setIsOpen(true);
+      setModalContent('값을 제대로 입력해주세요!');
+      if (emailValue === '') {
+        setEmailError('이메일 칸이 비어있습니다!');
+        setIsEmailError(true);
+      }
+      if (passwordValue === '') {
+        setPasswordError('비밀번호 칸이 비어있습니다!');
+        setIsPasswordError(true);
       }
     }
   };
@@ -124,10 +150,35 @@ export function useCheckUserData({
           type: selectedUserType,
         });
         if (data.data.item.id) {
-          router.push('/login');
+          setIsOpen(true);
+          setModalContent('회원가입 성공!');
+          setTimeout(() => {
+            router.push('/login');
+          }, 1000);
         }
       } catch (error) {
         console.error('회원 가입:', (error as ErrorType).response?.status);
+        if ((error as ErrorType).response?.status === 409) {
+          setIsOpen(true);
+          setModalContent('중복된 이메일입니다!');
+          setEmailError('중복된 이메일입니다!');
+          setIsEmailError(true);
+        }
+      }
+    } else {
+      setIsOpen(true);
+      setModalContent('값을 제대로 입력해주세요!');
+      if (emailValue === '') {
+        setEmailError('이메일 칸이 비어있습니다!');
+        setIsEmailError(true);
+      }
+      if (passwordValue === '') {
+        setPasswordError('비밀번호 칸이 비어있습니다!');
+        setIsPasswordError(true);
+      }
+      if (passwordRepeatValue === '') {
+        setPasswordRepeatError('비밀번호 확인칸이 비어있습니다!');
+        setIsPasswordRepeatError(true);
       }
     }
   };
@@ -139,6 +190,11 @@ export function useCheckUserData({
   }, [emailValue, passwordValue, passwordRepeatValue]);
 
   return {
+    isOpen,
+    modalType,
+    modalContent,
+    setIsOpen,
+    closeModal,
     emailError,
     passwordError,
     passwordRepeatError,

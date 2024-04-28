@@ -5,12 +5,18 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
 import { useCheckUserData } from '@/shared/@common/auth/hooks/useCheckUserData';
+import { Modal } from '@/shared/@common/ui/Modal/ModalBase';
 
 export default function LoginBody() {
   const email = useInput('');
   const password = useInput('');
 
   const {
+    isOpen,
+    modalType,
+    modalContent,
+    setIsOpen,
+    closeModal,
     emailError,
     isEmailError,
     passwordError,
@@ -61,6 +67,15 @@ export default function LoginBody() {
           </Link>
         </div>
       </div>
+      <Modal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        onClose={() => {
+          closeModal();
+        }}
+        content={modalContent}
+        type={modalType}
+      />
     </div>
   );
 }
