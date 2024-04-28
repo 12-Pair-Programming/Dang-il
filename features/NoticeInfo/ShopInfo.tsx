@@ -141,8 +141,10 @@ const ShopInfo = ({
             type={type}
           />
           <div>
-            <p className="text-base font-bold text-primary">식당</p>
-            <p className="text-[28px] font-bold">도토리 식당</p>
+            <p className="text-base font-bold text-primary">
+              {getdata.shop.item.category}
+            </p>
+            <p className="text-[28px] font-bold">{getdata.shop.item.name}</p>
           </div>
           <div className="flex w-[963px] h-[365px] border-[1px] rounded-2xl p-6 mt-4">
             <div className="w-[640px] overflow-hidden rounded-2xl">
