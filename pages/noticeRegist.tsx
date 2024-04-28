@@ -13,6 +13,9 @@ const noticeRegist = () => {
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
+  const handleClose = () => {
+    router.push('myShopInfo');
+  };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const data = {
@@ -45,12 +48,14 @@ const noticeRegist = () => {
         >
           <div className="flex justify-between items-center self-stretch max-w-[1440px]">
             <p className="text-black text-[28px] font-bold">공고 등록</p>
-            <Image
-              src={`/images/close.svg`}
-              alt="닫기"
-              width={32}
-              height={32}
-            />
+            <button onClick={handleClose}>
+              <Image
+                src={`/images/close.svg`}
+                alt="닫기"
+                width={32}
+                height={32}
+              />
+            </button>
           </div>
           <div className="inline-flex items-start gap-5">
             <Input
