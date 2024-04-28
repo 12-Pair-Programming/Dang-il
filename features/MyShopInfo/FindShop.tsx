@@ -7,6 +7,7 @@ import FindNotice from './FindNotice';
 import useFetch from '@/shared/@common/api/hooks/useFetch';
 import shopAPI from '@/shared/@common/api/shopAPI';
 import { jwtDecode } from 'jwt-decode';
+import userAPI from '@/shared/@common/api/userAPI';
 
 interface ShopData {
   id: string;
@@ -65,20 +66,34 @@ const FindShop = () => {
   }, [isMobile]);
 
   let shop = [];
+  let shopId = '';
 
-  const getShop = async () => {
+  const getUser = async () => {
     try {
-      const shopData = await shopAPI.get(userId);
+      const userData = await userAPI.getUserData(userId);
+      shopId = userData.data.item.shop.item.id;
+      console.log(shopId);
+      const shopData = await shopAPI.get(shopId);
       shop = shopData.data.item;
       setRegistered(true);
     } catch (error) {
+      console.log(shopId);
       console.log(userId);
       setRegistered(false);
     }
   };
 
+  // const getShop = async () => {
+  //   try {
+
+  //   } catch (error) {
+
+  //   }
+  // };
+
   useEffect(() => {
-    getShop();
+    getUser();
+    // getShop();
   }, []);
 
   if (registered) {
