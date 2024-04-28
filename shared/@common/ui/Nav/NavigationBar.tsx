@@ -43,7 +43,7 @@ export const NavigationBar = () => {
   return (
     <div className="w-full p-[15px] flex flex-row bg-white justify-center items-center sticky gap-10 z-10 tablet:gap-2 mobile:grid mobile:grid-cols-3 mobile:gap-[1px] ">
       <div className="h-[40px] flex items-center mobile:w-[120px]">
-        <Link href={'/'}>
+        <Link href={'/noticeList'}>
           <Image
             className="mobile:w-[120px]"
             width={140}
@@ -86,7 +86,7 @@ export const NavigationBar = () => {
             ) : (
               <NavButton href={'/myProfileInfo'}>사용자 프로필</NavButton>
             )}
-            <NavButton onClick={handleLogout} href={'/'}>
+            <NavButton onClick={handleLogout} href={'/noticeList'}>
               로그아웃
             </NavButton>
 
