@@ -17,7 +17,7 @@ interface props {
  */
 const CardImage = ({ imageUrl, closed, width, height }: props) => {
   return (
-    <div className="flex justify-center items-center rounded-2xl object-cover">
+    <div className="flex justify-center items-center rounded-2xl object-cover w-[550px] h-[346px] relative">
       <Image
         className="object-cover"
         src={imageUrl}
@@ -28,7 +28,7 @@ const CardImage = ({ imageUrl, closed, width, height }: props) => {
 
       {closed && (
         <>
-          <div className="absolute items-center bg-black opacity-50 w-full h-full rounded-2xl" />
+          <div className="absolute items-center bg-black opacity-50 rounded-2xl m-[-10px] w-[557px] h-[345px]" />
           <p className="absolute text-3xl font-bold text-gray-30">지난 공고</p>
         </>
       )}
