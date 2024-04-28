@@ -12,6 +12,7 @@ interface TextareaProps {
   isError?: boolean;
   errorText?: string;
   countText?: string;
+  value?: string;
   onChange?: (event: TextareaChangeEvent) => void;
   onBlur?: (event: TextareaOnBlurEvent) => void;
 }
@@ -24,6 +25,7 @@ export const Textarea = ({
   isError = false,
   errorText,
   countText,
+  value,
   onChange,
   onBlur,
 }: TextareaProps) => {
@@ -42,6 +44,7 @@ export const Textarea = ({
         placeholder={placeholder}
         onChange={onChange}
         onBlur={onBlur}
+        value={value}
       />
       {countText && (
         <p className="h-6 absolute top-1/2 right-4 transform -translate-y-1/2 w-4  flex-shrink-0">
