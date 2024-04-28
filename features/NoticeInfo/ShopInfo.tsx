@@ -148,14 +148,12 @@ const ShopInfo = ({
           </div>
           <div className="flex w-[963px] h-[365px] border-[1px] rounded-2xl p-6 mt-4">
             <div className="w-[640px] overflow-hidden rounded-2xl">
-              {/* {getdata.shop.item.imageUrl && ( */}
               <CardImage
                 imageUrl={getdata.shop.item.imageUrl}
                 closed={getdata.closed}
                 width={550}
                 height={350}
               />
-              {/* )} */}
             </div>
             <div className="w-[346px] ml-6 flex flex-col justify-between">
               <p className="text-base font-bold text-primary">시급</p>
