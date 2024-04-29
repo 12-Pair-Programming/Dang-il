@@ -6,10 +6,16 @@ import Image from 'next/image';
 import FindNotice from './FindNotice';
 import useFetch from '@/shared/@common/api/hooks/useFetch';
 import userAPI from '@/shared/@common/api/userAPI';
+import { jwtDecode } from 'jwt-decode';
 
 // 가게 상태에 따라 다른 div 출력
 const FindProfile = () => {
   const router = useRouter();
+  const token = localStorage.getItem('token');
+  const decodedToken = token ? jwtDecode(token) : null;
+  const userId = (decodedToken as any)?.userId || '';
+  console.log(decodedToken);
+  console.log(userId);
 
   const handleWritingShopInfo = () => {
     /* 가게 등록하는 페이지로 이동시키기 */
@@ -25,13 +31,22 @@ const FindProfile = () => {
   const isMobile = useMediaQuery({ query: '(min-width: 768px)' });
   const [isMyProfile, setIsMyProfile] = useState(true); // 가게 상태 추가
 
-  const data = {
-    // GET으로 받아올 것
-    name: '김승우',
-    phone: '010-0000-0000',
-    address: '서울시 종로구',
-    bio: '어쩌구 저쩌구',
+  let user = [];
+
+  const getUser = async () => {
+    try {
+      const userData = await userAPI.getUserData(userId);
+      user = userData.data.item;
+      setIsMyProfile(true);
+    } catch (error) {
+      console.log(userId);
+      setIsMyProfile(false);
+    }
   };
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   //   const { data } = useFetch(() =>
   //     userAPI.getUserData('abc');
@@ -65,7 +80,7 @@ const FindProfile = () => {
                     <div className="flex flex-col items-start gap-2">
                       <p className=" text-primary font-bold text-base">이름</p>
                       <p className="text-black text-[28px] font-bold">
-                        {data.name}
+                        {user.name}
                       </p>
                     </div>
                     <div className="flex items-center gap-[6px]">
@@ -75,7 +90,7 @@ const FindProfile = () => {
                         width={20}
                         height={20}
                       />
-                      <p className="text-gray-50">{data.phone}</p>
+                      <p className="text-gray-50">{user.phone}</p>
                     </div>
                     <div className="flex items-center gap-[6px]">
                       <Image
@@ -84,10 +99,10 @@ const FindProfile = () => {
                         width={20}
                         height={20}
                       />
-                      <p className=" text-gray-50">{data.address}</p>
+                      <p className=" text-gray-50">{user.address}</p>
                     </div>
                   </div>
-                  <p className="self-stretch text-black">{data.bio}</p>
+                  <p className="self-stretch text-black">{user.bio}</p>
                 </div>
                 <div className="flex items-start gap-2">
                   <Button

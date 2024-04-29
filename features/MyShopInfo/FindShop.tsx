@@ -6,6 +6,8 @@ import Image from 'next/image';
 import FindNotice from './FindNotice';
 import useFetch from '@/shared/@common/api/hooks/useFetch';
 import shopAPI from '@/shared/@common/api/shopAPI';
+import { jwtDecode } from 'jwt-decode';
+import userAPI from '@/shared/@common/api/userAPI';
 
 interface ShopData {
   id: string;
@@ -26,15 +28,19 @@ interface FindShopData {
 // 가게 상태에 따라 다른 div 출력
 const FindShop = () => {
   const router = useRouter();
+  const token = localStorage.getItem('token');
+  const decodedToken = token ? jwtDecode(token) : null;
+  const userId = (decodedToken as any)?.userId || '';
+  console.log(decodedToken);
+  console.log(userId);
 
-  const { data } = useFetch(() =>
-    shopAPI.get('4490151c-5217-4157-b072-9c37b05bed47'),
-  );
+  // const { data } = useFetch(() => {
+  //   return shopAPI.get(userId)
+  // });
 
-  let shop = [];
-  if (data && data.item) {
-    shop = data.item;
-  }
+  const [registered, setRegistered] = useState(true);
+  const [size, setSize] = useState('large');
+  const isMobile = useMediaQuery({ query: '(min-width: 768px)' });
 
   const handleWritingShopInfo = () => {
     /* 가게 등록하는 페이지로 이동시키기 */
@@ -51,10 +57,6 @@ const FindShop = () => {
     router.push('/noticeRegist');
   };
 
-  const [size, setSize] = useState('large');
-  const isMobile = useMediaQuery({ query: '(min-width: 768px)' });
-  const [isMyShop, setIsMyShop] = useState(true); // 가게 상태 추가
-
   useEffect(() => {
     if (isMobile) {
       setSize('large');
@@ -63,67 +65,108 @@ const FindShop = () => {
     }
   }, [isMobile]);
 
-  if (isMyShop) {
+  let shop = [];
+  let shopId = '';
+
+  const getUser = async () => {
+    try {
+      const userData = await userAPI.getUserData(userId);
+      shopId = userData.data.item.shop.item.id;
+      console.log(shopId);
+      const shopData = await shopAPI.get(shopId);
+      shop = shopData.data.item;
+      setRegistered(true);
+    } catch (error) {
+      console.log(shopId);
+      console.log(userId);
+      setRegistered(false);
+    }
+  };
+
+  // const getShop = async () => {
+  //   try {
+
+  //   } catch (error) {
+
+  //   }
+  // };
+
+  useEffect(() => {
+    getUser();
+    // getShop();
+  }, []);
+
+  if (registered) {
     return (
       <>
-        <div className="inline-flex w-full p-6 justify-between items-start rounded-xl bg-purple-10">
-          <Image
-            src={shop.imageUrl}
-            alt="내 가게 사진"
-            width={200}
-            height={200}
-          />
-          <div className="flex w-[346px] pt-4 flex-col justify-between items-start self-stretch">
-            <div className="flex w-[346px] p-2 flex-col items-start gap-3">
-              <div className="flex flex-col items-start gap-2">
-                <p className=" text-primary font-bold text-base">
-                  {shop.category}
-                </p>
-                <p className="text-black text-[28px] font-bold">{shop.name}</p>
+        <div className="flex py-[60px] px-[237px] flex-col items-start gap-2 bg-white ">
+          <p className="text-black text-[28px] font-bold">내 가게</p>
+          <div>
+            <div className="inline-flex w-full p-6 justify-between items-start rounded-xl bg-purple-10">
+              <Image
+                src={shop.imageUrl}
+                alt="내 가게 사진"
+                width={200}
+                height={200}
+              />
+              <div className="flex w-[346px] pt-4 flex-col justify-between items-start self-stretch">
+                <div className="flex w-[346px] p-2 flex-col items-start gap-3">
+                  <div className="flex flex-col items-start gap-2">
+                    <p className=" text-primary font-bold text-base">
+                      {shop.category}
+                    </p>
+                    <p className="text-black text-[28px] font-bold">
+                      {shop.name}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-[6px]">
+                    <Image
+                      src={`/images/icon-location-on.svg`}
+                      alt="위치 로고"
+                      width={20}
+                      height={20}
+                    />
+                    <p className=" text-gray-50">
+                      {shop.address1} {shop.address2}
+                    </p>
+                  </div>
+                  <p className="self-stretch text-black">{shop.description}</p>
+                </div>
+                <div className="flex items-start gap-2 self-stretch">
+                  <Button
+                    size="medium"
+                    color="none"
+                    onClick={handleEditingShopInfo}
+                  >
+                    편집하기
+                  </Button>
+                  <Button
+                    size="medium"
+                    color="colored"
+                    onClick={handleWritingNotice}
+                  >
+                    공고 등록하기
+                  </Button>
+                </div>
               </div>
-              <div className="flex items-center gap-[6px]">
-                <Image
-                  src={`/images/icon-location-on.svg`}
-                  alt="위치 로고"
-                  width={20}
-                  height={20}
-                />
-                <p className=" text-gray-50">
-                  {shop.address1} {shop.address2}
-                </p>
-              </div>
-              <p className="self-stretch text-black">{shop.description}</p>
             </div>
-            <div className="flex items-start gap-2 self-stretch">
-              <Button
-                size="medium"
-                color="none"
-                onClick={handleEditingShopInfo}
-              >
-                편집하기
-              </Button>
-              <Button
-                size="medium"
-                color="colored"
-                onClick={handleWritingNotice}
-              >
-                공고 등록하기
-              </Button>
-            </div>
+            <FindNotice />
           </div>
         </div>
-        <FindNotice />
       </>
     );
   } else {
     return (
-      <div className="flex w-full py-[60px] px-[24px] flex-col content-center items-center gap-6 rounded-xl border border-solid border-gray-20">
-        <p className="text-black self-stretch text-center text-base">
-          내 가게를 소개하고 공고도 등록해 보세요.
-        </p>
-        <Button size={size} color="colored" onClick={handleWritingShopInfo}>
-          가게 등록하기
-        </Button>
+      <div className="flex py-[60px] px-[237px] flex-col items-start gap-2 bg-white ">
+        <p className="text-black text-[28px] font-bold">내 가게</p>
+        <div className="flex w-full py-[60px] px-[24px] flex-col content-center items-center gap-6 rounded-xl border border-solid border-gray-20">
+          <p className="text-black self-stretch text-center text-base">
+            내 가게를 소개하고 공고도 등록해 보세요.
+          </p>
+          <Button size={size} color="colored" onClick={handleWritingShopInfo}>
+            가게 등록하기
+          </Button>
+        </div>
       </div>
     );
   }
