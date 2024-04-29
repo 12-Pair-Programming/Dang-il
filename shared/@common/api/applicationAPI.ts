@@ -33,9 +33,13 @@ const applicationAPI = {
     });
   },
   post: <T>(shop_id: string, notice_id: string, body: T) => {
+    const headers = {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    };
     return axiosInstance.post(
       `/shops/${shop_id}/notices/${notice_id}/applications`,
       body,
+      { headers },
     );
   },
   put: <T>(shop_id: string, notice_id: string, application_id: T, body: T) => {
