@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import alertAPI from '@/shared/@common/api/alertAPI';
 
 interface NavModalMessageProps {
-  key: string;
+  messageKey: string;
   url: string;
   user_id: string;
   checked: boolean;
@@ -15,7 +15,7 @@ interface NavModalMessageProps {
 }
 
 export const NavModalMessage = ({
-  key,
+  messageKey,
   url,
   user_id,
   checked,
@@ -36,10 +36,10 @@ export const NavModalMessage = ({
   return (
     <div
       className="flex w-[328px] gap-1 px-3 py-4 flex-col bg-white"
-      style={{ opacity: checked ? 0.8 : 1 }}
+      style={{ opacity: checked ? 0.5 : 1 }}
       onClick={() => {
-        alertAPI.put(user_id, key);
-        router.push(url);
+        alertAPI.put({ user_id: user_id, alert_id: messageKey });
+        //router.push(url);
       }}
     >
       <Image
