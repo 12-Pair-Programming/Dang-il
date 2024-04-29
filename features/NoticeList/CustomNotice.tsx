@@ -66,6 +66,7 @@ const CustomNotice = () => {
               noticeData.items.slice(0, 3).map((item: ItemData) => (
                 <Link
                   href={`/noticeInfo?shopId=${item.item.shop.item.id}&noticeId=${item.item.id}`}
+                  className="max-w-[310px] mobile:max-w-[236px]"
                 >
                   <Card
                     name={item.item.shop.item.name}
