@@ -6,7 +6,6 @@ import Button from '@/shared/@common/ui/Button/Button';
 import { Modal } from '@/shared/@common/ui/Modal/ModalBase';
 import { useModal } from '@/shared/@common/ui/Modal/hook/modalHook';
 
-import alertAPI from '@/shared/@common/api/alertAPI';
 import noticeAPI from '@/shared/@common/api/noticeAPI';
 import applicationAPI from '@/shared/@common/api/applicationAPI';
 import useFetch from '@/shared/@common/api/hooks/useFetch';
@@ -15,9 +14,7 @@ import { jwtDecode } from 'jwt-decode';
 
 interface props {
   userType: string;
-  name: string;
   isLogin: boolean;
-
   shopId: string;
   noticeId: string;
 }
@@ -54,70 +51,41 @@ interface Item {
  * @param shopId 가게 ID
  * @param noticeId 공고 ID
  */
-const ShopInfo = ({
-  userType,
-  name,
-  isLogin,
-
-  shopId,
-  noticeId,
-}: props) => {
+const ShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
   const router = useRouter();
 
-  const [modalContent, setModalContent] = useState('');
-  const [modalType, setModalType] = useState('');
+  const token =
+    typeof window !== 'undefined' ? localStorage.getItem('token') : '';
 
-  const token = localStorage.getItem('token');
   const decodedToken = token ? jwtDecode(token) : null;
   const userId = (decodedToken as any)?.userId || '';
 
-  //최초는 공백. 신청하면 pending 신청 취소시 canceled
-  // FIXME: 임시 상태값. pending(대기중) accepted(승인) rejected(거절) canceled(취소)
-  const [status, setStatus] = useState('canceled');
+  const [modalContent, setModalContent] = useState('');
+  const [modalType, setModalType] = useState('');
+  const [buttonStatus, setButtonStatus] = useState('');
 
-  //TODO: 유저의 지원 목록 조회
-  // status가 존재하지 않는 경우
-  //공고 신청을 누를 때 localStorage에 회원ID, 공고ID를 불러와서 존재 하는 경우 pending
-  // noticePendings = [{userId : 'id-1',noticeId : ['notice-1','notice-2','notice-3']},{userId : 'id-2',noticeId : ['notice-1','notice-2','notice-3']} ,{userId : 'id-3',noticeId : ['notice-1','notice-2','notice-3']}  ]
-  let recentAplication = localStorage.getItem('recentAplication');
-
-  const userStatus = () => {
-    const { data, loading, execute, error } = useFetch(() => {
-      return applicationAPI.getApplicationListData({
-        shop_id: shopId,
-        notice_id: noticeId,
-      });
+  const {
+    data: applicationListData,
+    loading: applicationListDataLoading,
+    execute: executeApplicationListDataLoading,
+    error: applicationListDataError,
+  } = useFetch(() => {
+    return applicationAPI.getApplicationListData({
+      shop_id: shopId,
+      notice_id: noticeId,
     });
+  });
 
-    console.log(data);
+  const userApplicationInfo = applicationListData?.items.find((item: any) => {
+    return item.item.user.item.id === userId;
+  })?.item;
+  const userName = userApplicationInfo?.user.item.name;
 
-    // interface UserItem {
-    //   id: string;
-    // }
+  useEffect(() => {
+    setButtonStatus(userApplicationInfo?.status);
+  }, []);
 
-    // interface Item {
-    //   id: string;
-    //   status: string;
-    //   user: {
-    //     item: UserItem;
-    //   };
-    // }
-
-    // if (!loading) {
-    //   const statuses = data.items.map((item: any) => {
-    //     if (item.item.user.item.id === userId) {
-    //       return item.item.status;
-    //     }
-    //   });
-    //   const status: string = statuses.find(
-    //     (status: string) => status !== undefined,
-    //   );
-
-    //   console.log('::status::', status);
-    // }
-  };
-
-  userStatus();
+  const userApplicationId = userApplicationInfo?.id;
 
   const { data, loading, execute, error } = useFetch(() => {
     return noticeAPI.getShopNotice({ shops_id: shopId, notice_id: noticeId });
@@ -147,21 +115,14 @@ const ShopInfo = ({
 
   /** 공고 신청 버튼 클릭 */
   const handleApplyNotice = () => {
-    if (name) {
+    if (userName) {
       const handleTotalSubmit = async () => {
         try {
           const data = await applicationAPI.post(shopId, noticeId, '');
 
           if (data) {
-            alert('신청 되었습니다.?');
-            setStatus('pending');
-
-            //FIXME: 로그인 정보 전달받은 뒤에 실행되지 않음
-            const applicationNoriceInfo = {
-              userId: userId,
-              noticeId: noticeId,
-            };
-            setLocalStorage('recentAplication', applicationNoriceInfo);
+            alert('신청 되었습니다.');
+            setButtonStatus('pending');
           }
         } catch (error) {
           console.error('Regist Failed?', error);
@@ -196,16 +157,14 @@ const ShopInfo = ({
       }
 
       localStorage.setItem(storageName, JSON.stringify(localData));
-    } else if (storageName === 'recentAplication') {
-      //FIXME: 최근 신청한 공고 정보 저장
     }
   };
 
-  /** 광고 신청 - 프로필 미존재 확인 클릭
+  /** 공고 신청 - 프로필 미존재 확인 클릭
    * - 프로필 미존재 시 :프로필 등록 화면 이동
    */
   const handleApplyNoticeClick = () => {
-    if (!name) {
+    if (!userName) {
       router.push(`/registMyProfile?noticeId=${noticeId}`);
     }
   };
@@ -221,11 +180,15 @@ const ShopInfo = ({
   const handleCancelNoticeClick = () => {
     const handleCancelSubmit = async () => {
       try {
-        //FIXME: 로그인 상태임에도 로그인 정보(토큰)를 보내지 못함.
-        const data = await noticeAPI.put(shopId, noticeId, 'canceled');
+        const data = await applicationAPI.put(
+          shopId,
+          noticeId,
+          userApplicationId,
+          { status: 'canceled' },
+        );
         if (data) {
           alert('취소가 완료되었습니다.');
-          setStatus('canceled');
+          setButtonStatus('cancel');
         }
       } catch (error) {
         console.error('Regist Failed', error);
@@ -233,6 +196,33 @@ const ShopInfo = ({
     };
     handleCancelSubmit();
   };
+
+  let isButtonColor: 'colored' | 'none' = 'colored';
+  let isButtonDisabled = false;
+  let isButtonText = '신청하기';
+
+  if (data && !loading) {
+    switch (true) {
+      case userType === 'employer':
+        isButtonText = '공고 편집';
+        isButtonColor = 'none';
+        break;
+      case getdata.closed ||
+        !isLogin ||
+        buttonStatus === 'rejected' ||
+        buttonStatus === 'accepted':
+        isButtonText = '신청 불가';
+        isButtonDisabled = true;
+        break;
+      case buttonStatus !== 'pending':
+        isButtonText = '신청하기';
+        break;
+      default:
+        isButtonText = '취소하기';
+        isButtonColor = 'none';
+        break;
+    }
+  }
 
   return (
     <>
@@ -282,53 +272,27 @@ const ShopInfo = ({
                 closed={false}
               />
               <p className="my-3">{getdata.shop.item.description}</p>
-              {/* TODO: 로직 변경 필요 */}
-              {userType === 'employer' ? (
-                <Button
-                  size="large"
-                  color="none"
-                  onClick={() => {
-                    handleEditeNotice();
-                  }}
-                  disabled={false}
-                >
-                  공고편집
-                </Button>
-              ) : getdata.closed ||
-                status === 'rejected' ||
-                status === 'accepted' ? (
-                <Button
-                  size="large"
-                  color="none"
-                  onClick={() => {}}
-                  disabled={true}
-                >
-                  신청 불가
-                </Button>
-              ) : status !== 'pending' ? (
-                <Button
-                  size="large"
-                  color="colored"
-                  // TODO: 모달 오픈
-                  onClick={() => {
-                    handleApplyNotice();
-                  }}
-                  disabled={false}
-                >
-                  신청하기
-                </Button>
-              ) : (
-                <Button
-                  size="large"
-                  color="none"
-                  onClick={() => {
-                    handleCancelNotice();
-                  }}
-                  disabled={false}
-                >
-                  취소하기
-                </Button>
-              )}
+
+              <Button
+                size="large"
+                color={isButtonColor}
+                onClick={() => {
+                  switch (true) {
+                    case userType === 'employer':
+                      handleEditeNotice();
+                      break;
+                    case buttonStatus !== 'pending':
+                      handleApplyNotice();
+                      break;
+                    default:
+                      handleCancelNotice();
+                      break;
+                  }
+                }}
+                disabled={isButtonDisabled}
+              >
+                {isButtonText}
+              </Button>
             </div>
           </div>
           <div className="bg-gray-10 p-8 mt-6 rounded-lg w-[963px]">
