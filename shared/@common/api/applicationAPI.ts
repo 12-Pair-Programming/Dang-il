@@ -3,14 +3,14 @@ import { axiosInstance } from '@/shared/utils/axiosInstance';
 interface ApplicationListData {
   shop_id: string;
   notice_id: string;
-  offset: number;
-  limit: number;
+  offset?: number;
+  limit?: number;
 }
 
 interface ApplicationData {
   user_id: string;
-  offset: number;
-  limit: number;
+  offset?: number;
+  limit?: number;
 }
 
 const applicationAPI = {
@@ -28,6 +28,9 @@ const applicationAPI = {
   },
   getApplicationData: ({ user_id, offset, limit }: ApplicationData) => {
     const params = { offset, limit };
+    return axiosInstance.get(`/users/${user_id}/applications`, {
+      params,
+    });
     return axiosInstance.get(`/users/${user_id}/applications`, {
       params,
     });
