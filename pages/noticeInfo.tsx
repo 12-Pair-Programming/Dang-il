@@ -11,21 +11,14 @@ import { useEffect } from 'react';
  * @returns
  */
 const NoticeInfo = () => {
-  // TODO: 로그인 정보 연결 필요
-  const userType = 'employee'; //user.item.type : employer | employee;
-  const isLogin = true;
+  const userType =
+    typeof window !== 'undefined' ? localStorage.getItem('user') : ''; //user.item.type : employer | employee;
+  const token =
+    typeof window !== 'undefined' ? localStorage.getItem('token') : '';
+  const isLogin = token ? true : false;
 
-  const name = '김토큰';
   const router = useRouter();
-  let { shopId, noticeId } = router.query;
-
-  console.log('::NoticeInfo:::shopId::', shopId, '::noticeId:::', noticeId);
-
-  //TODO: 새로고침을 할 때나 shopId, noticeId가 변경될 때 다시 그려주고 싶음
-  useEffect(() => {
-    shopId = router.query.shopId;
-    noticeId = router.query.noticeId;
-  }, [router.query]);
+  const { noticeId, shopId } = router.query;
 
   return (
     <>
@@ -33,12 +26,15 @@ const NoticeInfo = () => {
       <div className="bg-white text-black items-center flex flex-col pb-20">
         <ShopInfo
           isLogin={isLogin}
-          userType={userType}
-          shopId={shopId}
-          noticeId={noticeId}
-          name={name}
+          userType={userType as string}
+          shopId={shopId as string}
+          noticeId={noticeId as string}
         />
-        {userType === 'employee' ? <RecentNotices /> : <EmployeeList />}
+        {userType === 'employer' ? (
+          <EmployeeList />
+        ) : (
+          <RecentNotices noticeId={noticeId as string} />
+        )}
       </div>
       <Footer />
     </>
