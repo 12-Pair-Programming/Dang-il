@@ -43,15 +43,19 @@ const registMyProfile = () => {
 
   const handleTotalSubmit = async () => {
     try {
-      const data = await userAPI.put(userId, localStorage.getItem('token'), {
-        name: name.value,
-        phone: phone.value,
-        address: location,
-        bio: description.value,
-      });
-      if (data) {
-        alert('등록이 완료되었습니다.');
-        router.push('/myProfileInfo');
+      if (name.value && phone.value && location && description.value) {
+        const data = await userAPI.put(userId, localStorage.getItem('token'), {
+          name: name.value,
+          phone: phone.value,
+          address: location,
+          bio: description.value,
+        });
+        if (data) {
+          alert('등록이 완료되었습니다.');
+          router.push('/myProfileInfo');
+        }
+      } else {
+        alert('필수 입력 내용을 입력해주세요.');
       }
     } catch (error) {
       console.error('Regist Failed', error);
