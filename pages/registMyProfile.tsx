@@ -9,6 +9,8 @@ import { useTextarea } from '@/shared/@common/ui/Textarea/hook/textareaHook';
 import { Textarea } from '@/shared/@common/ui/Textarea/Textarea';
 import userAPI from '@/shared/@common/api/userAPI';
 import { JwtPayload, jwtDecode } from 'jwt-decode';
+import NavigationBar from '@/shared/@common/ui/Nav/NavigationBar';
+import Footer from '@/shared/@common/ui/Footer/Footer';
 
 interface CustomDecodedToken extends JwtPayload {
   userId?: string;
@@ -91,8 +93,9 @@ const registMyProfile = () => {
   ];
 
   return (
-    <>
-      <div className="flex w-[1440px] py-[60px] px-[238px] flex-col items-center gap-2 bg-gray-05">
+    <div className="bg-gray-05 h-full">
+      <NavigationBar />
+      <div className="flex m-[auto] min-h-[100vh] w-[1440px] py-[60px] px-[238px] flex-col items-center gap-2 bg-gray-05">
         <form
           onSubmit={handleSubmit}
           className="flex flex-col items-center gap-8"
@@ -144,7 +147,8 @@ const registMyProfile = () => {
           </div>
         </form>
       </div>
-    </>
+      <Footer />
+    </div>
   );
 };
 

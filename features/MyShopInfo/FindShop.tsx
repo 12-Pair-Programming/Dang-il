@@ -99,8 +99,8 @@ const FindShop = () => {
 
   if (registered) {
     return (
-      <>
-        <div className="flex py-[60px] px-[237px] flex-col items-start gap-2 bg-white ">
+      <div className="bg-white">
+        <div className="flex m-[auto] w-[983px] py-[60px] px-[auto] flex-col items-start gap-2 bg-white ">
           <p className="text-black text-[28px] font-bold">내 가게</p>
           <div className="w-full">
             <div className="object-cover w-full h-[340px] inline-flex py-[60px] px-[57px] w-[964px] p-6 justify-between items-start rounded-xl bg-purple-10">
@@ -155,7 +155,7 @@ const FindShop = () => {
             <FindNotice />
           </div>
         </div>
-      </>
+      </div>
     );
   } else {
     return (
@@ -168,6 +168,8 @@ const FindShop = () => {
           <Button size={size} color="colored" onClick={handleWritingShopInfo}>
             가게 등록하기
           </Button>
+          <div className="h-[300px]"> 서인님 여기를 조정하세요 </div>{' '}
+          {/* 여기 조정해서 Footer를 바닥에 두세요. */}
         </div>
       </div>
     );

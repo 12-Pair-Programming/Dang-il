@@ -67,9 +67,9 @@ const FindProfile = () => {
 
   if (isMyProfile) {
     return (
-      <div>
-        <div className="flex py-[60px] px-[238px] flex-col items-start self-stretch bg-white gap-2">
-          <div className="flex flex-row items-start justify-between self-stretch bg-white ">
+      <div className="flex flex-col bg-white items-center justify-center px-[auto] w-[full]">
+        <div className="flex py-[60px] mx-[auto] w-[983px] px-[auto] flex-col items-start justify-center self-stretch bg-white gap-2">
+          <div className="flex flex-row px-[auto] items-start justify-between self-stretch bg-white ">
             <p className="text-black text-[28px] font-bold whitespace-nowrap">
               내 프로필
             </p>
@@ -122,7 +122,7 @@ const FindProfile = () => {
     );
   } else {
     return (
-      <div className="flex py-[60px] px-[238px] flex-col items-start gap-2 bg-white ">
+      <div className="flex py-[60px] m-[auto] w-[983px] px-[auto] flex-col items-start gap-2 bg-white ">
         <p className="text-black text-[28px] font-bold">내 가게</p>
         <div className="flex w-full py-[60px] px-[24px] flex-col content-center items-center gap-6 rounded-xl border border-solid border-gray-20">
           <p className="text-black self-stretch text-center text-base">

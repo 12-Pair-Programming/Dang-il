@@ -10,6 +10,8 @@ import { Textarea } from '@/shared/@common/ui/Textarea/Textarea';
 import { jwtDecode } from 'jwt-decode';
 import userAPI from '@/shared/@common/api/userAPI';
 import noticeAPI from '@/shared/@common/api/noticeAPI';
+import Footer from '@/shared/@common/ui/Footer/Footer';
+import NavigationBar from '@/shared/@common/ui/Nav/NavigationBar';
 
 const noticeRegist = () => {
   const router = useRouter();
@@ -70,8 +72,9 @@ const noticeRegist = () => {
   let shopId = '';
 
   return (
-    <>
-      <div className="flex py-[60px] px-[238px] flex-col items-center gap-2 bg-gray-05">
+    <div className="bg-gray-05">
+      <NavigationBar />
+      <div className="flex py-[60px] m-auto w-[983px] h-[100vh] px-[auto] flex-col items-center gap-2 bg-gray-05">
         <form
           onSubmit={handleSubmit}
           className="flex flex-col items-center gap-8"
@@ -121,7 +124,8 @@ const noticeRegist = () => {
           </div>
         </form>
       </div>
-    </>
+      <Footer />
+    </div>
   );
 };
 
