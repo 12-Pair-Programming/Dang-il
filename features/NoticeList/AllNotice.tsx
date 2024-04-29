@@ -29,6 +29,9 @@ export interface ItemData {
 }
 
 export interface Data {
+  offset: number;
+  limit: number;
+  address: [];
   count: number;
   items: [item: ItemData];
 }
@@ -44,7 +47,7 @@ const AllNotice = () => {
   const router = useRouter();
   const value: string = router.query.value as string;
   const [showDetailFilter, setShowDetailFilter] = useState(false);
-  const [showCard, setShowCard] = useState(6);
+  const showCard = 6;
   const [currentPage, setCurrentPage] = useState(1);
   const cardOffset = (currentPage - 1) * showCard;
   const [data, setData] = useState<Data>();
@@ -171,8 +174,8 @@ const AllNotice = () => {
         </div>
         {data && (
           <Pagination
-            totalPage={6}
-            limit={10}
+            totalPage={data.count}
+            limit={data.limit}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
           />
