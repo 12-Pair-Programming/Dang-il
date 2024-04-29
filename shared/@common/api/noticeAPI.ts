@@ -64,7 +64,12 @@ const noticeAPI = {
     });
   },
   put: <T>(shop_id: string, notice_id: T, body: T) => {
-    return axiosInstance.put(`/shops/${shop_id}/notices/${notice_id}`, body);
+    const headers = {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    };
+    return axiosInstance.put(`/shops/${shop_id}/notices/${notice_id}`, body, {
+      headers,
+    });
   },
 };
 

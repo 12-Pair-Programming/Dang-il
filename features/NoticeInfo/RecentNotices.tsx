@@ -2,12 +2,16 @@ import Link from 'next/link';
 import Card from '@/shared/@common/notice/ui/Card';
 import { useEffect, useState } from 'react';
 
+interface props {
+  noticeId: string;
+}
+
 /**
  * 최근에 본 공고 리스트 컴포넌트
  * recentNotices에 저장된 데이터 6개를 불러옴
  * @returns
  */
-const RecentNotices = () => {
+const RecentNotices = ({ noticeId }: props) => {
   interface ItemData {
     shop: {
       item: {
@@ -34,7 +38,7 @@ const RecentNotices = () => {
     if (storedData) {
       setRecentNotices(JSON.parse(storedData));
     }
-  }, []);
+  }, [noticeId]);
 
   return (
     <div className="w-[983px] mt-[60px] mb-3 mx-[238px]">
