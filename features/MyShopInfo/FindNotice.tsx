@@ -6,11 +6,15 @@ import noticeAPI from '@/shared/@common/api/noticeAPI';
 import Card from '@/shared/@common/notice/ui/Card';
 import Button from '@/shared/@common/ui/Button/Button';
 import shopAPI from '@/shared/@common/api/shopAPI';
+import Pagination from '@/shared/@common/ui/Pagination/Pagination';
 
 const FindNotice = () => {
   const router = useRouter();
   const [isNotice, setIsNotice] = useState(true);
   const [cardList, setCardList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const showCard = 6;
+  const cardOffset = (currentPage - 1) * showCard;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +24,6 @@ const FindNotice = () => {
         const userId = (decodedToken as any)?.userId || '';
         const userData = await userAPI.getUserData(userId);
         const shopId = userData.data.item.shop.item.id;
-
         const [shopData, noticeData] = await Promise.all([
           shopAPI.get(shopId),
           noticeAPI.getShopNoticeList({ shops_id: shopId }),
@@ -50,26 +53,34 @@ const FindNotice = () => {
   };
 
   return (
-    <div className="flex pt-[60px] pb-[120px] px-[238px] flex-col items-start gap-2">
+    <div className="flex pt-[60px] pb-[120px] flex-col items-start gap-2">
       <div className="flex flex-col items-start gap-8">
         <p className="text-black text-[28px] font-bold">
           {isNotice ? '내가 등록한 공고' : '등록한 공고'}
         </p>
         {isNotice ? (
-          <div className="grid grid-cols-3 gap-6">
-            {cardList.map((card) => (
-              <Card
-                key={card.id}
-                name={card.name}
-                imageUrl={card.imageUrl}
-                address1={card.address1}
-                startsAt={card.startsAt}
-                workhour={card.workhour}
-                hourlyPay={card.hourlyPay}
-                originalHourlyPay={card.originalHourlyPay}
-                closed={card.closed}
-              />
-            ))}
+          <div>
+            <div className="grid grid-cols-3 gap-6">
+              {cardList.slice(cardOffset, cardOffset + showCard).map((card) => (
+                <Card
+                  key={card.id}
+                  name={card.name}
+                  imageUrl={card.imageUrl}
+                  address1={card.address1}
+                  startsAt={card.startsAt}
+                  workhour={card.workhour}
+                  hourlyPay={card.hourlyPay}
+                  originalHourlyPay={card.originalHourlyPay}
+                  closed={card.closed}
+                />
+              ))}
+            </div>
+            <Pagination
+              totalPage={6}
+              limit={10}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
           </div>
         ) : (
           <div className="flex w-[964px] py-[60px] px-6 flex-col justify-center items-center gap-6 rounded-xl border border-solid border-gray-20">

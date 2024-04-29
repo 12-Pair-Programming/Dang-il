@@ -50,6 +50,7 @@ const registMyShop = () => {
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const file = event.target.files?.[0];
+    if (file === undefined) return;
     const imageUrl = await imageAPI(file);
     setShopImage(imageUrl);
   };
@@ -238,7 +239,7 @@ const registMyShop = () => {
                 onChange={description.handleTextarea}
               />
             </div>
-            <div className="flex mt-8 justify-center">
+            <div className="flex mt-8 justify-center px-[200px]">
               <Button size="large" color="colored" onClick={handleTotalSubmit}>
                 등록하기
               </Button>

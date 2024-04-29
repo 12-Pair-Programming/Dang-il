@@ -1,10 +1,11 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { useRouter } from 'next/router';
 import Button from '@/shared/@common/ui/Button/Button';
 import Image from 'next/image';
 import FindNotice from './FindNotice';
-import useFetch from '@/shared/@common/api/hooks/useFetch';
 import userAPI from '@/shared/@common/api/userAPI';
 import { jwtDecode } from 'jwt-decode';
 
@@ -29,7 +30,9 @@ const FindProfile = () => {
 
   const getUser = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token =
+        typeof window !== 'undefined' ? localStorage.getItem('token') : '';
+
       const decodedToken = token ? jwtDecode(token) : null;
       const userId = (decodedToken as any)?.userId || '';
       const userData = await userAPI.getUserData(userId);
@@ -64,9 +67,9 @@ const FindProfile = () => {
 
   if (isMyProfile) {
     return (
-      <>
+      <div>
         <div className="flex py-[60px] px-[238px] flex-col items-start self-stretch bg-white gap-2">
-          <div className="flex flex-row items-start gap-[180px] self-stretch bg-white ">
+          <div className="flex flex-row items-start justify-between self-stretch bg-white ">
             <p className="text-black text-[28px] font-bold whitespace-nowrap">
               내 프로필
             </p>
@@ -115,7 +118,7 @@ const FindProfile = () => {
           </div>
         </div>
         <FindNotice />
-      </>
+      </div>
     );
   } else {
     return (

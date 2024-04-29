@@ -71,7 +71,7 @@ const noticeRegist = () => {
 
   return (
     <>
-      <div className="flex py-[60px] px-[238px] flex-col items-start gap-2 bg-gray-05">
+      <div className="flex py-[60px] px-[238px] flex-col items-center gap-2 bg-gray-05">
         <form
           onSubmit={handleSubmit}
           className="flex flex-col items-center gap-8"
@@ -106,7 +106,7 @@ const noticeRegist = () => {
               onChange={hour.handleInput}
             />
           </div>
-          <div className="flex w-[964px] flex-col items-start gap-2">
+          <div className="flex w-[935px] flex-col items-start gap-2">
             <Textarea
               title="공고 설명"
               placeholder="설명을 작성해 주세요"

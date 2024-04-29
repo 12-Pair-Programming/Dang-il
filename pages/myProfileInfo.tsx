@@ -1,12 +1,20 @@
-import FindProfile from '@/features/MyProfileInfo/FindProfile';
-import Footer from '@/shared/@common/ui/Footer/Footer';
-import NavigationBar from '@/shared/@common/ui/Nav/NavigationBar';
+'use client';
+
+import dynamic from 'next/dynamic';
+const NavigationBar = dynamic(
+  () => import('@/shared/@common/ui/Nav/NavigationBar'),
+);
+const Footer = dynamic(() => import('@/shared/@common/ui/Footer/Footer'));
+
+const FindProfile = dynamic(
+  () => import('@/features/MyProfileInfo/FindProfile'),
+);
 
 const MyProfileInfo = () => {
   return (
     <>
       <NavigationBar />
-      {FindProfile()} {/* 가게 상태에 따라 다른 div 렌더링 */}
+      <FindProfile />
       <Footer />
     </>
   );

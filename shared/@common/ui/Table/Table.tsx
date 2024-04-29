@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import TableBody from '@/shared/@common/ui/Table/TableBody';
 import TableHead from '@/shared/@common/ui/Table/TableHead';

@@ -78,6 +78,7 @@ const EditingMyShop = () => {
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const file = event.target.files?.[0];
+    if (file === undefined) return;
     const imageUrl = await imageAPI(file);
     setShopImage(imageUrl);
   };
@@ -169,7 +170,7 @@ const EditingMyShop = () => {
 
   return (
     <>
-      <div className="flex w-full py-[60px] px-[238px] flex-col items-start gap-2 bg-gray-05">
+      <div className="flex w-full py-[60px] px-[238px] flex-col items-center gap-2 bg-gray-05">
         <form
           onSubmit={handleSubmit}
           className="flex w-full flex-col items-center gap-8"
@@ -270,7 +271,7 @@ const EditingMyShop = () => {
                 onChange={description.handleTextarea}
               />
             </div>
-            <div className="flex mt-8 justify-center">
+            <div className="flex mt-8 justify-center items-center px-[200px]">
               <Button size="large" color="colored" onClick={handleTotalSubmit}>
                 완료하기
               </Button>
