@@ -3,14 +3,14 @@ import { axiosInstance } from '@/shared/utils/axiosInstance';
 interface ApplicationListData {
   shop_id: string;
   notice_id: string;
-  offset: number;
-  limit: number;
+  offset?: number;
+  limit?: number;
 }
 
 interface ApplicationData {
   user_id: string;
-  offset: number;
-  limit: number;
+  offset?: number;
+  limit?: number;
 }
 
 const applicationAPI = {
@@ -31,11 +31,18 @@ const applicationAPI = {
     return axiosInstance.get(`/users/${user_id}/applications`, {
       params,
     });
+    return axiosInstance.get(`/users/${user_id}/applications`, {
+      params,
+    });
   },
   post: <T>(shop_id: string, notice_id: string, body: T) => {
+    const headers = {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    };
     return axiosInstance.post(
       `/shops/${shop_id}/notices/${notice_id}/applications`,
       body,
+      { headers },
     );
   },
   put: <T>(shop_id: string, notice_id: string, application_id: T, body: T) => {

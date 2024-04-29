@@ -6,6 +6,7 @@ import Button from '@/shared/@common/ui/Button/Button';
 import { Modal } from '@/shared/@common/ui/Modal/ModalBase';
 import { useModal } from '@/shared/@common/ui/Modal/hook/modalHook';
 
+import alertAPI from '@/shared/@common/api/alertAPI';
 import noticeAPI from '@/shared/@common/api/noticeAPI';
 import applicationAPI from '@/shared/@common/api/applicationAPI';
 import useFetch from '@/shared/@common/api/hooks/useFetch';
@@ -80,29 +81,68 @@ const ShopInfo = ({
   // noticePendings = [{userId : 'id-1',noticeId : ['notice-1','notice-2','notice-3']},{userId : 'id-2',noticeId : ['notice-1','notice-2','notice-3']} ,{userId : 'id-3',noticeId : ['notice-1','notice-2','notice-3']}  ]
   let recentAplication = localStorage.getItem('recentAplication');
 
-  const { data, loading } = useFetch(() => {
+  const userStatus = () => {
+    const { data, loading, execute, error } = useFetch(() => {
+      return applicationAPI.getApplicationListData({
+        shop_id: shopId,
+        notice_id: noticeId,
+      });
+    });
+
+    console.log(data);
+
+    // interface UserItem {
+    //   id: string;
+    // }
+
+    // interface Item {
+    //   id: string;
+    //   status: string;
+    //   user: {
+    //     item: UserItem;
+    //   };
+    // }
+
+    // if (!loading) {
+    //   const statuses = data.items.map((item: any) => {
+    //     if (item.item.user.item.id === userId) {
+    //       return item.item.status;
+    //     }
+    //   });
+    //   const status: string = statuses.find(
+    //     (status: string) => status !== undefined,
+    //   );
+
+    //   console.log('::status::', status);
+    // }
+  };
+
+  userStatus();
+
+  const { data, loading, execute, error } = useFetch(() => {
     return noticeAPI.getShopNotice({ shops_id: shopId, notice_id: noticeId });
   });
 
   let getdata: Item = data;
-  if (data && !loading) {
+  if (data && data.item) {
     getdata = data.item;
   }
+
+  useEffect(() => {
+    execute();
+  }, [shopId, noticeId]);
 
   useEffect(() => {
     if (data && !loading) {
       setLocalStorage('recentNotices', data);
     }
-  }, [loading, shopId, noticeId]);
+  }, [loading]);
 
   const { isOpen, setIsOpen, openModal, closeModal, CallbackCloseMadal } =
     useModal({});
 
   const handleEditeNotice = () => {
-    console.log('click 로그인 중 - 공고 편집');
-    // TODO: 편집페이지 이동 - 공고 id전달
-    // 현재 공고 등록 페이지만 있는 듯 하여 확인 필요
-    router.push(`/noticeRegist?noticeId=${noticeId}`);
+    router.push('/noticeRegist');
   };
 
   /** 공고 신청 버튼 클릭 */
@@ -110,14 +150,13 @@ const ShopInfo = ({
     if (name) {
       const handleTotalSubmit = async () => {
         try {
-          //FIXME: 로그인 상태임에도 로그인 정보(토큰)를 보내지 못함.
           const data = await applicationAPI.post(shopId, noticeId, '');
 
           if (data) {
-            alert('신청 되었습니다.');
+            alert('신청 되었습니다.?');
             setStatus('pending');
 
-            //FIXME: 로그인 정보 전달받은 뒤에 실행 될 듯
+            //FIXME: 로그인 정보 전달받은 뒤에 실행되지 않음
             const applicationNoriceInfo = {
               userId: userId,
               noticeId: noticeId,
@@ -150,7 +189,6 @@ const ShopInfo = ({
 
     if (storageName === 'recentNotices') {
       localData.push(data.item);
-      console.log(':::data.item:::', data.item);
 
       // 배열의 길이가 6 이상인 경우, 첫 번째 요소를 제거
       if (localData.length > 6) {
