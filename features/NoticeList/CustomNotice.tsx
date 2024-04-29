@@ -45,7 +45,9 @@ const CustomNotice = () => {
                   )
                   .slice(0, 3)
                   .map((item: ItemData) => (
-                    <Link href={`/noticeInfo/${item.item.shop.item.id}`}>
+                    <Link
+                      href={`/noticeInfo?shopId=${item.item.shop.item.id}&noticeId=${item.item.id}`}
+                    >
                       <Card
                         name={item.item.shop.item.name}
                         imageUrl={item.item.shop.item.imageUrl}

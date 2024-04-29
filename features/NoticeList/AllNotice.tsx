@@ -20,6 +20,7 @@ export interface ItemData {
         originalHourlyPay: number;
       };
     };
+    id: string;
     startsAt: string;
     workhour: number;
     hourlyPay: number;
@@ -151,7 +152,9 @@ const AllNotice = () => {
             data.items
               .slice(cardOffset, cardOffset + showCard)
               .map((item: ItemData) => (
-                <Link href={`/noticeInfo/${item.item.shop.item.id}`}>
+                <Link
+                  href={`/noticeInfo?shopId=${item.item.shop.item.id}&noticeId=${item.item.id}`}
+                >
                   <Card
                     key={item.item.shop.item.id}
                     name={item.item.shop.item.name}
