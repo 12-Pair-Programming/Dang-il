@@ -4,6 +4,7 @@ import RecentNotices from '@/features/NoticeInfo/RecentNotices';
 import EmployeeList from '@/features/NoticeInfo/EmployeeList';
 import { NavigationBar } from '@/shared/@common/ui/Nav/NavigationBar';
 import Footer from '@/shared/@common/ui/Footer/Footer';
+import { useEffect } from 'react';
 
 /**
  * 공고 상세 페이지 컴포넌트
@@ -14,9 +15,17 @@ const NoticeInfo = () => {
   const userType = 'employee'; //user.item.type : employer | employee;
   const isLogin = true;
 
-  const name = '김코드';
+  const name = '김토큰';
   const router = useRouter();
-  const { shopId, noticeId } = router.query;
+  let { shopId, noticeId } = router.query;
+
+  console.log('::NoticeInfo:::shopId::', shopId, '::noticeId:::', noticeId);
+
+  //TODO: 새로고침을 할 때나 shopId, noticeId가 변경될 때 다시 그려주고 싶음
+  useEffect(() => {
+    shopId = router.query.shopId;
+    noticeId = router.query.noticeId;
+  }, [router.query]);
 
   return (
     <>
