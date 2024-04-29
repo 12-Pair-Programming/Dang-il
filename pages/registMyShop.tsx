@@ -10,6 +10,7 @@ import { useTextarea } from '@/shared/@common/ui/Textarea/hook/textareaHook';
 import { Textarea } from '@/shared/@common/ui/Textarea/Textarea';
 import shopAPI from '@/shared/@common/api/shopAPI';
 import imageAPI from '@/shared/@common/api/imageAPI';
+import NavigationBar from '@/shared/@common/ui/Nav/NavigationBar';
 
 interface ShopData {
   name: string;
@@ -137,6 +138,7 @@ const registMyShop = () => {
 
   return (
     <>
+      <NavigationBar />
       <div className="flex w-full py-[60px] px-[238px] flex-col items-start gap-2 bg-gray-05">
         <form
           onSubmit={handleSubmit}
