@@ -7,11 +7,14 @@ import Button from '@/shared/@common/ui/Button/Button';
 import { useRouter } from 'next/router';
 import { useTextarea } from '@/shared/@common/ui/Textarea/hook/textareaHook';
 import { Textarea } from '@/shared/@common/ui/Textarea/Textarea';
+import { jwtDecode } from 'jwt-decode';
+import userAPI from '@/shared/@common/api/userAPI';
+import noticeAPI from '@/shared/@common/api/noticeAPI';
 
 const noticeRegist = () => {
   const router = useRouter();
 
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [selectedDate, setSelectedDate] = useState<String | null>('');
 
   const handleClose = () => {
     router.push('myShopInfo');
@@ -27,17 +30,43 @@ const noticeRegist = () => {
     console.log(data);
   };
 
-  const handleWritingNotice = () => {
-    router.push('/myShopInfo');
+  const handleWritingNotice = async () => {
+    const token = localStorage.getItem('token');
+    const decodedToken = token ? jwtDecode(token) : null;
+    const userId = (decodedToken as any)?.userId || '';
+    console.log(decodedToken);
+    console.log(userId);
+    const hourlyPayNumber = Number(hourlypay.value);
+    const workingHour = Number(hour.value);
+    try {
+      const userData = await userAPI.getUserData(userId);
+      shopId = userData.data.item.shop.item.id;
+      console.log(shopId);
+      const noticeData = await noticeAPI.post(shopId, {
+        hourlypay: hourlyPayNumber,
+        startsAt: selectedDate,
+        workhour: workingHour,
+        description: description.value,
+      });
+      if (noticeData) {
+        alert('등록이 완료되었습니다');
+        router.push('/myShopInfo');
+      }
+    } catch (error) {
+      console.error('Notice Regist Failed', error);
+    }
   };
 
   const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
+    const formattedDate = date.toISOString().replace('.000Z', 'Z');
+    setSelectedDate(formattedDate);
   };
 
   const hourlypay = useInput('');
   const hour = useInput('');
   const description = useTextarea('');
+
+  let shopId = '';
 
   return (
     <>
