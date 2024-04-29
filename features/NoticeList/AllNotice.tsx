@@ -20,6 +20,7 @@ export interface ItemData {
         originalHourlyPay: number;
       };
     };
+    id: string;
     startsAt: string;
     workhour: number;
     hourlyPay: number;
@@ -115,7 +116,7 @@ const AllNotice = () => {
 
   return (
     <div className="flex flex-col w-full py-[60px] px-auto items-center bg-white tracking-wide mobile:px-4">
-      <div className="flex flex-col gap-10 px-4 w-auto tablet:w-[678px] mobile:max-w-[520px]">
+      <div className="flex flex-col gap-10 px-4 w-[983px] tablet:w-[678px] mobile:max-w-[520px]">
         <div className="flex justify-between mobile:flex-col mobile: gap-4">
           <div className="w-[291px]">
             <p className="text-[28px] font-bold">전체 공고</p>
@@ -151,7 +152,9 @@ const AllNotice = () => {
             data.items
               .slice(cardOffset, cardOffset + showCard)
               .map((item: ItemData) => (
-                <Link href={`/noticeInfo/${item.item.shop.item.id}`}>
+                <Link
+                  href={`/noticeInfo?shopId=${item.item.shop.item.id}&noticeId=${item.item.id}`}
+                >
                   <Card
                     key={item.item.shop.item.id}
                     name={item.item.shop.item.name}
