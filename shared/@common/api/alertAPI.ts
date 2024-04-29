@@ -5,6 +5,7 @@ interface GetAlertData {
   token?: string | null;
   offset?: number;
   limit?: number;
+  alert_id?: string;
 }
 
 const alertAPI = {
@@ -23,8 +24,22 @@ const alertAPI = {
     };
     return axiosInstance.get(`/users/${user_id}/alerts`, { params, headers });
   },
-  put: <T>(user_id: string, alert_id: string) => {
-    return axiosInstance.put(`/users/${user_id}/alerts/${alert_id}`);
+  put: ({
+    user_id,
+    token = localStorage.getItem('token'),
+    alert_id,
+  }: GetAlertData) => {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const requestBody = {};
+    return axiosInstance.put(
+      `/users/${user_id}/alerts/${alert_id}`,
+      requestBody,
+      {
+        headers,
+      },
+    );
   },
 };
 

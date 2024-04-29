@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { NavModalMessage } from './navModalMessage/NavModalMessage';
 import useFetch from '@/shared/@common/api/hooks/useFetch';
 import Image from 'next/image';
@@ -30,6 +30,11 @@ interface Item {
 
 export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
   const modalClick = useRef<HTMLDivElement>(null);
+  const target = useRef<HTMLDivElement>(null);
+  const [data, setData] = useState<Item[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
 
   const handleClick = (e: MouseEvent) => {
     if (modalClick.current && !modalClick.current.contains(e.target as Node)) {
@@ -37,11 +42,54 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await alertAPI.get({
+          limit: 3,
+          offset: page,
+          user_id,
+        });
+        setCount(response.data.count);
+        if (page === 1) {
+          setData(response.data.items);
+        } else {
+          setData((prevData) => [...prevData, ...response.data.items]);
+        }
+      } catch (error) {
+        console.error('Error fetching notice data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [page, user_id]);
+
+  useEffect(() => {
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      const entry = entries[0];
+      if (entry.isIntersecting && !loading && data.length < count) {
+        setPage((prevPage) => prevPage + 1);
+      }
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, {
+      threshold: 0,
+    });
+
+    if (target.current && isOpen) {
+      observer.observe(target.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [target.current, isOpen, loading, data.length, count]);
+
   const handleClose = () => {
     onClose();
   };
-
-  const { data } = useFetch(() => alertAPI.get({ user_id }));
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClick);
@@ -60,9 +108,7 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
         >
           <div className="inline-flex flex-col gap-4 w-full h-full">
             <div className="flex justify-between items-center self-stretch">
-              <p className="font-spoqa font-semibold text-lg">
-                알림 {data.count}개
-              </p>
+              <p className="font-spoqa font-semibold text-lg">알림 {count}개</p>
               <Image
                 width={28}
                 height={28}
@@ -72,12 +118,13 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
                 onClick={handleClose}
               />
             </div>
-            {data.count !== 0 ? (
-              <div className="flex flex-col gap-2 h-full">
-                {data.items?.map((item: Item) => {
+            {count !== 0 ? (
+              <div className="flex flex-col gap-2 overflow-y-scroll h-[1000px]">
+                {data.map((item: Item, index: number) => {
                   return (
                     <NavModalMessage
-                      key={item.item.id}
+                      key={index}
+                      messageKey={item.item.id}
                       isResult={item.item.result}
                       noticeName={item.item.notice.item.description}
                       noticePeriod={new Date(
@@ -90,6 +137,9 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
                     />
                   );
                 })}
+                <div ref={target} className="h-[300px]">
+                  {loading && <div>Loading...</div>}
+                </div>
               </div>
             ) : (
               <div className="flex flex-col gap-2 w-[350px] h-full items-center justify-center text-base font-bold mobile:w-full">
@@ -102,3 +152,8 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
     </>
   );
 };
+
+/*
+sss@naver.com
+qazwsx1357
+*/
