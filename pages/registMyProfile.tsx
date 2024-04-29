@@ -1,7 +1,7 @@
-import { Input } from '@/shared/@common/ui/Input/Input';
+import { Input } from '@/shared/@common/ui/input/Input';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
+import { useInput } from '@/shared/@common/ui/input/hook/inputHook';
 import Button from '@/shared/@common/ui/Button/Button';
 import { useRouter } from 'next/router';
 import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
@@ -43,15 +43,19 @@ const registMyProfile = () => {
 
   const handleTotalSubmit = async () => {
     try {
-      const data = await userAPI.put(userId, localStorage.getItem('token'), {
-        name: name.value,
-        phone: phone.value,
-        address: location,
-        bio: description.value,
-      });
-      if (data) {
-        alert('등록이 완료되었습니다.');
-        router.push('/myProfileInfo');
+      if (name.value && phone.value && location && description.value) {
+        const data = await userAPI.put(userId, localStorage.getItem('token'), {
+          name: name.value,
+          phone: phone.value,
+          address: location,
+          bio: description.value,
+        });
+        if (data) {
+          alert('등록이 완료되었습니다.');
+          router.push('/myProfileInfo');
+        }
+      } else {
+        alert('필수 입력 내용을 입력해주세요.');
       }
     } catch (error) {
       console.error('Regist Failed', error);
@@ -88,7 +92,7 @@ const registMyProfile = () => {
 
   return (
     <>
-      <div className="flex py-[60px] px-[238px] flex-col items-start gap-2 bg-gray-05">
+      <div className="flex w-[1440px] py-[60px] px-[238px] flex-col items-center gap-2 bg-gray-05">
         <form
           onSubmit={handleSubmit}
           className="flex flex-col items-center gap-8"
@@ -124,7 +128,7 @@ const registMyProfile = () => {
               defaultValue="선택"
             />
           </div>
-          <div className="flex w-[964px] flex-col items-start gap-2">
+          <div className="flex w-[1080px] flex-col items-start gap-2">
             <Textarea
               title="소개"
               width="100%"

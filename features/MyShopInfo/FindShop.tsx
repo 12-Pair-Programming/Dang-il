@@ -102,13 +102,14 @@ const FindShop = () => {
       <>
         <div className="flex py-[60px] px-[237px] flex-col items-start gap-2 bg-white ">
           <p className="text-black text-[28px] font-bold">내 가게</p>
-          <div>
-            <div className="inline-flex w-full p-6 justify-between items-start rounded-xl bg-purple-10">
+          <div className="w-full">
+            <div className="object-cover w-full h-[340px] inline-flex py-[60px] px-[57px] w-[964px] p-6 justify-between items-start rounded-xl bg-purple-10">
               <Image
                 src={shop.imageUrl}
                 alt="내 가게 사진"
                 width={200}
-                height={200}
+                height={400}
+                className="max-h-400 max-w-400"
               />
               <div className="flex w-[346px] pt-4 flex-col justify-between items-start self-stretch">
                 <div className="flex w-[346px] p-2 flex-col items-start gap-3">

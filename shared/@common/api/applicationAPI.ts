@@ -26,13 +26,13 @@ const applicationAPI = {
       { params },
     );
   },
-  getApplicationData: ({ user_id, offset, limit }: ApplicationData) => {
+  getApplicationData: (user_id: string, offset?: number, limit?: number) => {
+    const headers = {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    };
     const params = { offset, limit };
     return axiosInstance.get(`/users/${user_id}/applications`, {
-      params,
-    });
-    return axiosInstance.get(`/users/${user_id}/applications`, {
-      params,
+      headers,
     });
   },
   post: <T>(shop_id: string, notice_id: string, body: T) => {

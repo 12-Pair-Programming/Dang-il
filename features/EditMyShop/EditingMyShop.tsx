@@ -78,6 +78,7 @@ const EditingMyShop = () => {
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const file = event.target.files?.[0];
+    if (file === undefined) return;
     const imageUrl = await imageAPI(file);
     setShopImage(imageUrl);
   };
@@ -100,18 +101,28 @@ const EditingMyShop = () => {
       const userId = (decodedToken as any)?.userId || '';
       const userData = await userAPI.getUserData(userId);
       shopId = userData.data.item.shop.item.id;
-      const data = await shopAPI.put(shopId, {
-        name: name.value,
-        category: foodKinds,
-        address1: location,
-        address2: subLocation.value,
-        description: description.value,
-        imageUrl: shopImage,
-        originalHourlyPay: hourlyPayNumber,
-      });
-      if (data) {
-        alert('등록이 완료되었습니다');
-        router.push('myShopInfo');
+      if (
+        name.value &&
+        foodKinds &&
+        location &&
+        subLocation.value &&
+        hourlyPayNumber
+      ) {
+        const data = await shopAPI.put(shopId, {
+          name: name.value,
+          category: foodKinds,
+          address1: location,
+          address2: subLocation.value,
+          description: description.value,
+          imageUrl: shopImage,
+          originalHourlyPay: hourlyPayNumber,
+        });
+        if (data) {
+          alert('등록이 완료되었습니다');
+          router.push('myShopInfo');
+        }
+      } else {
+        alert('필수 입력 내용을 입력해주세요.');
       }
     } catch (error) {
       console.error('Edit Failed:', error);
@@ -159,7 +170,7 @@ const EditingMyShop = () => {
 
   return (
     <>
-      <div className="flex w-full py-[60px] px-[238px] flex-col items-start gap-2 bg-gray-05">
+      <div className="flex w-full py-[60px] px-[238px] flex-col items-center gap-2 bg-gray-05">
         <form
           onSubmit={handleSubmit}
           className="flex w-full flex-col items-center gap-8"
@@ -260,7 +271,7 @@ const EditingMyShop = () => {
                 onChange={description.handleTextarea}
               />
             </div>
-            <div className="flex mt-8 justify-center">
+            <div className="flex mt-8 justify-center items-center px-[200px]">
               <Button size="large" color="colored" onClick={handleTotalSubmit}>
                 완료하기
               </Button>

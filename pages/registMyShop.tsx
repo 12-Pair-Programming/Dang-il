@@ -50,6 +50,7 @@ const registMyShop = () => {
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const file = event.target.files?.[0];
+    if (file === undefined) return;
     const imageUrl = await imageAPI(file);
     setShopImage(imageUrl);
   };
@@ -67,18 +68,28 @@ const registMyShop = () => {
   const handleTotalSubmit = async () => {
     const hourlyPayNumber = Number(originalHourlyPay.value);
     try {
-      const data = await shopAPI.post({
-        name: name.value,
-        category: foodKinds,
-        address1: location,
-        address2: subLocation.value,
-        description: description.value,
-        imageUrl: shopImage,
-        originalHourlyPay: hourlyPayNumber,
-      });
-      if (data) {
-        alert('등록이 완료되었습니다');
-        router.push('myShopInfo');
+      if (
+        name.value &&
+        foodKinds &&
+        location &&
+        subLocation.value &&
+        hourlyPayNumber
+      ) {
+        const data = await shopAPI.post({
+          name: name.value,
+          category: foodKinds,
+          address1: location,
+          address2: subLocation.value,
+          description: description.value,
+          imageUrl: shopImage,
+          originalHourlyPay: hourlyPayNumber,
+        });
+        if (data) {
+          alert('등록이 완료되었습니다');
+          router.push('myShopInfo');
+        }
+      } else {
+        alert('필수 입력 내용을 입력해주세요.');
       }
     } catch (error) {
       console.error('Regist Failed:', error);
@@ -228,7 +239,7 @@ const registMyShop = () => {
                 onChange={description.handleTextarea}
               />
             </div>
-            <div className="flex mt-8 justify-center">
+            <div className="flex mt-8 justify-center px-[200px]">
               <Button size="large" color="colored" onClick={handleTotalSubmit}>
                 등록하기
               </Button>
