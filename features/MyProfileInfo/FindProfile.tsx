@@ -11,11 +11,7 @@ import { jwtDecode } from 'jwt-decode';
 // 가게 상태에 따라 다른 div 출력
 const FindProfile = () => {
   const router = useRouter();
-  const token = localStorage.getItem('token');
-  const decodedToken = token ? jwtDecode(token) : null;
-  const userId = (decodedToken as any)?.userId || '';
-  console.log(decodedToken);
-  console.log(userId);
+  const [user, setUser] = useState<any>([]);
 
   const handleWritingShopInfo = () => {
     /* 가게 등록하는 페이지로 이동시키기 */
@@ -31,21 +27,22 @@ const FindProfile = () => {
   const isMobile = useMediaQuery({ query: '(min-width: 768px)' });
   const [isMyProfile, setIsMyProfile] = useState(true); // 가게 상태 추가
 
-  let user = [];
-
   const getUser = async () => {
     try {
+      const token = localStorage.getItem('token');
+      const decodedToken = token ? jwtDecode(token) : null;
+      const userId = (decodedToken as any)?.userId || '';
       const userData = await userAPI.getUserData(userId);
-      user = userData.data.item;
+      setUser(userData.data.item);
       setIsMyProfile(true);
     } catch (error) {
-      console.log(userId);
       setIsMyProfile(false);
     }
   };
 
   useEffect(() => {
     getUser();
+    console.log(user);
   }, []);
 
   //   const { data } = useFetch(() =>
@@ -69,7 +66,7 @@ const FindProfile = () => {
     return (
       <>
         <div className="flex py-[60px] px-[238px] flex-col items-start self-stretch bg-white gap-2">
-          <div className="flex flex-row px-[238px] py-[60px] items-start gap-[180px] self-stretch bg-white ">
+          <div className="flex flex-row items-start gap-[180px] self-stretch bg-white ">
             <p className="text-black text-[28px] font-bold whitespace-nowrap">
               내 프로필
             </p>

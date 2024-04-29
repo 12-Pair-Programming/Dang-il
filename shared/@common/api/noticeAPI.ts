@@ -56,7 +56,12 @@ const noticeAPI = {
     return axiosInstance.get(`/shops/${shops_id}/notices/${notice_id}`);
   },
   post: <T>(shop_id: string, body: T) => {
-    return axiosInstance.post<T>(`/shops/${shop_id}/notices`, body);
+    const headers = {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    };
+    return axiosInstance.post<T>(`/shops/${shop_id}/notices`, body, {
+      headers,
+    });
   },
   put: <T>(shop_id: string, notice_id: T, body: T) => {
     return axiosInstance.put(`/shops/${shop_id}/notices/${notice_id}`, body);

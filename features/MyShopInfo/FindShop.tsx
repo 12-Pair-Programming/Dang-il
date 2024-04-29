@@ -8,6 +8,7 @@ import useFetch from '@/shared/@common/api/hooks/useFetch';
 import shopAPI from '@/shared/@common/api/shopAPI';
 import { jwtDecode } from 'jwt-decode';
 import userAPI from '@/shared/@common/api/userAPI';
+import noticeAPI from '@/shared/@common/api/noticeAPI';
 
 interface ShopData {
   id: string;
@@ -65,7 +66,7 @@ const FindShop = () => {
     }
   }, [isMobile]);
 
-  let shop = [];
+  const [shop, setShop] = useState<any>([]);
   let shopId = '';
 
   const getUser = async () => {
@@ -74,7 +75,7 @@ const FindShop = () => {
       shopId = userData.data.item.shop.item.id;
       console.log(shopId);
       const shopData = await shopAPI.get(shopId);
-      shop = shopData.data.item;
+      setShop(shopData.data.item);
       setRegistered(true);
     } catch (error) {
       console.log(shopId);
