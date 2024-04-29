@@ -19,6 +19,7 @@ const RecentNotices = () => {
         originalHourlyPay: number;
       };
     };
+    id: string;
     startsAt: string;
     workhour: number;
     hourlyPay: number;
@@ -42,8 +43,24 @@ const RecentNotices = () => {
       </div>
       <div className="mt-8 gap-[14px] grid grid-cols-3">
         {recentNotices &&
-          recentNotices?.slice(0, 6).map((notice) => (
-            <Link href={`/noticeInfo/${notice.shop.item.id}`}>
+          recentNotices?.slice(0, 6).map((notice) =>
+            notice.closed === false ? (
+              <Link
+                href={`/noticeInfo?shopId=${notice.shop.item.id}&noticeId=${notice.id}`}
+              >
+                <Card
+                  key={notice.shop.item.id}
+                  name={notice.shop.item.name}
+                  imageUrl={notice.shop.item.imageUrl}
+                  address1={notice.shop.item.address1}
+                  startsAt={notice.startsAt}
+                  workhour={notice.workhour}
+                  hourlyPay={notice.hourlyPay}
+                  originalHourlyPay={notice.shop.item.originalHourlyPay}
+                  closed={notice.closed}
+                />
+              </Link>
+            ) : (
               <Card
                 key={notice.shop.item.id}
                 name={notice.shop.item.name}
@@ -55,8 +72,8 @@ const RecentNotices = () => {
                 originalHourlyPay={notice.shop.item.originalHourlyPay}
                 closed={notice.closed}
               />
-            </Link>
-          ))}
+            ),
+          )}
       </div>
     </div>
   );

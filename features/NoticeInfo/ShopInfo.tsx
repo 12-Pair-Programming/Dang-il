@@ -7,8 +7,10 @@ import { Modal } from '@/shared/@common/ui/Modal/ModalBase';
 import { useModal } from '@/shared/@common/ui/Modal/hook/modalHook';
 
 import noticeAPI from '@/shared/@common/api/noticeAPI';
+import applicationAPI from '@/shared/@common/api/applicationAPI';
 import useFetch from '@/shared/@common/api/hooks/useFetch';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { jwtDecode } from 'jwt-decode';
 
 interface props {
   userType: string;
@@ -61,6 +63,23 @@ const ShopInfo = ({
 }: props) => {
   const router = useRouter();
 
+  const [modalContent, setModalContent] = useState('');
+  const [modalType, setModalType] = useState('');
+
+  const token = localStorage.getItem('token');
+  const decodedToken = token ? jwtDecode(token) : null;
+  const userId = (decodedToken as any)?.userId || '';
+
+  //최초는 공백. 신청하면 pending 신청 취소시 canceled
+  // FIXME: 임시 상태값. pending(대기중) accepted(승인) rejected(거절) canceled(취소)
+  const [status, setStatus] = useState('canceled');
+
+  //TODO: 유저의 지원 목록 조회
+  // status가 존재하지 않는 경우
+  //공고 신청을 누를 때 localStorage에 회원ID, 공고ID를 불러와서 존재 하는 경우 pending
+  // noticePendings = [{userId : 'id-1',noticeId : ['notice-1','notice-2','notice-3']},{userId : 'id-2',noticeId : ['notice-1','notice-2','notice-3']} ,{userId : 'id-3',noticeId : ['notice-1','notice-2','notice-3']}  ]
+  let recentAplication = localStorage.getItem('recentAplication');
+
   const { data, loading } = useFetch(() => {
     return noticeAPI.getShopNotice({ shops_id: shopId, notice_id: noticeId });
   });
@@ -69,30 +88,15 @@ const ShopInfo = ({
   if (data && !loading) {
     getdata = data.item;
   }
-  console.log(data);
+
   useEffect(() => {
-    //TODO: 데이터가 새로고침할 때 반영 안될때 있음. 확인 후 UseState로 데이터 관리?
     if (data && !loading) {
-      let localData: string[] = JSON.parse(
-        localStorage.getItem('recentNotices') || '[]',
-      );
-      localData.push(data.item);
-
-      // 배열의 길이가 6 이상인 경우, 첫 번째 요소를 제거
-      if (localData.length > 6) {
-        localData.shift();
-      }
-
-      // 로컬 스토리지에 새로운 데이터를 저장
-      localStorage.setItem('recentNotices', JSON.stringify(localData));
+      setLocalStorage('recentNotices', data);
     }
-  }, [loading]);
+  }, [loading, shopId, noticeId]);
 
-  //TODO: 유저의 지원 목록 조회
-  //결과 값 에서 items.item.notice.item.id로 공고 id를 찾아서?
-  //해당 items.item.status로 status 조회 필요
-  //GET /users/{user_id}/applications
-  const status = ''; //신청 여부 값. 이에 따라 취소 또는 신청 버튼 노출
+  const { isOpen, setIsOpen, openModal, closeModal, CallbackCloseMadal } =
+    useModal({});
 
   const handleEditeNotice = () => {
     console.log('click 로그인 중 - 공고 편집');
@@ -101,58 +105,129 @@ const ShopInfo = ({
     router.push(`/noticeRegist?noticeId=${noticeId}`);
   };
 
+  /** 공고 신청 버튼 클릭 */
   const handleApplyNotice = () => {
     if (name) {
-      console.log('click 로그인 중 - 공고 신청');
-      // TODO: 신청 모달 팝업
-      // 공고 지원 등록
-      //POST /shops/{shop_id}/notices/{notice_id}/applications
+      const handleTotalSubmit = async () => {
+        try {
+          //FIXME: 로그인 상태임에도 로그인 정보(토큰)를 보내지 못함.
+          const data = await applicationAPI.post(shopId, noticeId, '');
+
+          if (data) {
+            alert('신청 되었습니다.');
+            setStatus('pending');
+
+            //FIXME: 로그인 정보 전달받은 뒤에 실행 될 듯
+            const applicationNoriceInfo = {
+              userId: userId,
+              noticeId: noticeId,
+            };
+            setLocalStorage('recentAplication', applicationNoriceInfo);
+          }
+        } catch (error) {
+          console.error('Regist Failed?', error);
+        }
+      };
+      handleTotalSubmit();
     } else {
-      console.log('click 로그인 중 - 공고 신청 - 프로필 등록 필요');
-      // TODO: 프로필 등록 필요 모달 팝업
-      // 확인 선택 시 아래 링크 이동
-      //router.push(`/registMyProfile?noticeId=${noticeId}`);
+      setModalContent('내 프로필을 등록해주세요!');
+      setModalType('warning');
+      openModal();
     }
   };
 
-  const handleCancelNotice = () => {
-    console.log('click 로그인 중 - 공고 취소');
-    // TODO: 취소 모달 팝업
-    //PUT /shops/{shop_id}/notices/{notice_id}/applications/{application_id}
-    //Request body : 지원자 취소 -"status" :  canceled
+  /**
+   * localStorage에 새로운 데이터를 저장 - storageName에 따라 넣는 값은 달라짐
+   * - recentNotices : 최근에 본 공고
+   * - recentAplication : 최근에 신청한 공고
+   * @param storageName
+   * @param storageData
+   */
+  const setLocalStorage = (storageName: string, storageData: {}) => {
+    let localData: string[] = JSON.parse(
+      localStorage.getItem(storageName) || '[]',
+    );
+
+    if (storageName === 'recentNotices') {
+      localData.push(data.item);
+      console.log(':::data.item:::', data.item);
+
+      // 배열의 길이가 6 이상인 경우, 첫 번째 요소를 제거
+      if (localData.length > 6) {
+        localData.shift();
+      }
+
+      localStorage.setItem(storageName, JSON.stringify(localData));
+    } else if (storageName === 'recentAplication') {
+      //FIXME: 최근 신청한 공고 정보 저장
+    }
   };
 
-  //TODO: 1.먼저 모달 훅 불러오고
-  const { isOpen, setIsOpen, openModal, closeModal, type, content } = useModal({
-    modalContent: '안녕',
-    modalType: 'confirm',
-  });
-  console.log(shopId);
+  /** 광고 신청 - 프로필 미존재 확인 클릭
+   * - 프로필 미존재 시 :프로필 등록 화면 이동
+   */
+  const handleApplyNoticeClick = () => {
+    if (!name) {
+      router.push(`/registMyProfile?noticeId=${noticeId}`);
+    }
+  };
+
+  /** 공고 취소 모달 오픈 */
+  const handleCancelNotice = () => {
+    setModalContent('신청을 취소하시겠어요?');
+    setModalType('confirm');
+    openModal();
+  };
+
+  /** 공고 취소 모달 - 취소 하기 버튼 클릭 */
+  const handleCancelNoticeClick = () => {
+    const handleCancelSubmit = async () => {
+      try {
+        //FIXME: 로그인 상태임에도 로그인 정보(토큰)를 보내지 못함.
+        const data = await noticeAPI.put(shopId, noticeId, 'canceled');
+        if (data) {
+          alert('취소가 완료되었습니다.');
+          setStatus('canceled');
+        }
+      } catch (error) {
+        console.error('Regist Failed', error);
+      }
+    };
+    handleCancelSubmit();
+  };
+
   return (
     <>
       {getdata && (
         <div className="py-[60px] mx-[238px]">
           <Modal
-            content={content}
+            content={modalContent}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            onClose={closeModal}
-            type={type}
+            onClose={() => {
+              handleApplyNoticeClick();
+              closeModal();
+            }}
+            onCloseCallBack={() => {
+              CallbackCloseMadal();
+              handleCancelNoticeClick();
+            }}
+            type={modalType}
           />
           <div>
-            <p className="text-base font-bold text-primary">식당</p>
-            <p className="text-[28px] font-bold">도토리 식당</p>
+            <p className="text-base font-bold text-primary">
+              {getdata.shop.item.category}
+            </p>
+            <p className="text-[28px] font-bold">{getdata.shop.item.name}</p>
           </div>
           <div className="flex w-[963px] h-[365px] border-[1px] rounded-2xl p-6 mt-4">
             <div className="w-[640px] overflow-hidden rounded-2xl">
-              {/* {getdata.shop.item.imageUrl && ( */}
               <CardImage
                 imageUrl={getdata.shop.item.imageUrl}
                 closed={getdata.closed}
                 width={550}
                 height={350}
               />
-              {/* )} */}
             </div>
             <div className="w-[346px] ml-6 flex flex-col justify-between">
               <p className="text-base font-bold text-primary">시급</p>
@@ -181,7 +256,9 @@ const ShopInfo = ({
                 >
                   공고편집
                 </Button>
-              ) : getdata.closed ? (
+              ) : getdata.closed ||
+                status === 'rejected' ||
+                status === 'accepted' ? (
                 <Button
                   size="large"
                   color="none"
@@ -190,7 +267,19 @@ const ShopInfo = ({
                 >
                   신청 불가
                 </Button>
-              ) : status ? (
+              ) : status !== 'pending' ? (
+                <Button
+                  size="large"
+                  color="colored"
+                  // TODO: 모달 오픈
+                  onClick={() => {
+                    handleApplyNotice();
+                  }}
+                  disabled={false}
+                >
+                  신청하기
+                </Button>
+              ) : (
                 <Button
                   size="large"
                   color="none"
@@ -200,18 +289,6 @@ const ShopInfo = ({
                   disabled={false}
                 >
                   취소하기
-                </Button>
-              ) : (
-                <Button
-                  size="large"
-                  color="colored"
-                  // TODO: 모달 오픈
-                  onClick={() => {
-                    openModal();
-                  }}
-                  disabled={false}
-                >
-                  신청하기
                 </Button>
               )}
             </div>
