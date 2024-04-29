@@ -43,7 +43,7 @@ const noticeRegist = () => {
       shopId = userData.data.item.shop.item.id;
       console.log(shopId);
       const noticeData = await noticeAPI.post(shopId, {
-        hourlypay: hourlyPayNumber,
+        hourlyPay: hourlyPayNumber,
         startsAt: selectedDate,
         workhour: workingHour,
         description: description.value,
