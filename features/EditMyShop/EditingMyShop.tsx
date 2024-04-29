@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
-import { Input } from '@/shared/@common/ui/Input/Input';
+import { Input } from '@/shared/@common/ui/input/Input';
 import Button from '@/shared/@common/ui/Button/Button';
-import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
+import { useInput } from '@/shared/@common/ui/input/hook/inputHook';
 import { useTextarea } from '@/shared/@common/ui/Textarea/hook/textareaHook';
 import { Textarea } from '@/shared/@common/ui/Textarea/Textarea';
 import shopAPI from '@/shared/@common/api/shopAPI';
@@ -95,6 +95,11 @@ const EditingMyShop = () => {
   const handleTotalSubmit = async () => {
     const hourlyPayNumber = Number(originalHourlyPay.value);
     try {
+      const token = localStorage.getItem('token');
+      const decodedToken = token ? jwtDecode(token) : null;
+      const userId = (decodedToken as any)?.userId || '';
+      const userData = await userAPI.getUserData(userId);
+      shopId = userData.data.item.shop.item.id;
       const data = await shopAPI.put(shopId, {
         name: name.value,
         category: foodKinds,
