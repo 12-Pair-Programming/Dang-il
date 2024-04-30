@@ -6,6 +6,7 @@ import Button from '@/shared/@common/ui/Button/Button';
 import { Modal } from '@/shared/@common/ui/Modal/ModalBase';
 import { useModal } from '@/shared/@common/ui/Modal/hook/modalHook';
 
+import userAPI from '@/shared/@common/api/userAPI';
 import noticeAPI from '@/shared/@common/api/noticeAPI';
 import applicationAPI from '@/shared/@common/api/applicationAPI';
 import useFetch from '@/shared/@common/api/hooks/useFetch';
@@ -79,7 +80,17 @@ const ShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
   const userApplicationInfo = applicationListData?.items.find((item: any) => {
     return item.item.user.item.id === userId;
   })?.item;
-  const userName = userApplicationInfo?.user.item.name;
+
+  const {
+    data: userData,
+    loading: userdataLoading,
+    execute: userDataExcute,
+    error: userDataError,
+  } = useFetch(() => {
+    return userAPI.getUserData(userId);
+  });
+
+  const userName = userData?.item.name;
 
   useEffect(() => {
     setButtonStatus(userApplicationInfo?.status);
