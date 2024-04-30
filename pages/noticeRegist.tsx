@@ -61,8 +61,11 @@ const noticeRegist = () => {
   };
 
   const handleDateChange = (date: Date | null) => {
-    const formattedDate = date.toISOString().replace('.000Z', 'Z');
-    setSelectedDate(formattedDate);
+    if (date !== null) {
+      const formattedDate = date.toISOString().replace('.000Z', 'Z');
+
+      setSelectedDate(formattedDate);
+    }
   };
 
   const hourlypay = useInput('');

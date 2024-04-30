@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Input } from '@/shared/@common/ui/input/Input';
+import { Input } from '@/shared/@common/ui/Input/Input';
 import Button from '@/shared/@common/ui/Button/Button';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useInput } from '@/shared/@common/ui/input/hook/inputHook';
+import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
 import { useCheckUserData } from '@/shared/@common/auth/hooks/useCheckUserData';
 import { Modal } from '@/shared/@common/ui/Modal/ModalBase';
 

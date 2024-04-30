@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import Table from '@/shared/@common/ui/Table/3';
-import Button from '@/shared/@common/ui/Button/Button';
 
 const ButtonComponent = () => {
   const [disabled, setDisabled] = useState(false);
