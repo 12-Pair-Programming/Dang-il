@@ -5,8 +5,9 @@ import alertAPI from '@/shared/@common/api/alertAPI';
 
 interface NavModalMessageProps {
   messageKey: string;
-  url: string;
+  shop_id: string;
   user_id: string;
+  notice_id: string;
   checked: boolean;
   isResult: string;
   noticeName: string;
@@ -16,8 +17,9 @@ interface NavModalMessageProps {
 
 export const NavModalMessage = ({
   messageKey,
-  url,
+  shop_id,
   user_id,
+  notice_id,
   checked,
   isResult,
   noticeName,
@@ -35,11 +37,11 @@ export const NavModalMessage = ({
 
   return (
     <div
-      className="flex w-[328px] gap-1 px-3 py-4 flex-col bg-white"
+      className="flex w-[328px] gap-1 px-3 py-4 flex-col bg-white mobile:w-full cursor-pointer"
       style={{ opacity: checked ? 0.5 : 1 }}
       onClick={() => {
         alertAPI.put({ user_id: user_id, alert_id: messageKey });
-        //router.push(url);
+        router.push(`/noticeInfo?shopId=${shop_id}&noticeId=${notice_id}`);
       }}
     >
       <Image

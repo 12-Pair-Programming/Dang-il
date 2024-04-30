@@ -97,9 +97,7 @@ export const NavigationBar = () => {
                     width={24}
                     height={24}
                     src={
-                      isOpen
-                        ? '/images/dropdownDown.png'
-                        : '/images/dropdownUp.png'
+                      isOpen ? '/images/bell-on.svg' : '/images/bell-off.svg'
                     }
                     alt="모달 온오프 아이콘"
                   />

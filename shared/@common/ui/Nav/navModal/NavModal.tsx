@@ -20,8 +20,15 @@ interface Item {
     };
     notice: {
       item: {
+        id: string;
         startsAt: string;
         description: string;
+      };
+    };
+    shop: {
+      item: {
+        id: string;
+        name: string;
       };
     };
     createdAt: Date;
@@ -102,7 +109,7 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
     <>
       {isOpen && (
         <div
-          className="absolute flex flex-col align-top px-5 py-6 bg-purple-10 rounded-[10px] gap-2 right-0 ml-[-336px]  h-[500px] top-10 mobile:fixed mobile:top-0 mobile:right-0 mobile:bottom-0 mobile:left-0 mobile:h-screen mobile:rounded-none mobile:ml-0"
+          className="absolute flex flex-col align-top px-5 py-6 bg-purple-10 shadow-md rounded-[10px] gap-2 right-0 ml-[-336px]  h-[500px] top-10 mobile:fixed mobile:top-0 mobile:right-0 mobile:bottom-0 mobile:left-0 mobile:h-screen mobile:rounded-none mobile:ml-0"
           ref={modalClick}
           onMouseDown={(e) => e.stopPropagation()}
         >
@@ -126,12 +133,13 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
                       key={index}
                       messageKey={item.item.id}
                       isResult={item.item.result}
-                      noticeName={item.item.notice.item.description}
+                      shop_id={item.item.shop.item.id}
+                      notice_id={item.item.notice.item.id}
+                      noticeName={item.item.shop.item.name}
                       noticePeriod={new Date(
                         item.item.notice.item.startsAt,
                       ).toLocaleString()}
                       createdAt={item.item.createdAt}
-                      url={item.item.application.href}
                       checked={item.item.read}
                       user_id={user_id}
                     />
