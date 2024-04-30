@@ -71,7 +71,7 @@ const TableBody = ({ isEmployee }: TableProps) => {
     <tbody className="flex flex-col w-full h-full items-start bg-white">
       {isEmployee
         ? employee &&
-          employee.map((v: EmployeeItemData) => (
+          employee.slice(0, 4).map((v: EmployeeItemData) => (
             <tr className="flex w-full">
               <td
                 key={v.id}
@@ -97,7 +97,7 @@ const TableBody = ({ isEmployee }: TableProps) => {
             </tr>
           ))
         : employer &&
-          employer.map((v: EmployerItemData) => (
+          employer.slice(0, 4).map((v: EmployerItemData) => (
             <tr className="flex w-full">
               <td
                 key={v.id}

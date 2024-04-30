@@ -74,7 +74,7 @@ const FindNotice = () => {
           {isNotice ? '내가 등록한 공고' : '등록한 공고'}
         </p>
         {isNotice ? (
-          <div>
+          <div className="w-full px-auto">
             <div className="grid grid-cols-3 gap-6">
               {cardList
                 .slice(cardOffset, cardOffset + showCard)
@@ -92,12 +92,14 @@ const FindNotice = () => {
                   />
                 ))}
             </div>
-            <Pagination
-              totalPage={6}
-              limit={10}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-            />
+            <div className="px-[400px]">
+              <Pagination
+                totalPage={1}
+                limit={10}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
+            </div>
           </div>
         ) : (
           <div className="flex w-[964px] py-[60px] px-6 flex-col justify-center items-center gap-6 rounded-xl border border-solid border-gray-20">

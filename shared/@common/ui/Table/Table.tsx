@@ -5,6 +5,7 @@ import Pagination from '../Pagination/Pagination';
 
 export interface TableProps {
   isEmployee: boolean;
+  currentPage?: number;
 }
 
 const Table = ({ isEmployee }: TableProps) => {
@@ -15,8 +16,8 @@ const Table = ({ isEmployee }: TableProps) => {
         <TableHead isEmployee={isEmployee} />
         <TableBody isEmployee={isEmployee} />
         <Pagination
-          totalPage={3}
-          limit={2}
+          totalPage={1}
+          limit={1}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
         />
