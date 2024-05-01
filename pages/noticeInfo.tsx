@@ -31,7 +31,10 @@ const NoticeInfo = () => {
           noticeId={noticeId as string}
         />
         {userType === 'employer' ? (
-          <EmployeeList />
+          <EmployeeList
+            shopId={shopId as string}
+            noticeId={noticeId as string}
+          />
         ) : (
           <RecentNotices noticeId={noticeId as string} />
         )}

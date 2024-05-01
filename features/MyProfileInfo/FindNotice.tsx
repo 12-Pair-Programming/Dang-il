@@ -1,12 +1,12 @@
 import applicationAPI from '@/shared/@common/api/applicationAPI';
-import userAPI from '@/shared/@common/api/userAPI';
+import { userData } from './FindProfile';
 import Button from '@/shared/@common/ui/Button/Button';
 import Table from '@/shared/@common/ui/Table/Table';
 import { jwtDecode } from 'jwt-decode';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-const FindNotice = () => {
+const FindNotice = ({ user }: { user: userData }) => {
   const router = useRouter();
   const [isNotice, setIsNotice] = useState(false);
   const handleWritingNotice = () => {
@@ -34,8 +34,8 @@ const FindNotice = () => {
       <div className="flex pt-[60px] pb-[120px] px-[auto] w-[983px] flex-col items-start gap-2 bg-white">
         <div className="flex flex-col items-start gap-[32px] self-stretch bg-white">
           <p className="text-black text-[28px] font-bold">신청 내역</p>
-          <div className="flex flex-col items-start gap-8 w-full">
-            <Table isEmployee={false} />
+          <div className="flex flex-col items-start gap-8 w-full px-auto">
+            <Table isEmployee={false} user={user} />
           </div>
         </div>
       </div>

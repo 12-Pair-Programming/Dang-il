@@ -168,7 +168,7 @@ const FindShop = () => {
           <Button size={size} color="colored" onClick={handleWritingShopInfo}>
             가게 등록하기
           </Button>
-          <div className="h-[300px]"> 서인님 여기를 조정하세요 </div>{' '}
+          <div className="h-[550px]">.</div>
           {/* 여기 조정해서 Footer를 바닥에 두세요. */}
         </div>
       </div>

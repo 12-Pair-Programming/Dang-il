@@ -1,5 +1,6 @@
 import React from 'react';
-import { useGetApplicationData } from '@/shared/@common/ui/Table/test/tableTest';
+import useFetch from '../../api/hooks/useFetch';
+import applicationAPI from '../../api/applicationAPI';
 import TableButton from './TableButton';
 import { TableProps } from './Table';
 
@@ -13,10 +14,9 @@ interface EmployeeItemData {
 interface EmployeeData {
   item: {
     status: string;
+    id: string;
     user: {
-      item: {
-        item: EmployeeItemData;
-      };
+      item: EmployeeItemData;
     };
   };
 }
@@ -33,113 +33,116 @@ interface EmployerItemData {
 interface EmployerData {
   item: {
     notice: {
-      item: {
-        item: EmployerItemData;
-      };
+      item: EmployerItemData;
     };
+    status: string;
   };
 }
 
-const TableBody = ({ isEmployee }: TableProps) => {
-  const { data } = useGetApplicationData();
+const TableBody = ({ isEmployee, shopId, noticeId, user }: TableProps) => {
+  const { data, loading, error, execute } = useFetch(() => {
+    return applicationAPI.getApplicationListData({
+      shop_id: shopId as string,
+      notice_id: noticeId as string,
+    });
+  });
 
-  let employee = [];
-  if (data && data.items) {
-    employee = data.items.map((v: EmployeeData) => v.item.user.item);
-  }
+  const applicationId = user && user.id;
 
-  let employeeStatus = [];
-  if (data && data.items) {
-    employeeStatus = data.items.map((v: EmployeeData) => v.item.status);
-  }
+  const { data: applicationsData } = useFetch(() => {
+    return applicationAPI.getApplicationData(applicationId as string);
+  });
 
-  let employer = [];
-  if (data && data.items) {
-    employer = data.items.map((v: EmployerData) => v.item.notice.item);
-  }
-
-  const handleChangingStatus = (buttons: string) => {
-    const status =
-      buttons === 'approve'
-        ? '승인 완료'
-        : buttons === 'reject'
-          ? '거절'
-          : '대기중';
-  };
+  const status = 'accepted' || 'rejected' || 'canceled';
 
   return (
     <tbody className="flex flex-col w-full h-full items-start bg-white">
       {isEmployee
-        ? employee &&
-          employee.map((v: EmployeeItemData) => (
+        ? data &&
+          shopId &&
+          noticeId &&
+          data.items.slice(0, 4).map((v: EmployeeData) => (
             <tr className="flex w-full">
               <td
-                key={v.id}
+                key={v.item.user.item.id}
                 className="flex w-1/4 py-8 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20"
               >
-                {v.name}
+                {v.item.user.item.name}
               </td>
               <td
-                key={v.id}
+                key={v.item.user.item.id}
                 className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-x-scroll whitespace-pre scrollbar-hide"
               >
-                {v.bio}
+                {v.item.user.item.bio}
               </td>
               <td
-                key={v.id}
+                key={v.item.user.item.id}
                 className="flex w-1/4 py-5 px-4 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-auto whitespace-pre"
               >
-                {v.phone}
+                {v.item.user.item.phone}
               </td>
               <td className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 ">
-                <TableButton key={v.id} onClick={handleChangingStatus} />
+                <TableButton
+                  key={v.item.user.item.id}
+                  onClick={() => {
+                    applicationAPI.put(
+                      shopId as string,
+                      noticeId as string,
+                      v.item.id,
+                      status,
+                    );
+                  }}
+                />
               </td>
             </tr>
           ))
-        : employer &&
-          employer.map((v: EmployerItemData) => (
+        : applicationsData &&
+          applicationsData.items.slice(0, 4).map((v: EmployerData) => (
             <tr className="flex w-full">
               <td
-                key={v.id}
+                key={v.item.notice.item.id}
                 className="flex w-1/4 py-8 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20"
               >
-                {v.description}
+                {v.item.notice.item.description}
               </td>
               <td
-                key={v.id}
+                key={v.item.notice.item.id}
                 className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-x-scroll whitespace-pre scrollbar-hide"
               >
-                {v.startsAt.slice(0, 10)} {v.startsAt.slice(12, 13)}~
-                {Number(v.startsAt.slice(12, 13)) + Number(v.workhour)}시
+                {v.item.notice.item.startsAt.slice(0, 10)}{' '}
+                {v.item.notice.item.startsAt.slice(12, 13)}~
+                {Number(v.item.notice.item.startsAt.slice(12, 13)) +
+                  Number(v.item.notice.item.workhour)}
+                시
               </td>
               <td
-                key={v.id}
+                key={v.item.notice.item.id}
                 className="flex w-1/4 py-5 px-4 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-auto whitespace-pre"
               >
-                {v.hourlyPay}
+                {v.item.notice.item.hourlyPay}
               </td>
               <td className="flex w-1/5 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 overflow-auto whitespace-pre">
-                {status ? (
+                {v.item.status ? (
                   <p
                     className={`p-4 ${
-                      status === '거절'
-                        ? 'bg-purple-20 text-purple-40'
-                        : 'bg-blue-10 text-blue-20'
+                      v.item.status === 'accepted'
+                        ? 'bg-blue-10 text-blue-20'
+                        : v.item.status === 'rejected'
+                          ? 'bg-purple-20 text-purple-40'
+                          : 'bg-green-10 text-green-600'
                     } flex py-1 px-2 content-center items-center rounded-2xl font-bold text-sm`}
                   >
-                    {status}
+                    {v.item.status === 'accepted'
+                      ? '승인 완료'
+                      : v.item.status === 'rejected'
+                        ? '거절'
+                        : '대기중'}
                   </p>
                 ) : (
                   <p className="p-4 flex py-1 px-2 content-center items-center rounded-2xl font-bold text-sm bg-green-10 text-green-20">
                     대기중
                   </p>
                 )}
-                {/* <TableButton
-                  key={v.id}
-                  handleClick={() => handleChangingStatus('approve', false)}
-                  buttonVisible={true}
-                  status={employerStatus}
-                /> */}
               </td>
             </tr>
           ))}

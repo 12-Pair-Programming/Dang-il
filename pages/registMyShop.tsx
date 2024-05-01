@@ -242,7 +242,11 @@ const registMyShop = () => {
               />
             </div>
             <div className="flex mt-8 justify-center px-[200px]">
-              <Button size="large" color="colored" onClick={handleTotalSubmit}>
+              <Button
+                size="large"
+                color="colored"
+                onClick={() => handleTotalSubmit()}
+              >
                 등록하기
               </Button>
             </div>
