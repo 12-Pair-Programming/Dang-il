@@ -41,7 +41,259 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
   const [data, setData] = useState<Item[]>([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(10);
+
+  const newData: Item[] = [
+    {
+      item: {
+        id: '473297ee-68e5-4ed5-906c-17de8b040adb',
+        result: 'canceled',
+        read: false,
+        application: {
+          href: 'exampleApplicationHref1',
+        },
+        notice: {
+          item: {
+            id: '473297ee-68e5-4ed5-906c-17de8b040adb',
+            startsAt: '2024-05-10T09:00:00.000Z',
+            description: '공고 설명 1',
+          },
+        },
+        shop: {
+          item: {
+            id: '7cd020d9-c2b4-4cdc-93f3-f0cb412b914f',
+            name: '솥뚜껑 왕삼겹',
+          },
+        },
+        createdAt: new Date('2024-04-30T02:28:54.258Z'),
+      },
+    },
+    {
+      item: {
+        id: '18b584c8-a3d0-4a4f-b606-ff08ad560768',
+        result: 'canceled',
+        read: false,
+        application: {
+          href: 'exampleApplicationHref2',
+        },
+        notice: {
+          item: {
+            id: '18b584c8-a3d0-4a4f-b606-ff08ad560768',
+            startsAt: '2024-05-11T09:00:00.000Z',
+            description: '공고 설명 2',
+          },
+        },
+        shop: {
+          item: {
+            id: 'bc386cfb-4b05-4b3a-acb7-6fd787b3a53d',
+            name: '우레옥',
+          },
+        },
+        createdAt: new Date('2024-04-30T02:28:54.258Z'),
+      },
+    },
+    // 나머지 데이터 추가
+    {
+      item: {
+        id: '535f38e7-c611-4ea5-a533-c518ac62ecb3',
+        result: 'canceled',
+        read: false,
+        application: {
+          href: 'exampleApplicationHref3',
+        },
+        notice: {
+          item: {
+            id: '535f38e7-c611-4ea5-a533-c518ac62ecb3',
+            startsAt: '2024-05-12T09:00:00.000Z',
+            description: '공고 설명 3',
+          },
+        },
+        shop: {
+          item: {
+            id: 'ee742532-e127-4384-a4ad-868eef325c02',
+            name: '땡깡김밥',
+          },
+        },
+        createdAt: new Date('2024-04-30T02:28:54.258Z'),
+      },
+    },
+    // 나머지 데이터 추가
+    {
+      item: {
+        id: '11eb7ed0-88db-4060-b59d-3543e1cfeb53',
+        result: 'canceled',
+        read: true,
+        application: {
+          href: 'exampleApplicationHref4',
+        },
+        notice: {
+          item: {
+            id: '11eb7ed0-88db-4060-b59d-3543e1cfeb53',
+            startsAt: '2024-05-13T09:00:00.000Z',
+            description: '공고 설명 4',
+          },
+        },
+        shop: {
+          item: {
+            id: '03246e1c-061b-4047-baa8-0edc048718c5',
+            name: '통통 순대',
+          },
+        },
+        createdAt: new Date('2024-04-30T02:28:54.258Z'),
+      },
+    },
+    // 나머지 데이터 추가
+    {
+      item: {
+        id: 'f2f09b1c-69c8-434c-a253-c2f86a28d8a1',
+        result: 'canceled',
+        read: true,
+        application: {
+          href: 'exampleApplicationHref5',
+        },
+        notice: {
+          item: {
+            id: 'f2f09b1c-69c8-434c-a253-c2f86a28d8a1',
+            startsAt: '2024-05-14T09:00:00.000Z',
+            description: '공고 설명 5',
+          },
+        },
+        shop: {
+          item: {
+            id: '79ccf6cc-be7a-4985-bf1b-712acebd7a30',
+            name: '만사성 중화요리',
+          },
+        },
+        createdAt: new Date('2024-04-30T02:28:54.258Z'),
+      },
+    },
+    // 나머지 데이터 추가
+    {
+      item: {
+        id: '66961977-d166-473c-82a8-49f7772d3fad',
+        result: 'canceled',
+        read: true,
+        application: {
+          href: 'exampleApplicationHref6',
+        },
+        notice: {
+          item: {
+            id: '66961977-d166-473c-82a8-49f7772d3fad',
+            startsAt: '2024-05-15T09:00:00.000Z',
+            description: '공고 설명 6',
+          },
+        },
+        shop: {
+          item: {
+            id: 'bc386cfb-4b05-4b3a-acb7-6fd787b3a53d',
+            name: '우레옥',
+          },
+        },
+        createdAt: new Date('2024-04-30T02:28:54.258Z'),
+      },
+    },
+    // 나머지 데이터 추가
+    {
+      item: {
+        id: '8c7ba816-839a-43d0-a2d9-b257884b5e5d',
+        result: 'canceled',
+        read: false,
+        application: {
+          href: 'exampleApplicationHref7',
+        },
+        notice: {
+          item: {
+            id: '8c7ba816-839a-43d0-a2d9-b257884b5e5d',
+            startsAt: '2024-05-16T09:00:00.000Z',
+            description: '공고 설명 7',
+          },
+        },
+        shop: {
+          item: {
+            id: 'c0046d67-84b1-4f18-bb35-3cb1f2108ebd',
+            name: '냉면 맛집',
+          },
+        },
+        createdAt: new Date('2024-04-30T02:28:54.258Z'),
+      },
+    },
+    // 나머지 데이터 추가
+    {
+      item: {
+        id: '5bc2f2c9-0823-4d71-92bd-a6d05abff8da',
+        result: 'canceled',
+        read: false,
+        application: {
+          href: 'exampleApplicationHref8',
+        },
+        notice: {
+          item: {
+            id: '5bc2f2c9-0823-4d71-92bd-a6d05abff8da',
+            startsAt: '2024-05-17T09:00:00.000Z',
+            description: '공고 설명 8',
+          },
+        },
+        shop: {
+          item: {
+            id: 'bf4015a7-2cdb-4e73-be0e-5d1feba9adc2',
+            name: '통일희망집',
+          },
+        },
+        createdAt: new Date('2024-04-30T02:28:54.258Z'),
+      },
+    },
+    // 나머지 데이터 추가
+    {
+      item: {
+        id: 'c116b76d-c8f0-4282-ad9d-d855b1d549ca',
+        result: 'canceled',
+        read: false,
+        application: {
+          href: 'exampleApplicationHref9',
+        },
+        notice: {
+          item: {
+            id: 'c116b76d-c8f0-4282-ad9d-d855b1d549ca',
+            startsAt: '2024-05-18T09:00:00.000Z',
+            description: '공고 설명 9',
+          },
+        },
+        shop: {
+          item: {
+            id: 'c0046d67-84b1-4f18-bb35-3cb1f2108ebd',
+            name: '냉면 맛집',
+          },
+        },
+        createdAt: new Date('2024-04-30T02:28:54.258Z'),
+      },
+    },
+    // 나머지 데이터 추가
+    {
+      item: {
+        id: '647e3699-b0e5-4831-aa91-ef94913e23f5',
+        result: 'canceled',
+        read: false,
+        application: {
+          href: 'exampleApplicationHref10',
+        },
+        notice: {
+          item: {
+            id: '647e3699-b0e5-4831-aa91-ef94913e23f5',
+            startsAt: '2024-05-19T09:00:00.000Z',
+            description: '공고 설명 10',
+          },
+        },
+        shop: {
+          item: {
+            id: 'ab434b98-e9a7-4e5a-b841-cd54d4e73bbb',
+            name: '토끼',
+          },
+        },
+        createdAt: new Date('2024-04-30T02:28:54.258Z'),
+      },
+    },
+  ];
+  console.log(newData);
 
   const handleClick = (e: MouseEvent) => {
     if (modalClick.current && !modalClick.current.contains(e.target as Node)) {
@@ -58,7 +310,7 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
           offset: page,
           user_id,
         });
-        setCount(response.data.count);
+        //setCount(response.data.count);
         if (page === 1) {
           setData(response.data.items);
         } else {
@@ -127,7 +379,7 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
             </div>
             {count !== 0 ? (
               <div className="flex flex-col gap-2 overflow-y-scroll h-[1000px]">
-                {data.map((item: Item, index: number) => {
+                {newData.map((item: Item, index: number) => {
                   return (
                     <NavModalMessage
                       key={index}

@@ -116,6 +116,7 @@ const AllNotice = () => {
   const handleFilterButtonClick = () => {
     setShowDetailFilter(true);
   };
+  console.log(data);
 
   return (
     <div className="flex flex-col w-full py-[60px] px-auto items-center bg-white tracking-wide mobile:px-4">
