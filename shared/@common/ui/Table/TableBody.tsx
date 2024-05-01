@@ -48,14 +48,12 @@ const TableBody = ({ isEmployee, shopId, noticeId, user }: TableProps) => {
   });
 
   const applicationId = user && user.id;
-  console.log(applicationId);
+
   const { data: applicationsData } = useFetch(() => {
-    return applicationAPI.getApplicationData(applicationId);
+    return applicationAPI.getApplicationData(applicationId as string);
   });
 
   const status = 'accepted' || 'rejected' || 'canceled';
-
-  console.log(applicationsData);
 
   return (
     <tbody className="flex flex-col w-full h-full items-start bg-white">

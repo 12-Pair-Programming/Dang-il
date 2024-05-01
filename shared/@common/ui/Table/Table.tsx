@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import useFetch from '../../api/hooks/useFetch';
+import applicationAPI from '../../api/applicationAPI';
 import TableBody from '@/shared/@common/ui/Table/TableBody';
 import TableHead from '@/shared/@common/ui/Table/TableHead';
 import Pagination from '@/shared/@common/ui/Pagination/Pagination';
@@ -8,42 +10,46 @@ export interface TableProps {
   isEmployee: boolean;
   shopId?: string;
   noticeId?: string;
-  user: userData;
+  user?: userData;
+  offset?: number;
+  limit?: number;
 }
+
+const ITEM_PER_PAGE = 4;
 
 const Table = ({ isEmployee, shopId, noticeId, user }: TableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const listOffset = (currentPage - 1) * ITEM_PER_PAGE;
+  const { data, loading, error, execute } = useFetch(() => {
+    return applicationAPI.getApplicationListData({
+      shop_id: shopId as string,
+      notice_id: noticeId as string,
+      offset: listOffset,
+      limit: ITEM_PER_PAGE,
+    });
+  });
+
   return (
     <>
-      <table className="inline-flex flex-col items-start rounded-2xl border-gray-20 border border-solid w-full">
-        <TableHead isEmployee={isEmployee} user={user} />
-        <TableBody
-          isEmployee={isEmployee}
-          shopId={shopId}
-          noticeId={noticeId}
-          user={user}
-        />
-        <Pagination
-          totalPage={1}
-          limit={1}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
-      </table>
+      {data && data.count && (
+        <table className="inline-flex flex-col items-start rounded-2xl border-gray-20 border border-solid w-full">
+          <TableHead isEmployee={isEmployee} user={user} />
+          <TableBody
+            isEmployee={isEmployee}
+            shopId={shopId}
+            noticeId={noticeId}
+            user={user}
+          />
+          <Pagination
+            totalPage={data.count}
+            limit={data.count / ITEM_PER_PAGE}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </table>
+      )}
     </>
   );
 };
 
-{
-  /* 
-  사장님 확인 용
-  <Table
-  id={users.id}
-  userName={users.name}
-  date={data.items.item.startsAt.slice(0, 10)}
-  hour={data.items.item.startsAt.slice(12)}
-  hourlypay={data.items.item.notice.item.hourlyPay}
-  statuses={data.items.item.status}
-/>; */
-}
 export default Table;
