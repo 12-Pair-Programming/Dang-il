@@ -1,5 +1,6 @@
 import React from 'react';
-import { useGetApplicationData } from '@/shared/@common/ui/Table/test/tableTest';
+import useFetch from '../../api/hooks/useFetch';
+import applicationAPI from '../../api/applicationAPI';
 import TableButton from './TableButton';
 import { TableProps } from './Table';
 
@@ -40,8 +41,13 @@ interface EmployerData {
   };
 }
 
-const TableBody = ({ isEmployee }: TableProps) => {
-  const { data } = useGetApplicationData();
+const TableBody = ({ isEmployee, shopId, noticeId }: TableProps) => {
+  const { data, loading, error, execute } = useFetch(() => {
+    return applicationAPI.getApplicationListData({
+      shop_id: shopId as string,
+      notice_id: noticeId as string,
+    });
+  });
 
   let employee = [];
   if (data && data.items) {
@@ -58,19 +64,31 @@ const TableBody = ({ isEmployee }: TableProps) => {
     employer = data.items.map((v: EmployerData) => v.item.notice.item);
   }
 
-  const handleChangingStatus = (buttons: string) => {
-    const status =
-      buttons === 'approve'
-        ? '승인 완료'
-        : buttons === 'reject'
-          ? '거절'
-          : '대기중';
-  };
+  let applicationId = '';
+  if (data && data.items) {
+    const foundItem = data.items.find(
+      (v: EmployeeData) =>
+        v.item &&
+        v.item.user &&
+        v.item.user.item &&
+        v.item.user.item.item &&
+        v.item.user.item.item.id,
+    );
+
+    if (foundItem) {
+      applicationId = foundItem.item.user.item.item.id;
+    }
+  }
+
+  const status = 'accepted' || 'rejected';
 
   return (
     <tbody className="flex flex-col w-full h-full items-start bg-white">
       {isEmployee
         ? employee &&
+          shopId &&
+          noticeId &&
+          status &&
           employee.slice(0, 4).map((v: EmployeeItemData) => (
             <tr className="flex w-full">
               <td
@@ -92,7 +110,17 @@ const TableBody = ({ isEmployee }: TableProps) => {
                 {v.phone}
               </td>
               <td className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 ">
-                <TableButton key={v.id} onClick={handleChangingStatus} />
+                <TableButton
+                  key={v.id}
+                  onClick={() => {
+                    applicationAPI.put(
+                      shopId as string,
+                      noticeId as string,
+                      v.id,
+                      status,
+                    );
+                  }}
+                />
               </td>
             </tr>
           ))
@@ -134,12 +162,6 @@ const TableBody = ({ isEmployee }: TableProps) => {
                     대기중
                   </p>
                 )}
-                {/* <TableButton
-                  key={v.id}
-                  handleClick={() => handleChangingStatus('approve', false)}
-                  buttonVisible={true}
-                  status={employerStatus}
-                /> */}
               </td>
             </tr>
           ))}

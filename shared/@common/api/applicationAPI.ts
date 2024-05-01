@@ -45,10 +45,16 @@ const applicationAPI = {
       { headers },
     );
   },
-  put: <T>(shop_id: string, notice_id: string, application_id: T, body: T) => {
+  put: <T>(
+    shop_id: string,
+    notice_id: string,
+    application_id: string,
+    status: T,
+  ) => {
     const headers = {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     };
+    const body = { status: status };
     return axiosInstance.put(
       `/shops/${shop_id}/notices/${notice_id}/applications/${application_id}`,
       body,

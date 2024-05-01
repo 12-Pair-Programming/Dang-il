@@ -293,7 +293,6 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
       },
     },
   ];
-  console.log(newData);
 
   const handleClick = (e: MouseEvent) => {
     if (modalClick.current && !modalClick.current.contains(e.target as Node)) {
