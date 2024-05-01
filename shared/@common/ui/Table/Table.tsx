@@ -2,23 +2,26 @@ import React, { useState } from 'react';
 import TableBody from '@/shared/@common/ui/Table/TableBody';
 import TableHead from '@/shared/@common/ui/Table/TableHead';
 import Pagination from '@/shared/@common/ui/Pagination/Pagination';
+import { userData } from '@/features/MyProfileInfo/FindProfile';
 
 export interface TableProps {
   isEmployee: boolean;
   shopId?: string;
   noticeId?: string;
+  user: userData;
 }
 
-const Table = ({ isEmployee, shopId, noticeId }: TableProps) => {
+const Table = ({ isEmployee, shopId, noticeId, user }: TableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   return (
     <>
       <table className="inline-flex flex-col items-start rounded-2xl border-gray-20 border border-solid w-full">
-        <TableHead isEmployee={isEmployee} />
+        <TableHead isEmployee={isEmployee} user={user} />
         <TableBody
           isEmployee={isEmployee}
           shopId={shopId}
           noticeId={noticeId}
+          user={user}
         />
         <Pagination
           totalPage={1}

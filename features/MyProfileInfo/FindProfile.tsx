@@ -9,10 +9,19 @@ import FindNotice from './FindNotice';
 import userAPI from '@/shared/@common/api/userAPI';
 import { jwtDecode } from 'jwt-decode';
 
+export interface userData {
+  address: string;
+  bio: string;
+  email: string;
+  id: string;
+  name: string;
+  phone: string;
+}
+
 // 가게 상태에 따라 다른 div 출력
 const FindProfile = () => {
   const router = useRouter();
-  const [user, setUser] = useState<any>([]);
+  const [user, setUser] = useState<userData>();
 
   const handleWritingShopInfo = () => {
     /* 가게 등록하는 페이지로 이동시키기 */
@@ -65,7 +74,7 @@ const FindProfile = () => {
     }
   }, [isMobile]);
 
-  if (isMyProfile) {
+  if (isMyProfile && user) {
     return (
       <div className="flex flex-col bg-white items-center justify-center px-[auto] w-[full]">
         <div className="flex py-[60px] mx-[auto] w-[983px] px-[auto] flex-col items-start justify-center self-stretch bg-white gap-2">
@@ -117,7 +126,7 @@ const FindProfile = () => {
             </div>
           </div>
         </div>
-        <FindNotice />
+        <FindNotice user={user} />
       </div>
     );
   } else {

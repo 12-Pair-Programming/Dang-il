@@ -42,7 +42,7 @@ export const NavigationBar = () => {
 
   return (
     <div className="w-full flex bg-white justify-center items-center">
-      <div className=" w-[1024px] p-[15px] flex flex-row bg-white justify-between items-center sticky gap-10 z-10 tablet:gap-2 mobile:grid mobile:grid-cols-3 mobile:gap-[1px] ">
+      <div className="w-[983px] p-[15px] flex flex-row bg-white justify-between items-center sticky gap-10 z-10 tablet:w-[678px] tablet:gap-2 mobile:grid mobile:grid-cols-3 mobile:gap-[1px] ">
         <div className="h-[40px] flex items-center mobile:w-[120px]">
           <Link href={'/noticeList'}>
             <Image

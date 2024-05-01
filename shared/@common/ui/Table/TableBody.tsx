@@ -14,10 +14,9 @@ interface EmployeeItemData {
 interface EmployeeData {
   item: {
     status: string;
+    id: string;
     user: {
-      item: {
-        item: EmployeeItemData;
-      };
+      item: EmployeeItemData;
     };
   };
 }
@@ -34,14 +33,12 @@ interface EmployerItemData {
 interface EmployerData {
   item: {
     notice: {
-      item: {
-        item: EmployerItemData;
-      };
+      item: EmployerItemData;
     };
   };
 }
 
-const TableBody = ({ isEmployee, shopId, noticeId }: TableProps) => {
+const TableBody = ({ isEmployee, shopId, noticeId, user }: TableProps) => {
   const { data, loading, error, execute } = useFetch(() => {
     return applicationAPI.getApplicationListData({
       shop_id: shopId as string,
@@ -49,74 +46,51 @@ const TableBody = ({ isEmployee, shopId, noticeId }: TableProps) => {
     });
   });
 
-  let employee = [];
-  if (data && data.items) {
-    employee = data.items.map((v: EmployeeData) => v.item.user.item);
-  }
+  const applicationId = user && user.id;
+  console.log(applicationId);
+  const { data: applicationsData } = useFetch(() => {
+    return applicationAPI.getApplicationData(applicationId);
+  });
 
-  let employeeStatus = [];
-  if (data && data.items) {
-    employeeStatus = data.items.map((v: EmployeeData) => v.item.status);
-  }
-
-  let employer = [];
-  if (data && data.items) {
-    employer = data.items.map((v: EmployerData) => v.item.notice.item);
-  }
-
-  let applicationId = '';
-  if (data && data.items) {
-    const foundItem = data.items.find(
-      (v: EmployeeData) =>
-        v.item &&
-        v.item.user &&
-        v.item.user.item &&
-        v.item.user.item.item &&
-        v.item.user.item.item.id,
-    );
-
-    if (foundItem) {
-      applicationId = foundItem.item.user.item.item.id;
-    }
-  }
+  console.log(applicationsData);
 
   const status = 'accepted' || 'rejected';
 
   return (
     <tbody className="flex flex-col w-full h-full items-start bg-white">
       {isEmployee
-        ? employee &&
+        ? data &&
           shopId &&
           noticeId &&
           status &&
-          employee.slice(0, 4).map((v: EmployeeItemData) => (
+          data.items.slice(0, 4).map((v: EmployeeData) => (
             <tr className="flex w-full">
               <td
-                key={v.id}
+                key={v.item.user.item.id}
                 className="flex w-1/4 py-8 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20"
               >
-                {v.name}
+                {v.item.user.item.name}
               </td>
               <td
-                key={v.id}
+                key={v.item.user.item.id}
                 className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-x-scroll whitespace-pre scrollbar-hide"
               >
-                {v.bio}
+                {v.item.user.item.bio}
               </td>
               <td
-                key={v.id}
+                key={v.item.user.item.id}
                 className="flex w-1/4 py-5 px-4 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-auto whitespace-pre"
               >
-                {v.phone}
+                {v.item.user.item.phone}
               </td>
               <td className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 ">
                 <TableButton
-                  key={v.id}
+                  key={v.item.user.item.id}
                   onClick={() => {
                     applicationAPI.put(
                       shopId as string,
                       noticeId as string,
-                      v.id,
+                      v.item.id,
                       status,
                     );
                   }}
@@ -124,33 +98,36 @@ const TableBody = ({ isEmployee, shopId, noticeId }: TableProps) => {
               </td>
             </tr>
           ))
-        : employer &&
-          employer.slice(0, 4).map((v: EmployerItemData) => (
+        : applicationsData &&
+          applicationsData.items.slice(0, 4).map((v: EmployerData) => (
             <tr className="flex w-full">
               <td
-                key={v.id}
+                key={v.item.notice.item.id}
                 className="flex w-1/4 py-8 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20"
               >
-                {v.description}
+                {v.item.notice.item.description}
               </td>
               <td
-                key={v.id}
+                key={v.item.notice.item.id}
                 className="flex w-1/4 py-5 px-3 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-x-scroll whitespace-pre scrollbar-hide"
               >
-                {v.startsAt.slice(0, 10)} {v.startsAt.slice(12, 13)}~
-                {Number(v.startsAt.slice(12, 13)) + Number(v.workhour)}시
+                {v.item.notice.item.startsAt.slice(0, 10)}{' '}
+                {v.item.notice.item.startsAt.slice(12, 13)}~
+                {Number(v.item.notice.item.startsAt.slice(12, 13)) +
+                  Number(v.item.notice.item.workhour)}
+                시
               </td>
               <td
-                key={v.id}
+                key={v.item.notice.item.id}
                 className="flex w-1/4 py-5 px-4 items-center gap-3 flex-shrink-1 self-stretch border-b-gray-20 overflow-auto whitespace-pre"
               >
-                {v.hourlyPay}
+                {v.item.notice.item.hourlyPay}
               </td>
               <td className="flex w-1/5 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 overflow-auto whitespace-pre">
                 {status ? (
                   <p
                     className={`p-4 ${
-                      status === '거절'
+                      status !== 'accepted'
                         ? 'bg-purple-20 text-purple-40'
                         : 'bg-blue-10 text-blue-20'
                     } flex py-1 px-2 content-center items-center rounded-2xl font-bold text-sm`}
