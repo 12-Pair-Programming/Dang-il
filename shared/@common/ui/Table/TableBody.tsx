@@ -35,6 +35,7 @@ interface EmployerData {
     notice: {
       item: EmployerItemData;
     };
+    status: string;
   };
 }
 
@@ -52,9 +53,9 @@ const TableBody = ({ isEmployee, shopId, noticeId, user }: TableProps) => {
     return applicationAPI.getApplicationData(applicationId);
   });
 
-  console.log(applicationsData);
+  const status = 'accepted' || 'rejected' || 'canceled';
 
-  const status = 'accepted' || 'rejected';
+  console.log(applicationsData);
 
   return (
     <tbody className="flex flex-col w-full h-full items-start bg-white">
@@ -62,7 +63,6 @@ const TableBody = ({ isEmployee, shopId, noticeId, user }: TableProps) => {
         ? data &&
           shopId &&
           noticeId &&
-          status &&
           data.items.slice(0, 4).map((v: EmployeeData) => (
             <tr className="flex w-full">
               <td
@@ -124,15 +124,21 @@ const TableBody = ({ isEmployee, shopId, noticeId, user }: TableProps) => {
                 {v.item.notice.item.hourlyPay}
               </td>
               <td className="flex w-1/5 py-5 px-3 items-center gap-3 flex-shrink-0 self-stretch border-b-gray-20 overflow-auto whitespace-pre">
-                {status ? (
+                {v.item.status ? (
                   <p
                     className={`p-4 ${
-                      status !== 'accepted'
-                        ? 'bg-purple-20 text-purple-40'
-                        : 'bg-blue-10 text-blue-20'
+                      v.item.status === 'accepted'
+                        ? 'bg-blue-10 text-blue-20'
+                        : v.item.status === 'rejected'
+                          ? 'bg-purple-20 text-purple-40'
+                          : 'bg-green-10 text-green-600'
                     } flex py-1 px-2 content-center items-center rounded-2xl font-bold text-sm`}
                   >
-                    {status}
+                    {v.item.status === 'accepted'
+                      ? '승인 완료'
+                      : v.item.status === 'rejected'
+                        ? '거절'
+                        : '대기중'}
                   </p>
                 ) : (
                   <p className="p-4 flex py-1 px-2 content-center items-center rounded-2xl font-bold text-sm bg-green-10 text-green-20">

@@ -195,7 +195,7 @@ const ShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
           shopId,
           noticeId,
           userApplicationId,
-          { status: 'canceled' },
+          'canceled',
         );
         if (data) {
           alert('취소가 완료되었습니다.');
