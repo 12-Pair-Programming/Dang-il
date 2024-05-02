@@ -168,7 +168,6 @@ const NoticeShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
     if (storageName === 'recentNotices') {
       localData.push(data.item);
 
-      // 배열의 길이가 6 이상인 경우, 첫 번째 요소를 제거
       if (localData.length > 6) {
         localData.shift();
       }

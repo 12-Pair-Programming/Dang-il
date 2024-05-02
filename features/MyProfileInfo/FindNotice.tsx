@@ -10,7 +10,6 @@ const FindNotice = ({ user }: { user: userData }) => {
   const router = useRouter();
   const [isNotice, setIsNotice] = useState(false);
   const handleWritingNotice = () => {
-    /* 공고 작성하는 페이지로 이동시키기 */
     router.push('/noticeList');
   };
 

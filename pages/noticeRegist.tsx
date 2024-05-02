@@ -1,8 +1,8 @@
-import { Input } from '@/shared/@common/ui/Input/Input';
+import { Input } from '@/shared/@common/ui/input/Input';
 import Image from 'next/image';
 import Calendar from '@/features/NoticeRegist/Calendar';
 import { useState } from 'react';
-import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
+import { useInput } from '@/shared/@common/ui/input/hook/inputHook';
 import Button from '@/shared/@common/ui/Button/Button';
 import { useRouter } from 'next/router';
 import { useTextarea } from '@/shared/@common/ui/Textarea/hook/textareaHook';
@@ -133,7 +133,3 @@ const noticeRegist = () => {
 };
 
 export default noticeRegist;
-
-/*
-  handleHourlypay는 시급을 입력하면 값이 지속적으로 변겨되는 구조.
-*/

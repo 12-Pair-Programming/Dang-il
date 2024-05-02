@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
-import { Input } from '@/shared/@common/ui/Input/Input';
+import { useInput } from '@/shared/@common/ui/input/hook/inputHook';
+import { Input } from '@/shared/@common/ui/input/Input';
 import { SetState } from '@/shared/@common/types/helper';
 import Button from '@/shared/@common/ui/Button/Button';
 import FilterCalendar from './FilterCalendar';

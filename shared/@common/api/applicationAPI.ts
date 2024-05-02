@@ -30,7 +30,6 @@ const applicationAPI = {
     const headers = {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     };
-    const params = { offset, limit };
     return axiosInstance.get(`/users/${user_id}/applications`, {
       headers,
     });

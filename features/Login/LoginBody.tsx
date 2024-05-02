@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Input } from '@/shared/@common/ui/Input/Input';
+import { Input } from '@/shared/@common/ui/input/Input';
 import Button from '@/shared/@common/ui/Button/Button';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
+import { useInput } from '@/shared/@common/ui/input/hook/inputHook';
 import { useCheckUserData } from '@/shared/@common/auth/hooks/useCheckUserData';
 import { Modal } from '@/shared/@common/ui/Modal/ModalBase';
 
@@ -90,21 +90,3 @@ export default function LoginBody() {
     </div>
   );
 }
-/*
-const modalConfigs = [
-  { modalContent: '안녕', modalType: 'check' },
-  { modalContent: '안녕하세요', modalType: 'notice' },
-  { modalContent: '확인', modalType: 'warning' },
-];
-
-const modals = modalConfigs.map((config) => modalHook(config));
-
-madals[i]으로도 사용 가능
-
-{
-  "email": "test@test.com",
-  "password": "123123123a",
-  "type": "employee"
-}
-
-*/

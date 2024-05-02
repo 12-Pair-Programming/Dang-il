@@ -101,34 +101,3 @@ export const Dropdown = ({
 };
 
 export default Dropdown;
-
-/*
-넣을 값들
-const dropdownRelationOptions = [
-    { value: '1', label: '1' },
-    { value: '2', label: '2' },
-    { value: '3', label: '3' },
-    { value: '4', label: '4' },
-    { value: '4', label: '4' },
-    { value: '4', label: '4' },
-    { value: '4', label: '4' },
-    { value: '4', label: '4' },
-    { value: '4', label: '4' },
-  ];
-
-  훅 사용법
-  defaultOption:초기설정
-  selectedOption:선택 값
-
-  const { selectedOption, options, handleSelectOption } = dropdownHook({
-    defaultOption: '1',
-    options: dropdownRelationOptions,
-  });
-
-<Dropdown
-          title={'드롭다운'}
-          options={options}
-          onSelect={handleSelectOption}
-          default={selectedOption}
-        /> 
-        */

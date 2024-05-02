@@ -4,11 +4,9 @@ import { useRouter } from 'next/router';
 import Button from '@/shared/@common/ui/Button/Button';
 import Image from 'next/image';
 import FindNotice from './FindNotice';
-import useFetch from '@/shared/@common/api/hooks/useFetch';
 import shopAPI from '@/shared/@common/api/shopAPI';
 import { jwtDecode } from 'jwt-decode';
 import userAPI from '@/shared/@common/api/userAPI';
-import noticeAPI from '@/shared/@common/api/noticeAPI';
 
 interface ShopData {
   id: string;
@@ -20,41 +18,25 @@ interface ShopData {
   imageUrl: string;
 }
 
-interface FindShopData {
-  item: {
-    item: ShopData;
-  };
-}
-
-// 가게 상태에 따라 다른 div 출력
 const FindShop = () => {
   const router = useRouter();
   const token = localStorage.getItem('token');
   const decodedToken = token ? jwtDecode(token) : null;
   const userId = (decodedToken as any)?.userId || '';
-  console.log(decodedToken);
-  console.log(userId);
-
-  // const { data } = useFetch(() => {
-  //   return shopAPI.get(userId)
-  // });
 
   const [registered, setRegistered] = useState(true);
   const [size, setSize] = useState('large');
   const isMobile = useMediaQuery({ query: '(min-width: 768px)' });
 
   const handleWritingShopInfo = () => {
-    /* 가게 등록하는 페이지로 이동시키기 */
     router.push('/registMyShop');
   };
 
   const handleEditingShopInfo = () => {
-    /* 가게 정보 편집하는 페이지로 이동시키기 */
     router.push('/editMyShop');
   };
 
   const handleWritingNotice = () => {
-    /* 공고 작성하는 페이지로 이동시키기 */
     router.push('/noticeRegist');
   };
 
@@ -66,7 +48,7 @@ const FindShop = () => {
     }
   }, [isMobile]);
 
-  const [shop, setShop] = useState<any>([]);
+  const [shop, setShop] = useState<ShopData>();
   let shopId = '';
 
   const getUser = async () => {
@@ -84,17 +66,8 @@ const FindShop = () => {
     }
   };
 
-  // const getShop = async () => {
-  //   try {
-
-  //   } catch (error) {
-
-  //   }
-  // };
-
   useEffect(() => {
     getUser();
-    // getShop();
   }, []);
 
   if (registered) {
@@ -103,7 +76,7 @@ const FindShop = () => {
         <div className="flex m-[auto] w-[983px] py-[60px] px-[auto] flex-col items-start gap-2 bg-white ">
           <p className="text-black text-[28px] font-bold">내 가게</p>
           <div className="w-full">
-            <div className="object-cover w-full h-[340px] inline-flex py-[60px] px-[57px] w-[964px] p-6 justify-between items-start rounded-xl bg-purple-10">
+            <div className="object-cover h-[340px] inline-flex py-[60px] px-[57px] w-[964px] p-6 justify-between items-start rounded-xl bg-purple-10">
               <Image
                 src={shop.imageUrl}
                 alt="내 가게 사진"
@@ -169,7 +142,6 @@ const FindShop = () => {
             가게 등록하기
           </Button>
           <div className="h-[550px]">.</div>
-          {/* 여기 조정해서 Footer를 바닥에 두세요. */}
         </div>
       </div>
     );
