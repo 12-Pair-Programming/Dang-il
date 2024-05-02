@@ -6,6 +6,7 @@ import useFetch from '@/shared/@common/api/hooks/useFetch';
 import noticeAPI from '@/shared/@common/api/noticeAPI';
 import userAPI from '@/shared/@common/api/userAPI';
 import { jwtDecode } from 'jwt-decode';
+import Loading from '@/shared/@common/ui/Loading';
 
 const CustomNotice = () => {
   const user =
@@ -31,7 +32,9 @@ const CustomNotice = () => {
   }, [userId]);
   const userAddress = data && data.item.address;
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <div className="flex w-full py-[60px] px-auto flex-col items-center bg-purple-10">
       <div className="flex flex-col gap-10 px-4 w-[983px] tablet:w-[678px] mobile:w-full">
         <div className="text-[28px] font-bold">맞춤 공고</div>
@@ -45,26 +48,24 @@ const CustomNotice = () => {
                 )
                 .slice(0, 3)
                 .map((item: ItemData) => (
-                  <div className="mobile:max-w-[171px]">
-                    <Link
-                      href={`/noticeInfo?shopId=${item.item.shop.item.id}&noticeId=${item.item.id}`}
-                    >
-                      <Card
-                        name={item.item.shop.item.name}
-                        imageUrl={item.item.shop.item.imageUrl}
-                        address1={`${item.item.shop.item.address1} ${item.item.shop.item.address2}`}
-                        startsAt={item.item.startsAt}
-                        workhour={item.item.workhour}
-                        hourlyPay={item.item.hourlyPay}
-                        originalHourlyPay={
-                          item.item.shop.item.originalHourlyPay
-                        }
-                        closed={item.item.closed}
-                      />
-                    </Link>
-                  </div>
+                  <Link
+                    href={`/noticeInfo?shopId=${item.item.shop.item.id}&noticeId=${item.item.id}`}
+                    className="max-w-[310px] mobile:max-w-[236px]"
+                  >
+                    <Card
+                      name={item.item.shop.item.name}
+                      imageUrl={item.item.shop.item.imageUrl}
+                      address1={`${item.item.shop.item.address1} ${item.item.shop.item.address2}`}
+                      startsAt={item.item.startsAt}
+                      workhour={item.item.workhour}
+                      hourlyPay={item.item.hourlyPay}
+                      originalHourlyPay={item.item.shop.item.originalHourlyPay}
+                      closed={item.item.closed}
+                    />
+                  </Link>
                 ))
-            : noticeData &&
+            : !userAddress &&
+              noticeData &&
               noticeData.items.length > 0 &&
               noticeData.items.slice(0, 3).map((item: ItemData) => (
                 <Link
