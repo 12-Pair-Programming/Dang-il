@@ -46,7 +46,7 @@ const NoticePayInfo = ({
               : 'bg-primary text-white'
           } rounded-[20px] w-[159px] px-3 py-1 mobile:px-[0px] flex justify-center items-center mobile:bg-white mobile:items-start`}
         >
-          <div className="text-[12px] w-[159px] text-white overflow-hidden whitespace-nowrap text-ellipsis mobile:text-purple-30 ">
+          <div className="text-[12px] w-[159px] text-white overflow-hidden whitespace-nowrap text-ellipsis mobile:text-purple-30 text-center ">
             기존 시급보다 {pay}%⬆
           </div>
         </div>
@@ -68,9 +68,11 @@ const payPercentage = (
   originalHourlyPay: number,
 ): number | null => {
   const payDifference = hourlyPay - originalHourlyPay;
+
   if (payDifference > 0) {
-    const increasePercentage: number =
-      ((hourlyPay - originalHourlyPay) / originalHourlyPay) * 100;
+    const increasePercentage: number = Math.floor(
+      ((hourlyPay - originalHourlyPay) / originalHourlyPay) * 100,
+    );
     return increasePercentage;
   } else {
     return null;
