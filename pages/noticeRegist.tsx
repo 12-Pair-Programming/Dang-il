@@ -13,6 +13,10 @@ import noticeAPI from '@/shared/@common/api/noticeAPI';
 import Footer from '@/shared/@common/ui/Footer/Footer';
 import NavigationBar from '@/shared/@common/ui/Nav/NavigationBar';
 
+type JwtDecode = {
+  userId?: string;
+};
+
 const noticeRegist = () => {
   const router = useRouter();
 
@@ -35,7 +39,7 @@ const noticeRegist = () => {
   const handleWritingNotice = async () => {
     const token = localStorage.getItem('token');
     const decodedToken = token ? jwtDecode(token) : null;
-    const userId = (decodedToken as any)?.userId || '';
+    const userId = (decodedToken as JwtDecode)?.userId || '';
     const hourlyPayNumber = Number(hourlypay.value);
     const workingHour = Number(hour.value);
     try {

@@ -47,6 +47,9 @@ interface Item {
     startsAt: string;
   };
 }
+type JwtDecode = {
+  userId?: string;
+};
 
 /**
  * 가게 정보 카드 컴포넌트
@@ -63,7 +66,7 @@ const NoticeShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
     typeof window !== 'undefined' ? localStorage.getItem('token') : '';
 
   const decodedToken = token ? jwtDecode(token) : null;
-  const userId = (decodedToken as any)?.userId || '';
+  const userId = (decodedToken as JwtDecode)?.userId || '';
 
   const [modalContent, setModalContent] = useState('');
   const [modalType, setModalType] = useState('');

@@ -9,6 +9,9 @@ import FindNotice from './FindNotice';
 import userAPI from '@/shared/@common/api/userAPI';
 import { jwtDecode } from 'jwt-decode';
 
+type JwtDecode = {
+  userId?: string;
+};
 export interface userData {
   address: string;
   bio: string;
@@ -40,7 +43,7 @@ const FindProfile = () => {
         typeof window !== 'undefined' ? localStorage.getItem('token') : '';
 
       const decodedToken = token ? jwtDecode(token) : null;
-      const userId = (decodedToken as any)?.userId || '';
+      const userId = (decodedToken as JwtDecode)?.userId || '';
       const userData = await userAPI.getUserData(userId);
       setUser(userData.data.item);
       setIsMyProfile(true);

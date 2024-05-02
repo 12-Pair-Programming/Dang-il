@@ -8,6 +8,9 @@ import shopAPI from '@/shared/@common/api/shopAPI';
 import { jwtDecode } from 'jwt-decode';
 import userAPI from '@/shared/@common/api/userAPI';
 
+type JwtDecode = {
+  userId?: string;
+};
 interface ShopData {
   id: string;
   name: string;
@@ -22,7 +25,7 @@ const FindShop = () => {
   const router = useRouter();
   const token = localStorage.getItem('token');
   const decodedToken = token ? jwtDecode(token) : null;
-  const userId = (decodedToken as any)?.userId || '';
+  const userId = (decodedToken as JwtDecode)?.userId || '';
 
   const [registered, setRegistered] = useState(true);
   const [size, setSize] = useState('large');

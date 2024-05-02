@@ -6,6 +6,10 @@ import { jwtDecode } from 'jwt-decode';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
+type JwtDecode = {
+  userId?: string;
+};
+
 const FindNotice = ({ user }: { user: userData }) => {
   const router = useRouter();
   const [isNotice, setIsNotice] = useState(false);
@@ -18,7 +22,7 @@ const FindNotice = ({ user }: { user: userData }) => {
       try {
         const token = localStorage.getItem('token');
         const decodedToken = token ? jwtDecode(token) : null;
-        const userId = (decodedToken as any)?.userId || '';
+        const userId = (decodedToken as JwtDecode)?.userId || '';
         const userData = await applicationAPI.getApplicationData(userId);
         setIsNotice(!!userData);
       } catch (error) {
