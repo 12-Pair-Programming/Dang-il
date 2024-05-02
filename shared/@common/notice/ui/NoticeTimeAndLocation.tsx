@@ -6,6 +6,7 @@ interface props {
   workhour: number;
   address1: string;
   closed: boolean;
+  isPastNotice?: boolean;
 }
 
 /**
@@ -14,6 +15,7 @@ interface props {
  * @param workhour 작업 시간
  * @param address1 주소 앞부분
  * @param closed 닫힘 여부
+ * @param isPastNotice 지난 공고 여부
  * @returns
  */
 const NoticeTimeAndLocation = ({
@@ -21,20 +23,21 @@ const NoticeTimeAndLocation = ({
   workhour,
   address1,
   closed,
+  isPastNotice,
 }: props) => {
   const businessHours = businessHoursString(startsAt, workhour);
   return (
     <>
       <div className="flex flex-row my-2 pr-2">
         <Image
-          src={`/images/icon-clock-${closed ? 'off' : 'on'}.svg`}
+          src={`/images/icon-clock-${closed || isPastNotice ? 'off' : 'on'}.svg`}
           alt="clock icon"
           width={15}
           height={15}
         />
         <p
           className={`${
-            closed ? 'text-gray-20' : 'text-gray-50'
+            closed || isPastNotice ? 'text-gray-20' : 'text-gray-50'
           } text-sm ml-1 whitespace-nowrap overflow-hidden text-ellipsis`}
         >
           {businessHours}
@@ -42,14 +45,14 @@ const NoticeTimeAndLocation = ({
       </div>
       <div className="flex flex-row w-full">
         <Image
-          src={`/images/icon-location-${closed ? 'off' : 'on'}.svg`}
+          src={`/images/icon-location-${closed || isPastNotice ? 'off' : 'on'}.svg`}
           alt="location icon"
           width={15}
           height={15}
         />
         <p
           className={`${
-            closed ? 'text-gray-20' : 'text-gray-50'
+            closed || isPastNotice ? 'text-gray-20' : 'text-gray-50'
           } text-sm ml-1  whitespace-nowrap overflow-hidden text-ellipsis`}
         >
           {address1}

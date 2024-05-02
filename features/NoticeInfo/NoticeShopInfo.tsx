@@ -12,6 +12,7 @@ import applicationAPI from '@/shared/@common/api/applicationAPI';
 import useFetch from '@/shared/@common/api/hooks/useFetch';
 import { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import isPastNotice from '@/shared/@common/notice/utils/isPastNotice';
 
 interface props {
   userType: string;
@@ -42,6 +43,9 @@ interface Item {
   startsAt: string;
   workhour: number;
   shop: Shop;
+  item: {
+    startsAt: string;
+  };
 }
 
 /**
@@ -103,6 +107,8 @@ const NoticeShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
   });
 
   let getdata: Item = data;
+  const isPast = isPastNotice(getdata.item.startsAt);
+  console.log('🚀 ~ NoticeShopInfo ~ isPast:', isPast);
   if (data && data.item) {
     getdata = data.item;
   }
@@ -220,6 +226,7 @@ const NoticeShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
         break;
       case getdata.closed ||
         !isLogin ||
+        isPast ||
         buttonStatus === 'rejected' ||
         buttonStatus === 'accepted':
         isButtonText = '신청 불가';
@@ -266,6 +273,7 @@ const NoticeShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
                 closed={getdata.closed}
                 width={550}
                 height={350}
+                isPastNotice={isPast}
               />
             </div>
             <div className="w-[346px] ml-6 flex flex-col justify-between">

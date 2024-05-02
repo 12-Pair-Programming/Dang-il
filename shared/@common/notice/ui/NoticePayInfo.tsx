@@ -5,6 +5,7 @@ interface props {
   originalHourlyPay: number;
   closed: boolean;
   fontSize: string;
+  isPastNotice?: boolean;
 }
 
 /**
@@ -14,6 +15,7 @@ interface props {
  * @param originalHourlyPay 기존 시급
  * @param closed 닫힘 여부
  * @param fontSize ex : 4px
+ * @param isPastNotice 지난 공고 여부
  * @returns
  */
 const NoticePayInfo = ({
@@ -21,6 +23,7 @@ const NoticePayInfo = ({
   originalHourlyPay,
   closed,
   fontSize,
+  isPastNotice,
 }: props) => {
   const hourlyPayToString = `${hourlyPay.toLocaleString()}원`;
 
@@ -30,7 +33,7 @@ const NoticePayInfo = ({
     <div className="flex items-center mt-4 mobile:flex-col mobile:items-start g-4">
       <p
         className={`${
-          closed ? 'text-gray-20' : 'text-black'
+          closed || isPastNotice ? 'text-gray-20' : 'text-black'
         } font-bold text-[${fontSize}] mobile: text-[18px] mr-3 whitespace-nowrap`}
       >
         {hourlyPayToString}
@@ -38,7 +41,9 @@ const NoticePayInfo = ({
       {pay ? (
         <div
           className={`${
-            closed ? 'bg-gray-20 text-white' : 'bg-primary text-white'
+            closed || isPastNotice
+              ? 'bg-gray-20 text-white'
+              : 'bg-primary text-white'
           } rounded-[20px] w-[159px] px-3 py-1 mobile:px-[0px] flex justify-center items-center mobile:bg-white mobile:items-start`}
         >
           <div className="text-[12px] w-[159px] text-white overflow-hidden whitespace-nowrap text-ellipsis mobile:text-purple-30 ">
@@ -53,7 +58,7 @@ const NoticePayInfo = ({
 };
 
 /**
- * 기존 시급 대비 현재 사급을 퍼센트로 보여줌
+ * 기존 시급 대비 현재 시급을 퍼센트로 보여줌
  * @param hourlyPay
  * @param originalHourlyPay
  * @returns

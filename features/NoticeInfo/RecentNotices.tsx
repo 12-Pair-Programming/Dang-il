@@ -67,6 +67,7 @@ const RecentNotices = ({ noticeId }: props) => {
                 hourlyPay={notice.hourlyPay}
                 originalHourlyPay={notice.shop.item.originalHourlyPay}
                 closed={notice.closed}
+                isPastNotice={isPastNotice(notice.startsAt)}
               />
             </Link>
           ))}
