@@ -9,6 +9,9 @@ import FindNotice from './FindNotice';
 import userAPI from '@/shared/@common/api/userAPI';
 import { jwtDecode } from 'jwt-decode';
 
+type JwtDecode = {
+  userId?: string;
+};
 export interface userData {
   address: string;
   bio: string;
@@ -18,24 +21,21 @@ export interface userData {
   phone: string;
 }
 
-// 가게 상태에 따라 다른 div 출력
 const FindProfile = () => {
   const router = useRouter();
   const [user, setUser] = useState<userData>();
 
   const handleWritingShopInfo = () => {
-    /* 가게 등록하는 페이지로 이동시키기 */
     router.push('/registMyProfile');
   };
 
   const handleEditingProfileInfo = () => {
-    /* 가게 정보 편집하는 페이지로 이동시키기 */
     router.push('/registMyProfile');
   };
 
   const [size, setSize] = useState('large');
   const isMobile = useMediaQuery({ query: '(min-width: 768px)' });
-  const [isMyProfile, setIsMyProfile] = useState(true); // 가게 상태 추가
+  const [isMyProfile, setIsMyProfile] = useState(true);
 
   const getUser = async () => {
     try {
@@ -43,7 +43,7 @@ const FindProfile = () => {
         typeof window !== 'undefined' ? localStorage.getItem('token') : '';
 
       const decodedToken = token ? jwtDecode(token) : null;
-      const userId = (decodedToken as any)?.userId || '';
+      const userId = (decodedToken as JwtDecode)?.userId || '';
       const userData = await userAPI.getUserData(userId);
       setUser(userData.data.item);
       setIsMyProfile(true);
@@ -56,15 +56,6 @@ const FindProfile = () => {
     getUser();
     console.log(user);
   }, []);
-
-  //   const { data } = useFetch(() =>
-  //     userAPI.getUserData('abc');
-  //   );
-
-  // let user = [];
-  // if (data && data.item) {
-  //   user = data.item;
-  // }
 
   useEffect(() => {
     if (isMobile) {

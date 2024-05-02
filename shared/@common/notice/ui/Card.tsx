@@ -1,19 +1,17 @@
 import HourlyPayForWon from './NoticePayInfo';
 import NoticeTimeAndLocation from './NoticeTimeAndLocation';
-// import isPastNotice from '@/shared/@common/notice/utils/isPastNotice';
 import CardImage from './CardImage';
-// import Link from 'next/link';
 
 interface ProductProps {
-  name: string; //가게명
-  imageUrl: string; //가게 대표 이미지
-  address1: string; //주소
-  startsAt: string; //시작 일시
-  workhour: number; //업무 시간
-  hourlyPay: number; //공고 시급
-  originalHourlyPay: number; //가게 기존 시급
-  closed: boolean; //공고 오픈여부
-  isPastNotice?: boolean; //지난 공고 여부
+  name: string;
+  imageUrl: string;
+  address1: string;
+  startsAt: string;
+  workhour: number;
+  hourlyPay: number;
+  originalHourlyPay: number;
+  closed: boolean;
+  isPastNotice?: boolean;
 }
 
 /**

@@ -7,13 +7,17 @@ import noticeAPI from '@/shared/@common/api/noticeAPI';
 import userAPI from '@/shared/@common/api/userAPI';
 import { jwtDecode } from 'jwt-decode';
 
+type JwtDecode = {
+  userId?: string;
+};
+
 const CustomNotice = () => {
   const user =
     typeof window !== 'undefined' ? localStorage.getItem('user') : '';
   const token =
     typeof window !== 'undefined' ? localStorage.getItem('token') : '';
   const decodedToken = token ? jwtDecode(token) : null;
-  const userId = (decodedToken as any)?.userId || '';
+  const userId = (decodedToken as JwtDecode)?.userId || '';
   const [noticeData, setNoticeData] = useState<Data>();
   const [address, setAddress] = useState('');
 

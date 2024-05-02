@@ -12,7 +12,7 @@ import { useEffect } from 'react';
  */
 const NoticeInfo = () => {
   const userType =
-    typeof window !== 'undefined' ? localStorage.getItem('user') : ''; //user.item.type : employer | employee;
+    typeof window !== 'undefined' ? localStorage.getItem('user') : '';
   const token =
     typeof window !== 'undefined' ? localStorage.getItem('token') : '';
   const isLogin = token ? true : false;

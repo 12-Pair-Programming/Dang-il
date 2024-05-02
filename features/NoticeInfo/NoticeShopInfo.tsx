@@ -47,6 +47,9 @@ interface Item {
     startsAt: string;
   };
 }
+type JwtDecode = {
+  userId?: string;
+};
 
 /**
  * 가게 정보 카드 컴포넌트
@@ -63,7 +66,7 @@ const NoticeShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
     typeof window !== 'undefined' ? localStorage.getItem('token') : '';
 
   const decodedToken = token ? jwtDecode(token) : null;
-  const userId = (decodedToken as any)?.userId || '';
+  const userId = (decodedToken as JwtDecode)?.userId || '';
 
   const [modalContent, setModalContent] = useState('');
   const [modalType, setModalType] = useState('');
@@ -168,7 +171,6 @@ const NoticeShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
     if (storageName === 'recentNotices') {
       localData.push(data.item);
 
-      // 배열의 길이가 6 이상인 경우, 첫 번째 요소를 제거
       if (localData.length > 6) {
         localData.shift();
       }

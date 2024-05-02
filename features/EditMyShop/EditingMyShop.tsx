@@ -12,6 +12,10 @@ import imageAPI from '@/shared/@common/api/imageAPI';
 import { jwtDecode } from 'jwt-decode';
 import userAPI from '@/shared/@common/api/userAPI';
 
+type JwtDecode = {
+  userId?: string;
+};
+
 const EditingMyShop = () => {
   const router = useRouter();
   const [foodKinds, setFoodKinds] = useState('');
@@ -27,7 +31,7 @@ const EditingMyShop = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     const decodedToken = token ? jwtDecode(token) : null;
-    const userId = (decodedToken as any)?.userId || '';
+    const userId = (decodedToken as JwtDecode)?.userId || '';
 
     const fetchShopInfo = async () => {
       try {
@@ -98,7 +102,7 @@ const EditingMyShop = () => {
     try {
       const token = localStorage.getItem('token');
       const decodedToken = token ? jwtDecode(token) : null;
-      const userId = (decodedToken as any)?.userId || '';
+      const userId = (decodedToken as JwtDecode)?.userId || '';
       const userData = await userAPI.getUserData(userId);
       shopId = userData.data.item.shop.item.id;
       if (
