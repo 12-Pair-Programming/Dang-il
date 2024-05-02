@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Card from '@/shared/@common/notice/ui/Card';
 import { useEffect, useState } from 'react';
+import isPastNotice from '@/shared/@common/notice/utils/isPastNotice';
 
 interface props {
   noticeId: string;
@@ -47,24 +48,15 @@ const RecentNotices = ({ noticeId }: props) => {
       </div>
       <div className="mt-8 gap-[14px] grid grid-cols-3">
         {recentNotices &&
-          recentNotices?.slice(0, 6).map((notice) =>
-            notice.closed === false ? (
-              <Link
-                href={`/noticeInfo?shopId=${notice.shop.item.id}&noticeId=${notice.id}`}
-              >
-                <Card
-                  key={notice.shop.item.id}
-                  name={notice.shop.item.name}
-                  imageUrl={notice.shop.item.imageUrl}
-                  address1={notice.shop.item.address1}
-                  startsAt={notice.startsAt}
-                  workhour={notice.workhour}
-                  hourlyPay={notice.hourlyPay}
-                  originalHourlyPay={notice.shop.item.originalHourlyPay}
-                  closed={notice.closed}
-                />
-              </Link>
-            ) : (
+          recentNotices?.slice(0, 6).map((notice) => (
+            <Link
+              href={`/noticeInfo?shopId=${notice.shop.item.id}&noticeId=${notice.id}`}
+              onClick={(e) => {
+                if (notice.closed === true || isPastNotice(notice.startsAt)) {
+                  e.preventDefault();
+                }
+              }}
+            >
               <Card
                 key={notice.shop.item.id}
                 name={notice.shop.item.name}
@@ -76,8 +68,8 @@ const RecentNotices = ({ noticeId }: props) => {
                 originalHourlyPay={notice.shop.item.originalHourlyPay}
                 closed={notice.closed}
               />
-            ),
-          )}
+            </Link>
+          ))}
       </div>
     </div>
   );
