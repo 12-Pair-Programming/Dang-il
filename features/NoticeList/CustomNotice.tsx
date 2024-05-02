@@ -33,9 +33,9 @@ const CustomNotice = () => {
 
   return (
     <div className="flex w-full py-[60px] px-auto flex-col items-center bg-purple-10">
-      <div className="flex flex-col gap-10 px-4 w-[983px] tablet:w-[678px] mobile:max-w-[520px]">
+      <div className="flex flex-col gap-10 px-4 w-[983px] tablet:w-[678px] mobile:w-full">
         <div className="text-[28px] font-bold">맞춤 공고</div>
-        <div className="w-[983px] tablet:w-[678px] mobile:max-w-[520px] flex items-start overflow-x-scroll scrollbar-hide gap-4">
+        <div className="w-[983px] tablet:w-[678px] mobile:w-full flex items-start overflow-x-scroll scrollbar-hide gap-4">
           {userAddress && noticeData
             ? noticeData.items.length > 0 &&
               noticeData.items
@@ -45,21 +45,24 @@ const CustomNotice = () => {
                 )
                 .slice(0, 3)
                 .map((item: ItemData) => (
-                  <Link
-                    href={`/noticeInfo?shopId=${item.item.shop.item.id}&noticeId=${item.item.id}`}
-                    className="max-w-[310px] mobile:max-w-[236px]"
-                  >
-                    <Card
-                      name={item.item.shop.item.name}
-                      imageUrl={item.item.shop.item.imageUrl}
-                      address1={`${item.item.shop.item.address1} ${item.item.shop.item.address2}`}
-                      startsAt={item.item.startsAt}
-                      workhour={item.item.workhour}
-                      hourlyPay={item.item.hourlyPay}
-                      originalHourlyPay={item.item.shop.item.originalHourlyPay}
-                      closed={item.item.closed}
-                    />
-                  </Link>
+                  <div className="mobile:max-w-[171px]">
+                    <Link
+                      href={`/noticeInfo?shopId=${item.item.shop.item.id}&noticeId=${item.item.id}`}
+                    >
+                      <Card
+                        name={item.item.shop.item.name}
+                        imageUrl={item.item.shop.item.imageUrl}
+                        address1={`${item.item.shop.item.address1} ${item.item.shop.item.address2}`}
+                        startsAt={item.item.startsAt}
+                        workhour={item.item.workhour}
+                        hourlyPay={item.item.hourlyPay}
+                        originalHourlyPay={
+                          item.item.shop.item.originalHourlyPay
+                        }
+                        closed={item.item.closed}
+                      />
+                    </Link>
+                  </div>
                 ))
             : noticeData &&
               noticeData.items.length > 0 &&
