@@ -107,10 +107,10 @@ const NoticeShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
   });
 
   let getdata: Item = data;
-  const isPast = isPastNotice(getdata.item.startsAt);
-  console.log('🚀 ~ NoticeShopInfo ~ isPast:', isPast);
+  let isPast = false;
   if (data && data.item) {
     getdata = data.item;
+    isPast = isPastNotice(data.item.startsAt);
   }
 
   useEffect(() => {
