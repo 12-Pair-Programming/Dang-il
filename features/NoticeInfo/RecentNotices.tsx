@@ -42,11 +42,11 @@ const RecentNotices = ({ noticeId }: props) => {
   }, [noticeId]);
 
   return (
-    <div className="w-[983px] mt-[60px] mb-3 mx-[238px]">
+    <div className="w-[983px] tablet:w-[680px] mobile:max-w-[351px] mt-[60px] mb-3 mx-[238px] mobile:mx-[50px]">
       <div>
         <p className="text-[28px] font-bold">최근에 본 공고</p>
       </div>
-      <div className="mt-8 gap-[14px] grid grid-cols-3">
+      <div className="mt-8 gap-[14px] grid grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-2 ">
         {recentNotices &&
           recentNotices?.slice(0, 6).map((notice) => (
             <Link

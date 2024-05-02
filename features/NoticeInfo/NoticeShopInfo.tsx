@@ -245,7 +245,7 @@ const NoticeShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
   return (
     <>
       {getdata && (
-        <div className="py-[60px] mx-[238px]">
+        <div className="py-[60px] mx-[238px] w-[963px] tablet:w-[680px] mobile:max-w-[520px]  mobile:flex mobile:flex-col mobile:items-center">
           <Modal
             content={modalContent}
             isOpen={isOpen}
@@ -260,14 +260,14 @@ const NoticeShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
             }}
             type={modalType}
           />
-          <div>
+          <div className=" flex flex-col  content-start">
             <p className="text-base font-bold text-primary">
               {getdata.shop.item.category}
             </p>
             <p className="text-[28px] font-bold">{getdata.shop.item.name}</p>
           </div>
-          <div className="flex w-[963px] h-[365px] border-[1px] rounded-2xl p-6 mt-4">
-            <div className="w-[640px] overflow-hidden rounded-2xl">
+          <div className="flex w-[963px] tablet:w-[680px] mobile:max-w-[351px] h-[365px] tablet:h-[717px] mobile:h-[480px] border-[1px] rounded-2xl p-6 mt-4 tablet:flex tablet:flex-row tablet:flex-wrap mobile:flex mobile:flex-row mobile:flex-wrap">
+            <div className="w-[640px] mobile:w-[344px] mobile:h-[180px] overflow-hidden rounded-2xl ">
               <CardImage
                 imageUrl={getdata.shop.item.imageUrl}
                 closed={getdata.closed}
@@ -276,7 +276,7 @@ const NoticeShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
                 isPastNotice={isPast}
               />
             </div>
-            <div className="w-[346px] ml-6 flex flex-col justify-between">
+            <div className="w-[346px] tablet:w-[680px] mobile:max-w-[351px] ml-6 mobile:ml-1 flex flex-col justify-between">
               <p className="text-base font-bold text-primary">시급</p>
               <HourlyPayForWon
                 hourlyPay={getdata.hourlyPay}
@@ -314,7 +314,7 @@ const NoticeShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
               </Button>
             </div>
           </div>
-          <div className="bg-gray-10 p-8 mt-6 rounded-lg w-[963px]">
+          <div className="bg-gray-10 p-8 mt-6 rounded-lg w-[963px] tablet:w-[680px] mobile:max-w-[351px]">
             <p className="font-bold text-base">공고 설명</p>
             <p>{getdata.description}</p>
           </div>
