@@ -12,6 +12,7 @@ import applicationAPI from '@/shared/@common/api/applicationAPI';
 import useFetch from '@/shared/@common/api/hooks/useFetch';
 import { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import isPastNotice from '@/shared/@common/notice/utils/isPastNotice';
 
 interface props {
   userType: string;
@@ -42,6 +43,9 @@ interface Item {
   startsAt: string;
   workhour: number;
   shop: Shop;
+  item: {
+    startsAt: string;
+  };
 }
 
 /**
@@ -52,7 +56,7 @@ interface Item {
  * @param shopId 가게 ID
  * @param noticeId 공고 ID
  */
-const ShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
+const NoticeShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
   const router = useRouter();
 
   const token =
@@ -103,8 +107,10 @@ const ShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
   });
 
   let getdata: Item = data;
+  let isPast = false;
   if (data && data.item) {
     getdata = data.item;
+    isPast = isPastNotice(data.item.startsAt);
   }
 
   useEffect(() => {
@@ -220,6 +226,7 @@ const ShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
         break;
       case getdata.closed ||
         !isLogin ||
+        isPast ||
         buttonStatus === 'rejected' ||
         buttonStatus === 'accepted':
         isButtonText = '신청 불가';
@@ -238,7 +245,7 @@ const ShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
   return (
     <>
       {getdata && (
-        <div className="py-[60px] mx-[238px]">
+        <div className="py-[60px] mx-[238px] w-[963px] tablet:w-[680px] mobile:max-w-[520px]  mobile:flex mobile:flex-col mobile:items-center">
           <Modal
             content={modalContent}
             isOpen={isOpen}
@@ -253,22 +260,23 @@ const ShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
             }}
             type={modalType}
           />
-          <div>
+          <div className=" flex flex-col  content-start">
             <p className="text-base font-bold text-primary">
               {getdata.shop.item.category}
             </p>
             <p className="text-[28px] font-bold">{getdata.shop.item.name}</p>
           </div>
-          <div className="flex w-[963px] h-[365px] border-[1px] rounded-2xl p-6 mt-4">
-            <div className="w-[640px] overflow-hidden rounded-2xl">
+          <div className="flex w-[963px] tablet:w-[680px] mobile:max-w-[351px] h-[365px] tablet:h-[717px] mobile:h-[480px] border-[1px] rounded-2xl p-6 mt-4 tablet:flex tablet:flex-row tablet:flex-wrap mobile:flex mobile:flex-row mobile:flex-wrap">
+            <div className="w-[640px] mobile:w-[344px] mobile:h-[180px] overflow-hidden rounded-2xl ">
               <CardImage
                 imageUrl={getdata.shop.item.imageUrl}
                 closed={getdata.closed}
                 width={550}
                 height={350}
+                isPastNotice={isPast}
               />
             </div>
-            <div className="w-[346px] ml-6 flex flex-col justify-between">
+            <div className="w-[346px] tablet:w-[680px] mobile:max-w-[351px] ml-6 mobile:ml-1 flex flex-col justify-between">
               <p className="text-base font-bold text-primary">시급</p>
               <HourlyPayForWon
                 hourlyPay={getdata.hourlyPay}
@@ -306,7 +314,7 @@ const ShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
               </Button>
             </div>
           </div>
-          <div className="bg-gray-10 p-8 mt-6 rounded-lg w-[963px]">
+          <div className="bg-gray-10 p-8 mt-6 rounded-lg w-[963px] tablet:w-[680px] mobile:max-w-[351px]">
             <p className="font-bold text-base">공고 설명</p>
             <p>{getdata.description}</p>
           </div>
@@ -316,4 +324,4 @@ const ShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
   );
 };
 
-export default ShopInfo;
+export default NoticeShopInfo;

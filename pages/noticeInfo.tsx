@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import ShopInfo from '@/features/NoticeInfo/ShopInfo';
+import NoticeShopInfo from '@/features/NoticeInfo/NoticeShopInfo';
 import RecentNotices from '@/features/NoticeInfo/RecentNotices';
 import EmployeeList from '@/features/NoticeInfo/EmployeeList';
 import { NavigationBar } from '@/shared/@common/ui/Nav/NavigationBar';
@@ -24,7 +24,7 @@ const NoticeInfo = () => {
     <>
       <NavigationBar />
       <div className="bg-white text-black items-center flex flex-col pb-20">
-        <ShopInfo
+        <NoticeShopInfo
           isLogin={isLogin}
           userType={userType as string}
           shopId={shopId as string}
