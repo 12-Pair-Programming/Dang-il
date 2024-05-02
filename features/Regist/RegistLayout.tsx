@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import RegistBody from './RegistBody';
 
 export default function RegistLayout() {

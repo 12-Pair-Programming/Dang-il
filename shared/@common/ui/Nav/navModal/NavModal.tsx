@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavModalMessage } from './navModalMessage/NavModalMessage';
-import useFetch from '@/shared/@common/api/hooks/useFetch';
 import Image from 'next/image';
 import alertAPI from '@/shared/@common/api/alertAPI';
 
@@ -92,7 +91,7 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
         createdAt: new Date('2024-04-30T02:28:54.258Z'),
       },
     },
-    // 나머지 데이터 추가
+
     {
       item: {
         id: '535f38e7-c611-4ea5-a533-c518ac62ecb3',
@@ -117,7 +116,7 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
         createdAt: new Date('2024-04-30T02:28:54.258Z'),
       },
     },
-    // 나머지 데이터 추가
+
     {
       item: {
         id: '11eb7ed0-88db-4060-b59d-3543e1cfeb53',
@@ -142,7 +141,7 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
         createdAt: new Date('2024-04-30T02:28:54.258Z'),
       },
     },
-    // 나머지 데이터 추가
+
     {
       item: {
         id: 'f2f09b1c-69c8-434c-a253-c2f86a28d8a1',
@@ -167,7 +166,7 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
         createdAt: new Date('2024-04-30T02:28:54.258Z'),
       },
     },
-    // 나머지 데이터 추가
+
     {
       item: {
         id: '66961977-d166-473c-82a8-49f7772d3fad',
@@ -192,7 +191,7 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
         createdAt: new Date('2024-04-30T02:28:54.258Z'),
       },
     },
-    // 나머지 데이터 추가
+
     {
       item: {
         id: '8c7ba816-839a-43d0-a2d9-b257884b5e5d',
@@ -217,7 +216,7 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
         createdAt: new Date('2024-04-30T02:28:54.258Z'),
       },
     },
-    // 나머지 데이터 추가
+
     {
       item: {
         id: '5bc2f2c9-0823-4d71-92bd-a6d05abff8da',
@@ -242,7 +241,7 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
         createdAt: new Date('2024-04-30T02:28:54.258Z'),
       },
     },
-    // 나머지 데이터 추가
+
     {
       item: {
         id: 'c116b76d-c8f0-4282-ad9d-d855b1d549ca',
@@ -267,7 +266,7 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
         createdAt: new Date('2024-04-30T02:28:54.258Z'),
       },
     },
-    // 나머지 데이터 추가
+
     {
       item: {
         id: '647e3699-b0e5-4831-aa91-ef94913e23f5',
@@ -309,7 +308,7 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
           offset: page,
           user_id,
         });
-        //setCount(response.data.count);
+
         if (page === 1) {
           setData(response.data.items);
         } else {
@@ -411,8 +410,3 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
     </>
   );
 };
-
-/*
-sss@naver.com
-qazwsx1357
-*/

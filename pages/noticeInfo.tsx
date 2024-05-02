@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import ShopInfo from '@/features/NoticeInfo/ShopInfo';
+import NoticeShopInfo from '@/features/NoticeInfo/NoticeShopInfo';
 import RecentNotices from '@/features/NoticeInfo/RecentNotices';
 import EmployeeList from '@/features/NoticeInfo/EmployeeList';
 import { NavigationBar } from '@/shared/@common/ui/Nav/NavigationBar';
@@ -13,7 +13,7 @@ import Loading from '@/shared/@common/ui/Loading';
  */
 const NoticeInfo = () => {
   const userType =
-    typeof window !== 'undefined' ? localStorage.getItem('user') : ''; //user.item.type : employer | employee;
+    typeof window !== 'undefined' ? localStorage.getItem('user') : '';
   const token =
     typeof window !== 'undefined' ? localStorage.getItem('token') : '';
   const isLogin = token ? true : false;
@@ -31,6 +31,7 @@ const NoticeInfo = () => {
           <ShopInfo
             isLogin={isLogin}
             userType={userType as string}
+
             shopId={shopId as string}
             noticeId={noticeId as string}
           />
