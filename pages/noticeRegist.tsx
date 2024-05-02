@@ -1,8 +1,8 @@
-import { Input } from '@/shared/@common/ui/input/Input';
+import { Input } from '@/shared/@common/ui/Input/Input';
 import Image from 'next/image';
 import Calendar from '@/features/NoticeRegist/Calendar';
 import { useState } from 'react';
-import { useInput } from '@/shared/@common/ui/input/hook/inputHook';
+import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
 import Button from '@/shared/@common/ui/Button/Button';
 import { useRouter } from 'next/router';
 import { useTextarea } from '@/shared/@common/ui/Textarea/hook/textareaHook';
