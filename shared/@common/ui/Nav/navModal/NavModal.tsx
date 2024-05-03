@@ -160,8 +160,3 @@ export const NavModal = ({ isOpen, user_id, onClose }: NavModalProps) => {
     </>
   );
 };
-
-/*
-sss@naver.com
-qazwsx1357
-*/
