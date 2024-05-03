@@ -17,8 +17,13 @@ const CustomNotice = () => {
     typeof window !== 'undefined' ? localStorage.getItem('user') : '';
   const token =
     typeof window !== 'undefined' ? localStorage.getItem('token') : '';
+<<<<<<< HEAD
   const decodedToken = token ? jwtDecode(token) : null;
   const userId = (decodedToken as JwtDecode)?.userId || '';
+=======
+  const decodedToken = token ? jwtDecode<JwtDecode>(token) : null;
+  const userId = decodedToken?.userId || '';
+>>>>>>> 82327dd (fix: 배포 에러 수정)
   const [noticeData, setNoticeData] = useState<Data>();
   const [address, setAddress] = useState('');
 
