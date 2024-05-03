@@ -1,19 +1,20 @@
 import React from 'react';
 import { PropsWithChildren } from 'react';
 
-interface ButtonProps {
-  size: string;
-  color: 'colored' | 'none';
-  onClick: () => void;
-  disabled?: boolean;
+interface ButtonProps extends React.ComponentProps<'button'> {
+  size: string; // 크기 종류
+  color: 'colored' | 'none' /* | 'disabled'; */; // 색상 종류
+  onClick?: () => void; // 클릭 이벤트 핸들러
+  disabled?: boolean; // 비활성화 여부
 }
 
 const Button = ({
   size,
   color,
-  onClick,
+  onClick = () => {},
   disabled = false,
   children,
+  ...rest
 }: PropsWithChildren<ButtonProps>) => {
   const styleInformation = (size: string, color: 'colored' | 'none') => {
     let sizeStyle, colorStyle, fontStyle;
@@ -77,7 +78,12 @@ const Button = ({
   )}`;
 
   return (
-    <button className={buttonClass} onClick={onClick} disabled={disabled}>
+    <button
+      className={buttonClass}
+      onClick={onClick}
+      disabled={disabled}
+      {...rest}
+    >
       {children}
     </button>
   );
