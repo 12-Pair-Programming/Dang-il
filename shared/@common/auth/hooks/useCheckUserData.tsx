@@ -29,9 +29,9 @@ export function useCheckUserData({
   const [passwordRepeatError, setPasswordRepeatError] = useState<
     string | undefined
   >('');
-  const [isEmailError, setIsEmailError] = useState(true);
-  const [isPasswordError, setIsPasswordError] = useState(true);
-  const [isPasswordRepeatError, setIsPasswordRepeatError] = useState(true);
+  const [isEmailError, setIsEmailError] = useState(false);
+  const [isPasswordError, setIsPasswordError] = useState(false);
+  const [isPasswordRepeatError, setIsPasswordRepeatError] = useState(false);
 
   const [isEmailCheck, setIsEmailCheck] = useState(false);
   const [isPasswordCheck, setIsPasswordCheck] = useState(false);
@@ -42,16 +42,48 @@ export function useCheckUserData({
   const [modalContent, setModalContent] = useState('');
   const [modalType, setModalType] = useState('notice');
 
+  const [isSuccess, setIsSuccess] = useState(false);
+
   const { isOpen, setIsOpen, closeModal } = useModal({});
 
   const EMAIL_CHECK = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
   const PASSWORD_CHECK = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,30}$/;
 
-  const emailValue = email.trim();
-  const passwordValue = password.trim();
-  const passwordRepeatValue = passwordRepeat.trim();
-
   const router = useRouter();
+
+  const [emailValue, setEmailValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
+  const [passwordRepeatValue, setPasswordRepeatValue] = useState('');
+
+  useEffect(() => {
+    setEmailValue(email.trim());
+  }, [email]);
+
+  useEffect(() => {
+    setPasswordValue(password.trim());
+  }, [password]);
+
+  useEffect(() => {
+    setPasswordRepeatValue(passwordRepeat.trim());
+  }, [passwordRepeat]);
+
+  useEffect(() => {
+    if (emailValue !== '') {
+      if (EMAIL_CHECK.test(emailValue)) {
+        setIsEmailCheck(true);
+      }
+    }
+    if (passwordValue !== '') {
+      if (PASSWORD_CHECK.test(passwordValue)) {
+        setIsPasswordCheck(true);
+      }
+    }
+    if (passwordRepeatValue !== '') {
+      if (passwordRepeatValue === passwordValue) {
+        setIsPasswordRepeatCheck(true);
+      }
+    }
+  }, [emailValue, passwordValue, passwordRepeatValue]);
 
   const CheckEmail = () => {
     if (emailValue !== '') {
@@ -106,37 +138,40 @@ export function useCheckUserData({
   };
 
   const handleLoginSystem = async () => {
-    if (isEmailCheck && isPasswordCheck && isPasswordRepeatCheck) {
-      try {
-        const data = await authenticationAPI.post({
-          email: emailValue,
-          password: passwordValue,
-        });
-        localStorage.setItem('token', data.data.item.token);
-        localStorage.setItem('user', data.data.item.user.item.type);
-        setModalContent('회원가입 성공!');
-        setTimeout(() => {
-          router.push('/noticeList');
-        }, 1000);
-      } catch (error) {
-        console.error('로그인 실패:', (error as ErrorType).response?.status);
+    if (!isOpen) {
+      if (isEmailCheck && isPasswordCheck) {
+        try {
+          const data = await authenticationAPI.post({
+            email: emailValue,
+            password: passwordValue,
+          });
+          if (data.data.item.token) {
+            localStorage.setItem('token', data.data.item.token);
+            localStorage.setItem('user', data.data.item.user.item.type);
+            setIsOpen(true);
+            setModalContent('로그인 성공!');
+            setIsSuccess(true);
+          }
+        } catch (error) {
+          console.error('로그인 실패:', (error as ErrorType).response?.status);
+          setIsOpen(true);
+          setModalContent('로그인 정보가 잘못되었습니다!');
+          setEmailError('이메일이 맞는지 확인해주세요!');
+          setIsEmailError(true);
+          setPasswordError('비밀번호가 맞는지 확인해주세요!');
+          setIsPasswordError(true);
+        }
+      } else {
+        if (emailValue === '') {
+          setEmailError('이메일 칸이 비어있습니다!');
+          setIsEmailError(true);
+        }
+        if (passwordValue === '') {
+          setPasswordError('비밀번호 칸이 비어있습니다!');
+          setIsPasswordError(true);
+        }
         setIsOpen(true);
-        setModalContent('로그인 정보가 잘못되었습니다!');
-        setEmailError('이메일이 맞는지 확인해주세요!');
-        setIsEmailError(true);
-        setPasswordError('비밀번호가 맞는지 확인해주세요!');
-        setIsPasswordError(true);
-      }
-    } else {
-      setIsOpen(true);
-      setModalContent('값을 제대로 입력해주세요!');
-      if (emailValue === '') {
-        setEmailError('이메일 칸이 비어있습니다!');
-        setIsEmailError(true);
-      }
-      if (passwordValue === '') {
-        setPasswordError('비밀번호 칸이 비어있습니다!');
-        setIsPasswordError(true);
+        setModalContent('값을 제대로 입력해주세요!');
       }
     }
   };
@@ -152,9 +187,7 @@ export function useCheckUserData({
         if (data.data.item.id) {
           setIsOpen(true);
           setModalContent('회원가입 성공!');
-          setTimeout(() => {
-            router.push('/login');
-          }, 1000);
+          setIsSuccess(true);
         }
       } catch (error) {
         console.error('회원 가입:', (error as ErrorType).response?.status);
@@ -183,13 +216,8 @@ export function useCheckUserData({
     }
   };
 
-  useEffect(() => {
-    CheckEmail();
-    CheckPassword();
-    CheckPasswordRepeat();
-  }, [emailValue, passwordValue, passwordRepeatValue]);
-
   return {
+    isSuccess,
     isOpen,
     modalType,
     modalContent,
@@ -202,6 +230,9 @@ export function useCheckUserData({
     isPasswordError,
     isPasswordRepeatError,
     selectedUserType,
+    CheckEmail,
+    CheckPassword,
+    CheckPasswordRepeat,
     handleRadioChange,
     handleLoginSystem,
     handleRegistSystem,
