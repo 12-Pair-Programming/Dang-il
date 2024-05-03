@@ -14,7 +14,7 @@ const shopAPI = {
     const headers = {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     };
-    console.log(localStorage.getItem('token'));
+
     return axiosInstance.put(`/shops/${shop_id}`, body, { headers });
   },
 };

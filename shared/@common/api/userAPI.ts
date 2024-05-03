@@ -11,7 +11,6 @@ const userAPI = {
     const headers = {
       Authorization: `Bearer ${token}`,
     };
-    console.log(headers);
     return axiosInstance.put(`/users/${user_id}`, body, { headers });
   },
 };

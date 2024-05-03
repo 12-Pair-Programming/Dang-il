@@ -34,7 +34,7 @@ const FindNotice = ({ user }: { user: userData }) => {
 
   if (isNotice) {
     return (
-      <div className="flex pt-[60px] pb-[120px] px-[auto] w-[983px] flex-col items-start gap-2 bg-white">
+      <div className="flex pt-[60px] pb-[120px] px-[auto] w-[983px] flex-col items-start gap-2 bg-white tablet:w-full mobile:w-full">
         <div className="flex flex-col items-start gap-[32px] self-stretch bg-white">
           <p className="text-black text-[28px] font-bold">신청 내역</p>
           <div className="flex flex-col items-start gap-8 w-full px-auto">
@@ -45,7 +45,7 @@ const FindNotice = ({ user }: { user: userData }) => {
     );
   } else {
     return (
-      <div className="flex flex-col px-[238px] py-[60px] items-start gap-8 bg-white">
+      <div className="flex flex-col px-[238px] py-[60px] items-start gap-8 bg-white w-full">
         <p className="text-black text-[28px] font-bold">신청 내역</p>
         <div className="flex w-[964px] py-[60px] px-6 flex-col justify-center items-center gap-6 rounded-xl border border-solid border-gray-20">
           <p className="text-black align-center">아직 신청 내역이 없어요.</p>
