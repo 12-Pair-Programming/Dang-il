@@ -7,6 +7,7 @@ import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
 import Card from '@/shared/@common/notice/ui/Card';
 import FilterModal from './FilterModal';
 import noticeAPI from '@/shared/@common/api/noticeAPI';
+import Loading from '@/shared/@common/ui/Loading';
 
 export interface ItemData {
   item: {
@@ -43,13 +44,21 @@ export interface FilterValues {
   money?: number;
 }
 
+const ITEM_PER_PAGE = 6;
+
+const SORT_OPTIONS = [
+  { value: 'time', label: '마감임박순' },
+  { value: 'pay', label: '시급많은순' },
+  { value: 'hour', label: '시간적은순' },
+  { value: 'shop', label: '가나다순' },
+];
+
 const AllNotice = () => {
   const router = useRouter();
   const value: string = router.query.value as string;
   const [showDetailFilter, setShowDetailFilter] = useState(false);
-  const showCard = 6;
   const [currentPage, setCurrentPage] = useState(1);
-  const cardOffset = (currentPage - 1) * showCard;
+  const cardOffset = (currentPage - 1) * ITEM_PER_PAGE;
   const [data, setData] = useState<Data>();
   const [keyword, setKeyword] = useState(value);
   const [sortedData, setSortedData] = useState<string>();
@@ -77,33 +86,30 @@ const AllNotice = () => {
     filterOptions++;
   }
 
-  const showNoticeData = async () => {
-    const data = await noticeAPI.getNoticeList({
-      address: filterValues.clickedAddress,
-      keyword: keyword,
-      startsAtGte: filterValues.startDate?.toISOString(),
-      hourlyPayGte: filterValues.money,
-      sort: sortedData,
-    });
-    setData(data.data);
-  };
-
   useEffect(() => {
-    showNoticeData();
+    const getNoticeList = async () => {
+      const data = await noticeAPI.getNoticeList({
+        offset: cardOffset,
+        limit: ITEM_PER_PAGE,
+        address: filterValues.clickedAddress,
+        keyword: keyword,
+        startsAtGte: filterValues.startDate?.toISOString(),
+        hourlyPayGte: filterValues.money,
+        sort: sortedData,
+      });
+
+      setData(data.data);
+    };
+
+    getNoticeList();
   }, [
+    currentPage,
     sortedData,
     filterValues.clickedAddress,
     keyword,
     filterValues.startDate,
     filterValues.money,
   ]);
-
-  const options = [
-    { value: 'time', label: '마감임박순' },
-    { value: 'pay', label: '시급많은순' },
-    { value: 'hour', label: '시간적은순' },
-    { value: 'shop', label: '가나다순' },
-  ];
 
   const handleSelectOption = (value: string) => {
     setSortedData(value);
@@ -118,8 +124,8 @@ const AllNotice = () => {
   };
 
   return (
-    <div className="flex flex-col w-full py-[60px] px-auto items-center bg-white tracking-wide mobile:px-4">
-      <div className="flex flex-col gap-10 px-4 w-[983px] tablet:w-[678px] mobile:max-w-[520px]">
+    <div className="flex flex-col w-full py-[60px] px-auto items-center bg-white tracking-wide">
+      <div className="flex flex-col gap-10 px-4 w-[983px] tablet:w-[678px] mobile:w-full">
         <div className="flex justify-between mobile:flex-col mobile: gap-4">
           <div className="w-[291px]">
             <p className="text-[28px] font-bold">전체 공고</p>
@@ -128,7 +134,7 @@ const AllNotice = () => {
             <Dropdown
               title={''}
               width="138px"
-              options={options}
+              options={SORT_OPTIONS}
               onSelect={handleSelectOption}
               defaultValue="마감임박순"
             />
@@ -150,32 +156,34 @@ const AllNotice = () => {
           </div>
         </div>
         <div className="w-full grid grid-cols-3 grid-rows-2 gap-4 tablet:grid-cols-2 mobile:grid-cols-2 mobile: g-3">
-          {data &&
+          {!data ? (
+            <Loading />
+          ) : (
+            data &&
             data.items.length > 0 &&
-            data.items
-              .slice(cardOffset, cardOffset + showCard)
-              .map((item: ItemData) => (
-                <Link
-                  href={`/noticeInfo?shopId=${item.item.shop.item.id}&noticeId=${item.item.id}`}
-                >
-                  <Card
-                    key={item.item.shop.item.id}
-                    name={item.item.shop.item.name}
-                    imageUrl={item.item.shop.item.imageUrl}
-                    address1={`${item.item.shop.item.address1} ${item.item.shop.item.address2}`}
-                    startsAt={item.item.startsAt}
-                    workhour={item.item.workhour}
-                    hourlyPay={item.item.hourlyPay}
-                    originalHourlyPay={item.item.shop.item.originalHourlyPay}
-                    closed={item.item.closed}
-                  />
-                </Link>
-              ))}
+            data.items.map((item: ItemData) => (
+              <Link
+                href={`/noticeInfo?shopId=${item.item.shop.item.id}&noticeId=${item.item.id}`}
+              >
+                <Card
+                  key={item.item.shop.item.id}
+                  name={item.item.shop.item.name}
+                  imageUrl={item.item.shop.item.imageUrl}
+                  address1={`${item.item.shop.item.address1} ${item.item.shop.item.address2}`}
+                  startsAt={item.item.startsAt}
+                  workhour={item.item.workhour}
+                  hourlyPay={item.item.hourlyPay}
+                  originalHourlyPay={item.item.shop.item.originalHourlyPay}
+                  closed={item.item.closed}
+                />
+              </Link>
+            ))
+          )}
         </div>
         {data && (
           <Pagination
             totalPage={data.count}
-            limit={data.limit}
+            limit={Math.floor(data.count / ITEM_PER_PAGE)}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
           />

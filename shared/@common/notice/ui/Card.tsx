@@ -3,14 +3,15 @@ import NoticeTimeAndLocation from './NoticeTimeAndLocation';
 import CardImage from './CardImage';
 
 interface ProductProps {
-  name: string; //가게명
-  imageUrl: string; //가게 대표 이미지
-  address1: string; //주소
-  startsAt: string; //시작 일시
-  workhour: number; //업무 시간
-  hourlyPay: number; //공고 시급
-  originalHourlyPay: number; //가게 기존 시급
-  closed: boolean; //공고 오픈여부
+  name: string;
+  imageUrl: string;
+  address1: string;
+  startsAt: string;
+  workhour: number;
+  hourlyPay: number;
+  originalHourlyPay: number;
+  closed: boolean;
+  isPastNotice?: boolean;
 }
 
 /**
@@ -23,6 +24,7 @@ interface ProductProps {
   @param hourlyPay 공고 시급
   @param originalHourlyPay 가게 기존 시급
   @param closed 공고 오픈여부
+  @param isPastNotice 지난 공고 여부
  */
 const Card = ({
   name,
@@ -33,6 +35,7 @@ const Card = ({
   hourlyPay,
   originalHourlyPay,
   closed,
+  isPastNotice,
 }: ProductProps) => {
   return (
     <div className="bg-white border-[1px] rounded-2xl w-auto h-auto p-4">
@@ -40,6 +43,7 @@ const Card = ({
         <CardImage
           imageUrl={imageUrl}
           closed={closed}
+          isPastNotice={isPastNotice}
           width={280}
           height={150}
         />
@@ -47,7 +51,7 @@ const Card = ({
       <div className="w-full mt-[15px]">
         <p
           className={`${
-            closed ? 'text-gray-20' : 'text-black'
+            closed || isPastNotice ? 'text-gray-20' : 'text-black'
           } font-bold text-xl`}
         >
           {name}
@@ -57,12 +61,14 @@ const Card = ({
           workhour={workhour}
           address1={address1}
           closed={closed}
+          isPastNotice={isPastNotice}
         />
         <HourlyPayForWon
           hourlyPay={hourlyPay}
           closed={closed}
           fontSize="24px"
           originalHourlyPay={originalHourlyPay}
+          isPastNotice={isPastNotice}
         />
       </div>
     </div>

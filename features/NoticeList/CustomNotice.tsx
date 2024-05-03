@@ -6,6 +6,11 @@ import useFetch from '@/shared/@common/api/hooks/useFetch';
 import noticeAPI from '@/shared/@common/api/noticeAPI';
 import userAPI from '@/shared/@common/api/userAPI';
 import { jwtDecode } from 'jwt-decode';
+import Loading from '@/shared/@common/ui/Loading';
+
+type JwtDecode = {
+  userId?: string;
+};
 
 const CustomNotice = () => {
   const user =
@@ -13,7 +18,7 @@ const CustomNotice = () => {
   const token =
     typeof window !== 'undefined' ? localStorage.getItem('token') : '';
   const decodedToken = token ? jwtDecode(token) : null;
-  const userId = (decodedToken as any)?.userId || '';
+  const userId = (decodedToken as JwtDecode)?.userId || '';
   const [noticeData, setNoticeData] = useState<Data>();
   const [address, setAddress] = useState('');
 
@@ -31,11 +36,13 @@ const CustomNotice = () => {
   }, [userId]);
   const userAddress = data && data.item.address;
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <div className="flex w-full py-[60px] px-auto flex-col items-center bg-purple-10">
-      <div className="flex flex-col gap-10 px-4 w-[983px] tablet:w-[678px] mobile:max-w-[520px]">
+      <div className="flex flex-col gap-10 px-4 w-[983px] tablet:w-[678px] mobile:w-full">
         <div className="text-[28px] font-bold">맞춤 공고</div>
-        <div className="w-[983px] tablet:w-[678px] mobile:max-w-[520px] flex items-start overflow-x-scroll scrollbar-hide gap-4">
+        <div className="w-[983px] tablet:w-[678px] mobile:w-full flex items-start overflow-x-scroll scrollbar-hide gap-4">
           {userAddress && noticeData
             ? noticeData.items.length > 0 &&
               noticeData.items
@@ -61,11 +68,12 @@ const CustomNotice = () => {
                     />
                   </Link>
                 ))
-            : noticeData &&
+            : !userAddress &&
+              noticeData &&
               noticeData.items.length > 0 &&
               noticeData.items.slice(0, 3).map((item: ItemData) => (
                 <Link
-                  href={`/noticeInfo/${item.item.shop.item.id}`}
+                  href={`/noticeInfo?shopId=${item.item.shop.item.id}&noticeId=${item.item.id}`}
                   className="max-w-[310px] mobile:max-w-[236px]"
                 >
                   <Card

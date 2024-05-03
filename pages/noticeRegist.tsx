@@ -13,6 +13,10 @@ import noticeAPI from '@/shared/@common/api/noticeAPI';
 import Footer from '@/shared/@common/ui/Footer/Footer';
 import NavigationBar from '@/shared/@common/ui/Nav/NavigationBar';
 
+type JwtDecode = {
+  userId?: string;
+};
+
 const noticeRegist = () => {
   const router = useRouter();
 
@@ -35,7 +39,7 @@ const noticeRegist = () => {
   const handleWritingNotice = async () => {
     const token = localStorage.getItem('token');
     const decodedToken = token ? jwtDecode(token) : null;
-    const userId = (decodedToken as any)?.userId || '';
+    const userId = (decodedToken as JwtDecode)?.userId || '';
     const hourlyPayNumber = Number(hourlypay.value);
     const workingHour = Number(hour.value);
     try {
@@ -61,8 +65,11 @@ const noticeRegist = () => {
   };
 
   const handleDateChange = (date: Date | null) => {
-    const formattedDate = date.toISOString().replace('.000Z', 'Z');
-    setSelectedDate(formattedDate);
+    if (date !== null) {
+      const formattedDate = date.toISOString().replace('.000Z', 'Z');
+
+      setSelectedDate(formattedDate);
+    }
   };
 
   const hourlypay = useInput('');
@@ -130,7 +137,3 @@ const noticeRegist = () => {
 };
 
 export default noticeRegist;
-
-/*
-  handleHourlypay는 시급을 입력하면 값이 지속적으로 변겨되는 구조.
-*/

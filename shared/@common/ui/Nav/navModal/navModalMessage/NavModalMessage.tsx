@@ -33,7 +33,15 @@ export const NavModalMessage = ({
   const router = useRouter();
   const currentTime = new Date().getTime();
   const noticeTime = new Date(createdAt).getTime();
-  const minutesAgo = Math.round((currentTime - noticeTime) / (1000 * 60));
+  const timeDifference = currentTime - noticeTime;
+
+  let hours = Math.floor(timeDifference / (1000 * 60 * 60));
+  let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+  if (minutes >= 60) {
+    hours += Math.floor(minutes / 60);
+    minutes %= 60;
+  }
 
   return (
     <div
@@ -63,7 +71,9 @@ export const NavModalMessage = ({
         </span>
         되었어요.
       </div>
-      <div>{minutesAgo}분 전</div>
+      <div>
+        {hours}시간 {minutes}분 전
+      </div>
     </div>
   );
 };

@@ -2,15 +2,20 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
-import { Input } from '@/shared/@common/ui/input/Input';
+import { Input } from '@/shared/@common/ui/Input/Input';
 import Button from '@/shared/@common/ui/Button/Button';
-import { useInput } from '@/shared/@common/ui/input/hook/inputHook';
+import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
 import { useTextarea } from '@/shared/@common/ui/Textarea/hook/textareaHook';
 import { Textarea } from '@/shared/@common/ui/Textarea/Textarea';
 import shopAPI from '@/shared/@common/api/shopAPI';
 import imageAPI from '@/shared/@common/api/imageAPI';
 import { jwtDecode } from 'jwt-decode';
 import userAPI from '@/shared/@common/api/userAPI';
+import Loading from '@/shared/@common/ui/Loading';
+
+type JwtDecode = {
+  userId?: string;
+};
 
 const EditingMyShop = () => {
   const router = useRouter();
@@ -27,7 +32,7 @@ const EditingMyShop = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     const decodedToken = token ? jwtDecode(token) : null;
-    const userId = (decodedToken as any)?.userId || '';
+    const userId = (decodedToken as JwtDecode)?.userId || '';
 
     const fetchShopInfo = async () => {
       try {
@@ -98,7 +103,7 @@ const EditingMyShop = () => {
     try {
       const token = localStorage.getItem('token');
       const decodedToken = token ? jwtDecode(token) : null;
-      const userId = (decodedToken as any)?.userId || '';
+      const userId = (decodedToken as JwtDecode)?.userId || '';
       const userData = await userAPI.getUserData(userId);
       shopId = userData.data.item.shop.item.id;
       if (

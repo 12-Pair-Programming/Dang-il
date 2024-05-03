@@ -16,10 +16,7 @@ const Button = ({
   children,
   ...rest
 }: PropsWithChildren<ButtonProps>) => {
-  const styleInformation = (
-    size: string,
-    color: 'colored' | 'none' /*| 'disabled' */,
-  ) => {
+  const styleInformation = (size: string, color: 'colored' | 'none') => {
     let sizeStyle, colorStyle, fontStyle;
 
     switch (size) {
@@ -51,24 +48,20 @@ const Button = ({
           'font-bold text-xs leading-5 align-center whitespace-nowrap';
         break;
       default:
-        sizeStyle = ''; // 기본값 처리
+        sizeStyle = '';
     }
 
     switch (color) {
       case 'colored':
         colorStyle = 'bg-primary';
-        fontStyle += ' text-white'; // 텍스트 색상 조정
+        fontStyle += ' text-white';
         break;
       case 'none':
         colorStyle = 'bg-white border-primary border border-solid';
-        fontStyle += ' text-primary'; // 텍스트 색상 조정
+        fontStyle += ' text-primary';
         break;
-      // case 'disabled':
-      //   colorStyle = 'bg-gray-40';
-      //   fontStyle += ' text-white'; // 텍스트 색상 조정
-      //   break;
       default:
-        colorStyle = ''; // 기본값 처리
+        colorStyle = '';
     }
 
     if (disabled) {
@@ -76,7 +69,7 @@ const Button = ({
       fontStyle += ' text-white';
     }
 
-    return `${sizeStyle} ${colorStyle} ${fontStyle}`; // 크기, 색상 및 텍스트 스타일 조합
+    return `${sizeStyle} ${colorStyle} ${fontStyle}`;
   };
 
   const buttonClass = `inline-flex items-center gap-2 rounded-md ${styleInformation(
