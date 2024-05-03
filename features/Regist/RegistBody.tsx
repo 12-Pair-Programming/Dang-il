@@ -7,19 +7,25 @@ import { useInput } from '@/shared/@common/ui/Input/hook/inputHook';
 import { useCheckUserData } from '@/shared/@common/auth/hooks/useCheckUserData';
 import { RadioButton } from './radioButton/RadioButton';
 import { Modal } from '@/shared/@common/ui/Modal/ModalBase';
-import { useModal } from '@/shared/@common/ui/Modal/hook/modalHook';
+import { useRouter } from 'next/router';
 
 export default function RegistnBody() {
   const email = useInput('');
   const password = useInput('');
   const passwordRepeat = useInput('');
 
+  const router = useRouter();
+
   const {
+    isSuccess,
     isOpen,
     modalType,
     modalContent,
     setIsOpen,
     closeModal,
+    CheckEmail,
+    CheckPassword,
+    CheckPasswordRepeat,
     emailError,
     isEmailError,
     passwordError,
@@ -59,7 +65,8 @@ export default function RegistnBody() {
             <Input
               title={'이메일'}
               placeholder={'이메일을 입력해주세요.'}
-              onBlur={email.handleInput}
+              onBlur={CheckEmail}
+              onChange={email.handleInput}
               isError={isEmailError}
               errorText={emailError}
             />
@@ -67,7 +74,8 @@ export default function RegistnBody() {
               title={'비밀번호'}
               placeholder={'비밀번호를 입력해주세요.'}
               type={'password'}
-              onBlur={password.handleInput}
+              onBlur={CheckPassword}
+              onChange={password.handleInput}
               isError={isPasswordError}
               errorText={passwordError}
             />
@@ -75,7 +83,8 @@ export default function RegistnBody() {
               title={'비밀번호 확인'}
               placeholder={'비밀번호를 입력해주세요.'}
               type={'password'}
-              onBlur={passwordRepeat.handleInput}
+              onBlur={CheckPasswordRepeat}
+              onChange={passwordRepeat.handleInput}
               isError={isPasswordRepeatError}
               errorText={passwordRepeatError}
             />
@@ -94,11 +103,7 @@ export default function RegistnBody() {
                 />
               </div>
             </div>
-            <Button
-              size={'large'}
-              color={'colored'}
-              onClick={handleRegistSystem}
-            >
+            <Button size={'large'} color={'colored'} type="submit">
               가입하기
             </Button>
           </div>
@@ -114,6 +119,9 @@ export default function RegistnBody() {
           setIsOpen={setIsOpen}
           onClose={() => {
             closeModal();
+            if (isSuccess) {
+              router.push('/login');
+            }
           }}
           content={modalContent}
           type={modalType}
