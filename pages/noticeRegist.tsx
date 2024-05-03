@@ -33,7 +33,6 @@ const noticeRegist = () => {
       workhour: hour.value,
       description: description.value,
     };
-    console.log(data);
   };
 
   const handleWritingNotice = async () => {
@@ -81,13 +80,15 @@ const noticeRegist = () => {
   return (
     <div className="bg-gray-05">
       <NavigationBar />
-      <div className="flex py-[60px] m-auto w-[983px] h-[100vh] px-[auto] flex-col items-center gap-2 bg-gray-05">
+      <div className="flex py-[60px] m-auto w-full h-[100vh] px-[auto] flex-col items-center gap-2 bg-gray-05 ">
         <form
           onSubmit={handleSubmit}
           className="flex flex-col items-center gap-8"
         >
           <div className="flex justify-between items-center self-stretch max-w-[1440px]">
-            <p className="text-black text-[28px] font-bold">공고 등록</p>
+            <p className="text-black text-[28px] font-bold mobile:text-xl">
+              공고 등록
+            </p>
             <button onClick={handleClose}>
               <Image
                 src={`/images/close.svg`}
@@ -97,7 +98,7 @@ const noticeRegist = () => {
               />
             </button>
           </div>
-          <div className="inline-flex items-start gap-5">
+          <div className="inline-flex items-start gap-5 tablet:flex-col mobile:flex-col">
             <Input
               title="시급*"
               placeholder="입력"
@@ -116,7 +117,7 @@ const noticeRegist = () => {
               onChange={hour.handleInput}
             />
           </div>
-          <div className="flex w-[935px] flex-col items-start gap-2">
+          <div className="flex w-[935px] flex-col items-start gap-2 tablet:w-[300px] mobile:w-[300px]">
             <Textarea
               title="공고 설명"
               placeholder="설명을 작성해 주세요"

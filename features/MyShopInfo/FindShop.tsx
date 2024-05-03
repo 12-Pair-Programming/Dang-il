@@ -23,8 +23,9 @@ interface ShopData {
 
 const FindShop = () => {
   const router = useRouter();
-  const token = localStorage.getItem('token');
-  const decodedToken = token ? jwtDecode(token) : null;
+  const token =
+    typeof window !== 'undefined' ? localStorage.getItem('token') : '';
+  const decodedToken = token ? jwtDecode<JwtDecode>(token) : null;
   const userId = (decodedToken as JwtDecode)?.userId || '';
 
   const [registered, setRegistered] = useState(true);
@@ -51,20 +52,26 @@ const FindShop = () => {
     }
   }, [isMobile]);
 
-  const [shop, setShop] = useState<ShopData>();
+  const [shop, setShop] = useState<ShopData>({
+    id: '',
+    name: '',
+    category: '',
+    address1: '',
+    address2: '',
+    description: '',
+    imageUrl: '',
+  });
   let shopId = '';
 
   const getUser = async () => {
     try {
       const userData = await userAPI.getUserData(userId);
       shopId = userData.data.item.shop.item.id;
-      console.log(shopId);
+
       const shopData = await shopAPI.get(shopId);
       setShop(shopData.data.item);
       setRegistered(true);
     } catch (error) {
-      console.log(shopId);
-      console.log(userId);
       setRegistered(false);
     }
   };
@@ -76,10 +83,12 @@ const FindShop = () => {
   if (registered) {
     return (
       <div className="bg-white">
-        <div className="flex m-[auto] w-[983px] py-[60px] px-[auto] flex-col items-start gap-2 bg-white ">
-          <p className="text-black text-[28px] font-bold">내 가게</p>
+        <div className="flex m-[auto] w-[983px] py-[60px] px-[auto] flex-col items-start gap-2 bg-white tablet:w-full mobile:w-full tablet:px-8 mobile:px-3  ">
+          <p className="text-black text-[28px] font-bold mobile:text-xl">
+            내 가게
+          </p>
           <div className="w-full">
-            <div className="object-cover h-[340px] inline-flex py-[60px] px-[57px] w-[964px] p-6 justify-between items-start rounded-xl bg-purple-10">
+            <div className="object-cover h-[340px] inline-flex py-[60px] px-[57px] w-[964px] p-6 justify-between items-start rounded-xl bg-purple-10 tablet:w-full mobile:w-full tablet:h-full mobile:h-full tablet:flex-col mobile:flex-col">
               <Image
                 src={shop.imageUrl}
                 alt="내 가게 사진"
@@ -135,10 +144,12 @@ const FindShop = () => {
     );
   } else {
     return (
-      <div className="flex py-[60px] px-[237px] flex-col items-start gap-2 bg-white ">
-        <p className="text-black text-[28px] font-bold">내 가게</p>
+      <div className="flex py-[60px] px-[237px] flex-col items-start gap-2 bg-white mobile:px-10">
+        <p className="text-black text-[28px] font-bold mobile:text-xl">
+          내 가게
+        </p>
         <div className="flex w-full py-[60px] px-[24px] flex-col content-center items-center gap-6 rounded-xl border border-solid border-gray-20">
-          <p className="text-black self-stretch text-center text-base">
+          <p className="text-black self-stretch text-center text-base mobile:text-sm">
             내 가게를 소개하고 공고도 등록해 보세요.
           </p>
           <Button size={size} color="colored" onClick={handleWritingShopInfo}>

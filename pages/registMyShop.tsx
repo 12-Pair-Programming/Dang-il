@@ -139,14 +139,16 @@ const registMyShop = () => {
   return (
     <>
       <NavigationBar />
-      <div className="flex w-full py-[60px] px-[238px] flex-col items-start gap-2 bg-gray-05">
+      <div className="flex w-full py-[60px] px-[238px] flex-col items-start gap-2 bg-gray-05 tablet:px-[60px] mobile:px-3">
         <form
           onSubmit={handleSubmit}
           className="flex w-full flex-col items-center gap-8"
         >
-          <div className="flex flex-col items-start gap-8">
-            <div className="flex w-full justify-between items-center">
-              <p className="text-black text-[28px] font-bold">가게 정보</p>
+          <div className="flex flex-col items-start gap-8 mobile:gap-6 mobile:items-center mobile:self-stretch">
+            <div className="flex w-full justify-between items-center mobile:items-start">
+              <p className="text-black text-[28px] font-bold mobile:text-xl">
+                가게 정보
+              </p>
               <button onClick={handleClose}>
                 <Image
                   src={`/images/close.svg`}
@@ -156,7 +158,7 @@ const registMyShop = () => {
                 />
               </button>
             </div>
-            <div className="flex items-start gap-5 mb-6">
+            <div className="flex items-start gap-5 mb-6 mobile:flex-col mobile:inline-flex">
               <div className="flex flex-col items-start gap-2 flex-shrink-0">
                 <Input
                   title="가게 이름*"
@@ -173,7 +175,7 @@ const registMyShop = () => {
                 />
               </div>
             </div>
-            <div className="flex items-start gap-5 mb-6">
+            <div className="flex items-start gap-5 mb-6 mobile:flex-col mobile:inline-flex">
               <div className="flex flex-col items-start gap-2 flex-shrink-0 text-black">
                 <Dropdown
                   title={'주소*'}
@@ -190,7 +192,7 @@ const registMyShop = () => {
                 />
               </div>
             </div>
-            <div className="flex items-start gap-5 mb-6">
+            <div className="flex items-start gap-5 mb-6 mobile:flex-col mobile:inline-flex">
               <div className="flex flex-col items-start gap-2 flex-shrink-0 text-black">
                 <Input
                   title="기본 시급*"
@@ -201,7 +203,7 @@ const registMyShop = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-col items-start gap-5 mb-6">
+            <div className="flex flex-col items-start gap-5 mb-6 mobile:flex-col mobile:inline-flex">
               <p className="text-base">가게 이미지</p>
               <div className="inline-block relative">
                 <input
@@ -233,10 +235,10 @@ const registMyShop = () => {
                 </div>
               </div>
             </div>
-            <div className="w-full flex flex-col items-start gap-2">
+            <div className="w-[600px] flex flex-col items-start gap-2 mobile:flex-col mobile:inline-flex mobile:w-[350px]">
               <Textarea
                 title="가게 설명"
-                width="600px"
+                width="100%"
                 placeholder="입력"
                 onChange={description.handleTextarea}
               />

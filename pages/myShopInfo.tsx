@@ -7,15 +7,13 @@ const NavigationBar = dynamic(
 const Footer = dynamic(() => import('@/shared/@common/ui/Footer/Footer'));
 
 const MyShopInfo = () => {
-  if (typeof window !== 'undefined') {
-    return (
-      <div className="bg-white h-[100vh]">
-        <NavigationBar />
-        <FindShop />
-        <Footer />
-      </div>
-    );
-  }
+  return (
+    <div className="bg-white h-[100vh]">
+      <NavigationBar />
+      <FindShop />
+      <Footer />
+    </div>
+  );
 };
 
 export default MyShopInfo;
