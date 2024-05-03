@@ -1,4 +1,4 @@
-import { axiosInstance } from '@/shared/utils/axiosInstance';
+import { axiosInstance } from '@/shared/@common/api/axiosInstance';
 
 const authenticationAPI = {
   post: <T>(body: T) => {
