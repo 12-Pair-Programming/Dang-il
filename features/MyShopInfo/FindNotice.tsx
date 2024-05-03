@@ -8,6 +8,7 @@ import Button from '@/shared/@common/ui/Button/Button';
 import shopAPI from '@/shared/@common/api/shopAPI';
 import Pagination from '@/shared/@common/ui/Pagination/Pagination';
 import { ItemData } from '../NoticeList/AllNotice';
+import { JwtDecode } from '../NoticeList/CustomNotice';
 
 interface CardData {
   id: string;
@@ -33,8 +34,8 @@ const FindNotice = () => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
-        const decodedToken = token ? jwtDecode(token) : null;
-        const userId = (decodedToken as any)?.userId || '';
+        const decodedToken = token ? jwtDecode<JwtDecode>(token) : null;
+        const userId = decodedToken?.userId || '';
         const userData = await userAPI.getUserData(userId);
         const shopId = userData.data.item.shop.item.id;
         const [shopData, noticeData] = await Promise.all([
@@ -61,12 +62,12 @@ const FindNotice = () => {
     };
 
     fetchData();
-  }, []); // 빈 배열을 넘겨서 컴포넌트가 처음 렌더링될 때 한 번만 호출
+  }, []);
 
   const handleWritingNotice = () => {
     router.push('/noticeRegist');
   };
-  console.log(cardList);
+
   return (
     <div className="flex pt-[60px] pb-[120px] flex-col items-start gap-2">
       <div className="flex flex-col items-start gap-8">

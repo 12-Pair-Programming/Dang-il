@@ -80,7 +80,7 @@ const FindShop = () => {
     getUser();
   }, []);
 
-  if (registered) {
+  if (registered && shop) {
     return (
       <div className="bg-white">
         <div className="flex m-[auto] w-[983px] py-[60px] px-[auto] flex-col items-start gap-2 bg-white tablet:w-full mobile:w-full tablet:px-8 mobile:px-3  ">

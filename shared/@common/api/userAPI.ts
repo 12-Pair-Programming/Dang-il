@@ -1,4 +1,4 @@
-import { axiosInstance } from '@/shared/utils/axiosInstance';
+import { axiosInstance } from '@/shared/@common/api/axiosInstance';
 
 const userAPI = {
   getUserData: (user_id: string) => {

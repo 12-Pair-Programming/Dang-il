@@ -8,6 +8,7 @@ import Card from '@/shared/@common/notice/ui/Card';
 import FilterModal from './FilterModal';
 import noticeAPI from '@/shared/@common/api/noticeAPI';
 import Loading from '@/shared/@common/ui/Loading';
+import useFetch from '@/shared/@common/api/hooks/useFetch';
 
 export interface ItemData {
   item: {
@@ -59,7 +60,6 @@ const AllNotice = () => {
   const [showDetailFilter, setShowDetailFilter] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const cardOffset = (currentPage - 1) * ITEM_PER_PAGE;
-  const [data, setData] = useState<Data>();
   const [keyword, setKeyword] = useState(value);
   const [sortedData, setSortedData] = useState<string>();
   const [filterValues, setFilterValues] = useState<FilterValues>({
@@ -86,22 +86,20 @@ const AllNotice = () => {
     filterOptions++;
   }
 
+  const { data, loading, error, execute } = useFetch(() => {
+    return noticeAPI.getNoticeList({
+      offset: cardOffset,
+      limit: ITEM_PER_PAGE,
+      address: filterValues.clickedAddress,
+      keyword: keyword,
+      startsAtGte: filterValues.startDate?.toISOString(),
+      hourlyPayGte: filterValues.money,
+      sort: sortedData,
+    });
+  });
+
   useEffect(() => {
-    const getNoticeList = async () => {
-      const data = await noticeAPI.getNoticeList({
-        offset: cardOffset,
-        limit: ITEM_PER_PAGE,
-        address: filterValues.clickedAddress,
-        keyword: keyword,
-        startsAtGte: filterValues.startDate?.toISOString(),
-        hourlyPayGte: filterValues.money,
-        sort: sortedData,
-      });
-
-      setData(data.data);
-    };
-
-    getNoticeList();
+    execute();
   }, [
     currentPage,
     sortedData,
@@ -123,6 +121,9 @@ const AllNotice = () => {
     setShowDetailFilter(true);
   };
 
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <div className="flex flex-col w-full py-[60px] px-auto items-center bg-white tracking-wide">
       <div className="flex flex-col gap-10 px-4 w-[983px] tablet:w-[678px] mobile:w-full">
@@ -156,10 +157,7 @@ const AllNotice = () => {
           </div>
         </div>
         <div className="w-full grid grid-cols-3 grid-rows-2 gap-4 tablet:grid-cols-2 mobile:grid-cols-2 mobile: g-3">
-          {!data ? (
-            <Loading />
-          ) : (
-            data &&
+          {data &&
             data.items.length > 0 &&
             data.items.map((item: ItemData) => (
               <Link
@@ -177,8 +175,7 @@ const AllNotice = () => {
                   closed={item.item.closed}
                 />
               </Link>
-            ))
-          )}
+            ))}
         </div>
         {data && (
           <Pagination

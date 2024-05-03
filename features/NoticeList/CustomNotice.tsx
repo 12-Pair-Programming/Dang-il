@@ -8,7 +8,7 @@ import userAPI from '@/shared/@common/api/userAPI';
 import { jwtDecode } from 'jwt-decode';
 import Loading from '@/shared/@common/ui/Loading';
 
-type JwtDecode = {
+export type JwtDecode = {
   userId?: string;
 };
 
@@ -17,8 +17,9 @@ const CustomNotice = () => {
     typeof window !== 'undefined' ? localStorage.getItem('user') : '';
   const token =
     typeof window !== 'undefined' ? localStorage.getItem('token') : '';
-  const decodedToken = token ? jwtDecode(token) : null;
-  const userId = (decodedToken as JwtDecode)?.userId || '';
+
+  const decodedToken = token ? jwtDecode<JwtDecode>(token) : null;
+  const userId = decodedToken?.userId || '';
   const [noticeData, setNoticeData] = useState<Data>();
   const [address, setAddress] = useState('');
 

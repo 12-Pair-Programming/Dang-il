@@ -1,4 +1,4 @@
-import { axiosInstance } from '@/shared/utils/axiosInstance';
+import { axiosInstance } from '@/shared/@common/api/axiosInstance';
 
 interface ApplicationListData {
   shop_id: string;

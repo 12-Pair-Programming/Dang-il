@@ -13,6 +13,7 @@ import useFetch from '@/shared/@common/api/hooks/useFetch';
 import { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import isPastNotice from '@/shared/@common/notice/utils/isPastNotice';
+import { ApplicationData } from '@/shared/@common/ui/Table/TableBody';
 
 interface props {
   userType: string;
@@ -47,6 +48,7 @@ interface Item {
     startsAt: string;
   };
 }
+
 type JwtDecode = {
   userId?: string;
 };
@@ -84,9 +86,13 @@ const NoticeShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
     });
   });
 
-  const userApplicationInfo = applicationListData?.items.find((item: any) => {
-    return item.item.user.item.id === userId;
-  })?.item;
+  const userApplicationInfo = applicationListData?.items.find(
+    (item: ApplicationData) => {
+      return item.item.user.item.id === userId;
+    },
+  )?.item;
+
+  console.log(userApplicationInfo);
 
   const {
     data: userData,

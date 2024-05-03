@@ -21,6 +21,16 @@ interface EmployeeData {
   };
 }
 
+export interface ApplicationData {
+  item: {
+    user: {
+      item: {
+        id: string;
+      };
+    };
+  };
+}
+
 interface EmployerItemData {
   id: string;
   name: string;
