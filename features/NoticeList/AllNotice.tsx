@@ -7,6 +7,7 @@ import Dropdown from '@/shared/@common/ui/Dropdown/Dropdown';
 import Card from '@/shared/@common/notice/ui/Card';
 import FilterModal from './FilterModal';
 import noticeAPI from '@/shared/@common/api/noticeAPI';
+import Loading from '@/shared/@common/ui/Loading';
 
 export interface ItemData {
   item: {
@@ -123,8 +124,8 @@ const AllNotice = () => {
   };
 
   return (
-    <div className="flex flex-col w-full py-[60px] px-auto items-center bg-white tracking-wide mobile:px-4">
-      <div className="flex flex-col gap-10 px-4 w-[983px] tablet:w-[678px] mobile:max-w-[520px]">
+    <div className="flex flex-col w-full py-[60px] px-auto items-center bg-white tracking-wide">
+      <div className="flex flex-col gap-10 px-4 w-[983px] tablet:w-[678px] mobile:w-full">
         <div className="flex justify-between mobile:flex-col mobile: gap-4">
           <div className="w-[291px]">
             <p className="text-[28px] font-bold">전체 공고</p>
@@ -155,7 +156,10 @@ const AllNotice = () => {
           </div>
         </div>
         <div className="w-full grid grid-cols-3 grid-rows-2 gap-4 tablet:grid-cols-2 mobile:grid-cols-2 mobile: g-3">
-          {data &&
+          {!data ? (
+            <Loading />
+          ) : (
+            data &&
             data.items.length > 0 &&
             data.items.map((item: ItemData) => (
               <Link
@@ -173,12 +177,13 @@ const AllNotice = () => {
                   closed={item.item.closed}
                 />
               </Link>
-            ))}
+            ))
+          )}
         </div>
         {data && (
           <Pagination
             totalPage={data.count}
-            limit={data.count / ITEM_PER_PAGE}
+            limit={Math.floor(data.count / ITEM_PER_PAGE)}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
           />
