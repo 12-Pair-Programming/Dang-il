@@ -11,6 +11,7 @@ import shopAPI from '@/shared/@common/api/shopAPI';
 import imageAPI from '@/shared/@common/api/imageAPI';
 import { jwtDecode } from 'jwt-decode';
 import userAPI from '@/shared/@common/api/userAPI';
+import Loading from '@/shared/@common/ui/Loading';
 
 type JwtDecode = {
   userId?: string;

@@ -31,23 +31,21 @@ const Table = ({ isEmployee, shopId, noticeId, user }: TableProps) => {
 
   return (
     <>
-      {data && data.count && (
-        <table className="inline-flex flex-col items-start rounded-2xl border-gray-20 border border-solid w-full">
-          <TableHead isEmployee={isEmployee} user={user} />
-          <TableBody
-            isEmployee={isEmployee}
-            shopId={shopId}
-            noticeId={noticeId}
-            user={user}
-          />
-          <Pagination
-            totalPage={data.count}
-            limit={data.count / ITEM_PER_PAGE}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
-        </table>
-      )}
+      <table className="inline-flex flex-col items-start rounded-2xl border-gray-20 border border-solid w-full">
+        <TableHead isEmployee={isEmployee} user={user} />
+        <TableBody
+          isEmployee={isEmployee}
+          shopId={shopId}
+          noticeId={noticeId}
+          user={user}
+        />
+        <Pagination
+          totalPage={1}
+          limit={1}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      </table>
     </>
   );
 };
