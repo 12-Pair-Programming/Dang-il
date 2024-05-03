@@ -98,16 +98,15 @@ const NoticeShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
   });
 
   const userName = userData?.item.name;
-
-  useEffect(() => {
-    setButtonStatus(userApplicationInfo?.status);
-  }, []);
-
   const userApplicationId = userApplicationInfo?.id;
 
   const { data, loading, execute, error } = useFetch(() => {
     return noticeAPI.getShopNotice({ shops_id: shopId, notice_id: noticeId });
   });
+
+  useEffect(() => {
+    setButtonStatus(userApplicationInfo?.status);
+  }, [applicationListData]);
 
   let getdata: Item = data;
   let isPast = false;
@@ -118,6 +117,7 @@ const NoticeShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
 
   useEffect(() => {
     execute();
+    executeApplicationListDataLoading();
   }, [shopId, noticeId]);
 
   useEffect(() => {
@@ -203,7 +203,7 @@ const NoticeShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
           shopId,
           noticeId,
           userApplicationId,
-          { status: 'canceled' },
+          'canceled',
         );
         if (data) {
           alert('취소가 완료되었습니다.');
