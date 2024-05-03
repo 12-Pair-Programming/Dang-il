@@ -97,21 +97,3 @@ export default function LoginBody() {
     </div>
   );
 }
-/*
-const modalConfigs = [
-  { modalContent: '안녕', modalType: 'check' },
-  { modalContent: '안녕하세요', modalType: 'notice' },
-  { modalContent: '확인', modalType: 'warning' },
-];
-
-const modals = modalConfigs.map((config) => modalHook(config));
-
-madals[i]으로도 사용 가능
-
-{
-  "email": "test@test.com",
-  "password": "123123123a",
-  "type": "employee"
-}
-
-*/

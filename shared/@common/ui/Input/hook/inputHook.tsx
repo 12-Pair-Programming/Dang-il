@@ -14,19 +14,3 @@ export const useInput = (defaultValue?: string | number) => {
 
   return { handleInput, value, handleReset };
 };
-
-/*
-사용법
-const [email, password] = new Array(2).map(() => useInput());
-
-  const {
-    emailError,
-    isEmailError,
-    passwordError,
-    isPasswordError,
-    handleLoginSystem,
-  } = useCheckUserData({
-    email: email.value,
-    password: password.value,
-  });
-*/
