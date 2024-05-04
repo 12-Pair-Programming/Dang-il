@@ -284,7 +284,7 @@ const NoticeShopInfo = ({ userType, isLogin, shopId, noticeId }: props) => {
                 isPastNotice={isPast}
               />
             </div>
-            <div className="w-[346px] tablet:w-[680px] mobile:max-w-[351px] ml-6 mobile:ml-1 flex flex-col justify-between">
+            <div className="w-[346px] tablet:w-[680px] mobile:w-full ml-6 mobile:ml-1 flex flex-col justify-between">
               <p className="text-base font-bold text-primary">시급</p>
               <HourlyPayForWon
                 hourlyPay={getdata.hourlyPay}
