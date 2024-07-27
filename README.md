@@ -146,7 +146,7 @@ Axios / React date-picker(캘린더) / jwt-decode(토큰)
 </table>  
 </div>
 
-### 기능 중심 설계 - FSD
+### 기능 분할 설계 - FSD
 
 ### Userflow
 <div align="center">
